@@ -7,7 +7,7 @@
 \newcommand{\TODO}[1]{\todo[inline]{#1}}
 
 \begin{document}
-\title{\vspace{-3.5cm} Thesis Proposal}
+\title{\vspace{-3.5cm} Thesis Proposal - Realizing Iterative Relaxed Scheduler in Kernel Space}
 
 
 \author{
@@ -33,24 +33,25 @@ But, DMT presents the challenge of having no scheduling constraints.
 However, currently there are no such techniques that allow to control the schedule of a multi-threaded program on a fine-grained level, i.e, on the level of single memory accesses. 
 A design with a granularity of single memory accesses would help in enforcing the scheduling constraint. 
 
-Consider an example, there are two memory accesses $MA_{1}$ and $MA_{2}$ from two user level threads $T{1}$ and $T{2}$ respectively. 
+Consider an example, there are two memory accesses $MA_{1}$ and $MA_{2}$ from two user level threads $T_{1}$ and $T_{2}$ respectively. 
 The generated constraint for execution is $MA_{1}$ after $MA_{2}$. 
-Let us assume, $T{1}$ reaches $MA_{1}$ before $T{2}$ executes $MA_{2}$. 
+Let us assume, $T_{1}$ reaches $MA_{1}$ before $T_{2}$ executes $MA_{2}$. 
 The scheduling design has to detect the memory access for $MA_{2}$ and $MA_{1}$ for enforcing the above constraint. 
-With detection in place, the scheduler would enforce a conditional wait or busy wait on $T{1}$ until $T{2}$ completes its execution of $MA_{2}$. 
+With detection in place, the user level scheduler would enforce a conditional wait or busy wait on $T_{1}$ until $T_{2}$ completes its execution of $MA_{2}$.  
 Moving the scheduling decision to kernel space would remove the above mentioned synchronization required for scheduling. 
 Thus, improving the execution time of the user program.
 
 
-In the existing design, we have a thread scheduler and an verification engine.  
+In the existing design, we have a thread scheduler and a verification engine.  
 The verification engine primarily focusses on instrumenting the user code and realizing memory accesses made by various user threads. 
 The set of safe schedules are provided by the verification engine for the given user program. 
 The generated execution pattern is later realized with the thread scheduler, when the user program is executed. 
 The scheduler thread is realized in user space. 
 It is realized in two design modes - Seperate thread and shared thread. 
 Context switching of the scheduler thread is possible when executed in user space. 
-There is also a possibility for the operating system scheduler to override the scheduler constraints set by the scheduler thread on its user threads. 
-Moving the scheduler task to the kernel space would help to enforce the scheduling constraints set by the user. 
+Considering the example from above, the operating system scheduler might ignore the scheduling constraint set by the user level scheduler. 
+Thus, executing $T_{1}$ on $MA_{1}$ before $T_{2}$ executes the $MA_{2}$. 
+Moving the scheduler task to the kernel space would help to realize the safe scheduling constraints set by the user. 
 The proposed design can be realized by having the thread scheduler as a Loadable Kernel Module. 
 
 
