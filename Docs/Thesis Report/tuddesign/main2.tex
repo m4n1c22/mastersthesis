@@ -14,7 +14,7 @@
 % http://exp1.fkp.physik.tu-darmstadt.de/tuddesign/
 % Refer to the manuals and forum for details
 %======================================================
-\documentclass[longdoc,accentcolor=tud0a,12pt,paper=a4]{tudreport}
+\documentclass[longdoc,accentcolor=tud2b,12pt,paper=a4]{tudreport}
 %======================================================
 % colorback = Bereich unter Titel mit Hintergrundfarbe
 % colorbacktitle = Titel mit Hintergrundfarbe (Akzent)
@@ -47,7 +47,7 @@
 	\setenumerate{noitemsep}
 	\setitemize{noitemsep}
 	\setdescription{noitemsep}
-%\setlist{nolistsep}
+\setlist{nolistsep}
 
 %======================================================
 % Package loading for example contents (content.tex)
@@ -159,6 +159,11 @@
 	\tableofcontents
 	\listoffigures
 	\listoftables
+
+	\begin{abstract}
+	Abstract comes here...
+	\end{abstract}		
+	
 	
 	%======================================================
 	% The main matter (insert your contents here)
@@ -166,6 +171,12 @@
 	\cleardoublepage
 	%\graphicspath{ {./gfx/} }
 	\pagenumbering{arabic}
+	\chapter{Background}
+	\input{background}
+	
+	\chapter{Related Work}
+	\input{relatedwork}
+	
 	%\input{content2}
 	
 	%======================================================
