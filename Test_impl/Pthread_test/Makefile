@@ -4,9 +4,10 @@
 CC=gcc
 
 #Compiler flags
-CFLAGS=--std=c99 -Wall -Werror -O1
+CFLAGS=--std=c99 #-Wall -Werror -O1
 OUTPUT_FLAG=-o
 PTHREAD_OPTION=-lpthread
+PTHREAD_YIELD_OPTION = -pthread
 
 #Source code specifier for pthread example 1
 PTHREAD_EXAMPLE_1_SRC = pthread_example_1.c
@@ -33,7 +34,7 @@ exec: compile
 
 #Target for internal dependency in pthread example 1
 compile:
-	$(CC) $(CFLAGS) $(PTHREAD_EXAMPLE_1_SRC) $(OUTPUT_FLAG) $(OUT_PTHREAD_EXAMPLE_1) $(PTHREAD_OPTION)
+	$(CC) $(CFLAGS) $(PTHREAD_EXAMPLE_1_SRC) $(OUTPUT_FLAG) $(OUT_PTHREAD_EXAMPLE_1) $(PTHREAD_YIELD_OPTION)
 
 
 #Clean up the code.

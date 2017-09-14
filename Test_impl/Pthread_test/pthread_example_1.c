@@ -9,15 +9,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include "pthread_examples.h"
 #include "common.h"
 
 
-void *pthread_example_1(void *value) {
+void *pthread_example_1(void *thread_id) {
+
+    int tid;
+    tid = (*((int*)thread_id));
+    if (tid == 1) {
+      if(pthread_yield() != 0) {
+        pthread_exit(NULL);
+      }
+    }
+
+    printf("I am thread with TID %d\n", tid);
 
 
-    printf("I am thread with TID %lld\n", gettid());
 
     return NULL;
 }
@@ -28,8 +40,10 @@ int create_pthread_example_1() {
   /* this variable is our reference to the two newly created pthreads */
   pthread_t first_pthread, second_pthread;
 
+  int thread_id_1 = 1, thread_id_2 = 2;
+
   /* create a first thread which executes pthread_example_1(&fnptr) */
-  if(pthread_create(&first_pthread, NULL, pthread_example_1, NULL)) {
+  if(pthread_create(&first_pthread, NULL, pthread_example_1, &thread_id_1)) {
 
     fprintf(stderr, "Error creating thread\n");
     return EXIT_FAIL;
@@ -37,7 +51,7 @@ int create_pthread_example_1() {
   }
 
   /* create a first thread which executes pthread_example_1(&fnptr) */
-  if(pthread_create(&second_pthread, NULL, pthread_example_1, NULL)) {
+  if(pthread_create(&second_pthread, NULL, pthread_example_1, &thread_id_2)) {
 
     fprintf(stderr, "Error creating thread\n");
     return EXIT_FAIL;
