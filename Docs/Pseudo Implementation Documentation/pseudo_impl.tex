@@ -149,25 +149,35 @@
 \begin{tikzpicture}[scale=0.7,transform shape]
  
   % Draw diagram elements
-  \path \spacelayer {1}{Thread\\ Registration}{reg\_threads()};
-  
-  \path (p1.east)+(5.5,0.0) \spacelayer{2}{Registration File}{Proc FS custom file for communication};
+  % thread registration block area
+  \path \spacelayer {1}{Thread\\ Registration}{reg\_threads()};  
+  \path (p1.east)+(5.0,0.0) \spacelayer{2}{Registration File}{Proc FS custom file for communication};
   \path (p2.east)+(4.5,0.0) \spacelayer{3}{SYSCALL}{write() system call};
   \path (p3.south)+(0.0,-2.0) \spacelayer{4}{Write Callback}{Callback function triggered inside LKM during write};
 
-
-  \path (p1.south)+(0.0,-5.0) \spacelayer {5}{Memory\\ Assessment}{check\_permission()};
+  % memory assessment area
+  \path (p1.south)+(0.0,-5.0) \spacelayer {5}{Before M.A}{A callback is triggered before memory access is made to the global memory};
+  \path (p5.south)+(0.0,-2.0) \spacelayer {6}{Memory\\ Assessment}{Checks if the memory access is permitted or not};
+  \path (p6.south)+(0.0,-2.0) \spacelayer {7}{Scheduler\\ yield}{scheduler\_yield()};
 
   % Draw arrows between elements
   \path [line] (p1.east) -- node [above] {$filewrite()$} (p2);
 
   \path [line] (p2.east) -- node [above] {$write()$} (p3);
   
-  \path [linepart] (p3.south) -- node [left] {$callback\ triggered$} (p4);
+  \path [linepart] (p3.south) -- node [left] {$callback$}
+                                 node [right]{$triggered$} (p4);
 
 
-  \background{p1}{p1}{p5}{p5}{User Space}
+  \path [line] (p5.south) -- node [left] {$Check$}
+						     node [right] {$Trace$} (p6);
+
+  \path [line] (p6.south) -- node [left] {$Not$}
+						     node [right] {$Permitted$} (p7);
+
+  \background{p1}{p1}{p7}{p7}{User Space}
   \background{p3}{p3}{p4}{p4}{Kernel Space}
+
 
 \end{tikzpicture}
 \end{document} 
