@@ -1,0 +1,173 @@
+% Author: Sreeram Sadasivam
+%\documentclass{minimal}
+%
+%\usepackage{pgf}
+%\usepackage{tikz}
+%\usepackage[utf8]{inputenc}
+%\usetikzlibrary{arrows,automata}
+%\usetikzlibrary{positioning}
+%\usetikzlibrary{shadows,arrows}
+%% Define the layers to draw the diagram
+%\pgfdeclarelayer{background}
+%\pgfdeclarelayer{foreground}
+%\pgfsetlayers{background,main,foreground}
+% 
+%
+%\tikzset{
+%    state/.style={
+%           rectangle,
+%           rounded corners,
+%           draw=black, very thick,
+%           minimum height=2em,
+%           inner sep=2pt,
+%           text centered,
+%           },
+%}
+%
+%\begin{document}
+%\tikzstyle{line} = [draw, -latex']
+%\begin{tikzpicture}[->,>=stealth']
+%
+% % Position of THREAD_REG 
+% % Use previously defined 'state' as layout (see above)
+% % use tabular for content to get columns/rows
+% % parbox to limit width of the listing
+% \node[state] (THREAD_REG) 
+% {\begin{tabular}{l}
+%  \textbf{Thread Registration}\\
+%  \parbox{4cm}{\begin{itemize}
+%   \item Start of user program
+%   \item register\_threads()
+%   \item Parameter $thread\_IDs[thread\_count]$
+%  \end{itemize}
+%  }%\\[4em]
+%
+% \end{tabular}};
+%  
+% % State: PROCFS with different content
+% \node[state,    	% layout (defined above)
+%  text width=3cm, 	% max text width
+%  %yshift=2cm, 		% move 2cm in y
+%  right of=THREAD_REG, 	% Position is to the right of THREAD_REG
+%  node distance=6cm, 	% distance to THREAD_REG
+%  anchor=center] (PROCFS) 	% posistion relative to the center of the 'box'
+% {%
+% \begin{tabular}{l} 	% content
+%  \textbf{Registration File}\\
+%  \parbox{2.8cm}{Proc FS custom file for communication}
+% \end{tabular}
+% };
+% 
+%
+% % STATE SYSCALL
+% \node[state,
+%  right of=PROCFS,
+%  node distance=5cm,
+%  anchor=center] (SYSCALL) 
+% {%
+% \begin{tabular}{l}
+%  \textbf{SYSCALL}\\
+%  \parbox{3cm}{write() system call }
+% \end{tabular}
+% };
+% 
+% 
+% % STATE CALLBACK
+% \node[state,
+%  below of=SYSCALL,
+%  yshift=-2cm,
+%  anchor=center,
+%  text width=3cm] (CALLBACK) 
+% {%
+% \begin{tabular}{l}
+%  \textbf{Write Callback}\\
+%  \parbox{2.8cm}{Callback function triggered inside LKM during write}
+% \end{tabular}
+% };
+%
+% % draw the paths and and print some Text below/above the graph
+% \path (THREAD_REG) 	edge  node[anchor=south,above]{$filewrite()$} (PROCFS)                                   
+% 		(PROCFS)       	edge  node[anchor=south,above]{$write()$} 	(SYSCALL);
+% 
+% \path [line,dashed] (SYSCALL) -- node{$callback\ triggered$}(CALLBACK);
+%
+%
+%
+%\end{tikzpicture}
+%
+%
+%\end{document}
+\documentclass[11pt]{article}
+\usepackage{tikz}
+\usetikzlibrary{shadows,arrows}
+% Define the layers to draw the diagram
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+ 
+% Define block styles  
+\tikzstyle{materia}=[draw, fill=blue!20, text width=7.0em, text centered,
+  minimum height=1.5em,drop shadow]
+\tikzstyle{practica} = [materia, text width=8em, minimum width=10em,
+  minimum height=3em, rounded corners, drop shadow]
+\tikzstyle{texto} = [above, text width=6em, text centered]
+\tikzstyle{linepart} = [draw, thick, color=black!50, -latex', dashed]
+\tikzstyle{line} = [draw, thick, color=black!50, -latex']
+\tikzstyle{ur}=[draw, text centered, minimum height=0.01em]
+ 
+% Define distances for bordering
+\newcommand{\blockdist}{1.3}
+\newcommand{\edgedist}{1.5}
+
+\newcommand{\practica}[2]{node (p#1) [practica]
+  {Pr\'actica #1\\{\scriptsize\textit{#2}}}}
+
+
+\newcommand{\spacelayer}[3]{node (p#1) [practica]
+  {#2\\{\scriptsize\textit{#3}}}}
+
+
+% Draw background
+\newcommand{\background}[5]{%
+  \begin{pgfonlayer}{background}
+    % Left-top corner of the background rectangle
+    \path (#1.west |- #2.north)+(-0.5,0.5) node (a1) {};
+    % Right-bottom corner of the background rectanle
+    \path (#3.east |- #4.south)+(+0.5,-0.25) node (a2) {};
+    % Draw the background
+    \path[fill=yellow!20,rounded corners, draw=black!50, dashed]
+      (a1) rectangle (a2);
+    \path (a1.east |- a1.south)+(0.8,-0.3) node (u1)[texto]
+      {\scriptsize\textit{#5}};
+  \end{pgfonlayer}}
+
+\newcommand{\transreceptor}[3]{%
+  \path [linepart] (#1.east) -- node [above]
+    {\scriptsize Transreceptor #2} (#3);}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.7,transform shape]
+ 
+  % Draw diagram elements
+  \path \spacelayer {1}{Thread\\ Registration}{reg\_threads()};
+  
+  \path (p1.east)+(5.5,0.0) \spacelayer{2}{Registration File}{Proc FS custom file for communication};
+  \path (p2.east)+(4.5,0.0) \spacelayer{3}{SYSCALL}{write() system call};
+  \path (p3.south)+(0.0,-2.0) \spacelayer{4}{Write Callback}{Callback function triggered inside LKM during write};
+
+
+  \path (p1.south)+(0.0,-5.0) \spacelayer {5}{Memory\\ Assessment}{check\_permission()};
+
+  % Draw arrows between elements
+  \path [line] (p1.east) -- node [above] {$filewrite()$} (p2);
+
+  \path [line] (p2.east) -- node [above] {$write()$} (p3);
+  
+  \path [linepart] (p3.south) -- node [left] {$callback\ triggered$} (p4);
+
+
+  \background{p1}{p1}{p5}{p5}{User Space}
+  \background{p3}{p3}{p4}{p4}{Kernel Space}
+
+\end{tikzpicture}
+\end{document} 
