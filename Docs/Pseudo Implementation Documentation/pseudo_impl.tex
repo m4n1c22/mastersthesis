@@ -119,11 +119,11 @@
 \newcommand{\blockdist}{1.3}
 \newcommand{\edgedist}{1.5}
 
-\newcommand{\practica}[2]{node (p#1) [practica]
+\newcommand{\practica}[2]{node (#1) [practica]
   {Pr\'actica #1\\{\scriptsize\textit{#2}}}}
 
 
-\newcommand{\spacelayer}[3]{node (p#1) [practica]
+\newcommand{\spacelayer}[3]{node (#1) [practica]
   {#2\\{\scriptsize\textit{#3}}}}
 
 
@@ -150,34 +150,44 @@
  
   % Draw diagram elements
   % thread registration block area
-  \path \spacelayer {1}{Thread\\ Registration}{reg\_threads()};  
-  \path (p1.east)+(5.0,0.0) \spacelayer{2}{Registration File}{Proc FS custom file for communication};
-  \path (p2.east)+(4.5,0.0) \spacelayer{3}{SYSCALL}{write() system call};
-  \path (p3.south)+(0.0,-2.0) \spacelayer{4}{Write Callback}{Callback function triggered inside LKM during write};
+  \path \spacelayer {THREADINIT}{Thread\\ Created}{thread\_init()};  
+  \path (THREADINIT.south)+(0.0,-2.0)\spacelayer {USERTHREADREG}{Thread\\ Registration}{reg\_thread()};  
+  \path (USERTHREADREG.east)+(5.0,0.0) \spacelayer {REGPROCFS}{Registration File}{Proc FS custom file for communication};
+  \path (REGPROCFS.east)+(4.5,0.0) \spacelayer {REGSYSCALL}{SYSCALL}{write() system call};
+  \path (REGSYSCALL.south)+(0.0,-2.0) \spacelayer {REGCALLBACK}{Write Callback}{Callback function triggered inside LKM during write};
 
   % memory assessment area
-  \path (p1.south)+(0.0,-5.0) \spacelayer {5}{Before M.A}{A callback is triggered before memory access is made to the global memory};
-  \path (p5.south)+(0.0,-2.0) \spacelayer {6}{Memory\\ Assessment}{Checks if the memory access is permitted or not};
-  \path (p6.south)+(0.0,-2.0) \spacelayer {7}{Scheduler\\ yield}{scheduler\_yield()};
+  \path (USERTHREADREG.south)+(0.0,-5.0) \spacelayer {BEFOREMA}{Before M.A}{A callback is triggered before memory access is made to the global memory};
+  \path (BEFOREMA.south)+(0.0,-2.0) \spacelayer {MEMASSESSMENT}{Memory\\ Assessment}{Checks if the memory access is permitted or not};
+  \path (MEMASSESSMENT.south)+(0.0,-2.0) \spacelayer {SCHEDYIELD}{Scheduler\\ yield}{scheduler\_yield()};
+  \path (REGCALLBACK.south)+(0.0,-8.0) \spacelayer {CONTEXTSWITCH}{Context Switch call}{Function internally performs verification by calling check\_perm() again inside kernel space. And then performs the actual context switch};
+  
+  \path (CONTEXTSWITCH.north)+(0.0,2.0) \spacelayer {CHECKPERM}{Check trace}{Checks if the execution in the input trace is valid or not.};
+  
+  
 
   % Draw arrows between elements
-  \path [line] (p1.east) -- node [above] {$filewrite()$} (p2);
+  \path [line] (THREADINIT.south) -- node [left] {$register$}
+									 node [right] {$thread$} (USERTHREADREG);
+  \path [line] (USERTHREADREG.east) -- node [above] {$filewrite()$} (REGPROCFS);
 
-  \path [line] (p2.east) -- node [above] {$write()$} (p3);
+  \path [line] (REGPROCFS.east) -- node [above] {$write()$} (REGSYSCALL);
   
-  \path [linepart] (p3.south) -- node [left] {$callback$}
-                                 node [right]{$triggered$} (p4);
+  \path [linepart] (REGSYSCALL.south) -- node [left] {$callback$}
+                                 node [right]{$triggered$} (REGCALLBACK);
 
 
-  \path [line] (p5.south) -- node [left] {$Check$}
-						     node [right] {$Trace$} (p6);
+  \path [line] (BEFOREMA.south) -- node [left] {$Check$}
+						     node [right] {$Trace$} (MEMASSESSMENT);
 
-  \path [line] (p6.south) -- node [left] {$Not$}
-						     node [right] {$Permitted$} (p7);
+  \path [line] (MEMASSESSMENT.south) -- node [left] {$Not$}
+						     node [right] {$Permitted$} (SCHEDYIELD);
 
-  \background{p1}{p1}{p7}{p7}{User Space}
-  \background{p3}{p3}{p4}{p4}{Kernel Space}
+  \path [line] (SCHEDYIELD.east) -- node [above] {$context\_switch()$} (CONTEXTSWITCH);
 
+  \background{THREADINIT}{THREADINIT}{SCHEDYIELD}{SCHEDYIELD}{User Space}
+  \background{REGSYSCALL}{REGSYSCALL}{CONTEXTSWITCH}{CONTEXTSWITCH}{Kernel Space}
+  
 
 \end{tikzpicture}
 \end{document} 

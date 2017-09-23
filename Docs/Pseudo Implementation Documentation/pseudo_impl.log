@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.8)  21 SEP 2017 19:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.8)  22 SEP 2017 15:01
 entering extended mode
 **./pseudo_impl.tex
 (pseudo_impl.tex
@@ -430,13 +430,13 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 164.
+(Font)              <10.95> on input line 171.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 164.
+(Font)              <8> on input line 171.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 164.
+(Font)              <6> on input line 171.
 
-Overfull \hbox (29.47859pt too wide) in paragraph at lines 182--183
+Overfull \hbox (29.4835pt too wide) in paragraph at lines 192--193
 [][] 
  []
 
@@ -444,18 +444,18 @@ Overfull \hbox (29.47859pt too wide) in paragraph at lines 182--183
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] (pseudo_impl.aux) ) 
 Here is how much of TeX's memory you used:
- 12064 strings out of 493323
- 250717 string characters out of 3139061
- 291116 words of memory out of 3000000
- 15396 multiletter control sequences out of 15000+200000
+ 12084 strings out of 493323
+ 251487 string characters out of 3139061
+ 301240 words of memory out of 3000000
+ 15416 multiletter control sequences out of 15000+200000
  6731 words of font info for 24 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,7n,78p,426b,749s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,7n,78p,426b,751s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTe
 X 2.9/fonts/type1/public/amsfonts/cm/cmti8.pfb>
-Output written on pseudo_impl.pdf (1 page, 54482 bytes).
+Output written on pseudo_impl.pdf (1 page, 57481 bytes).
 PDF statistics:
  45 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
