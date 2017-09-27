@@ -2,6 +2,9 @@
 \documentclass[11pt]{article}
 \usepackage{tikz}
 \usetikzlibrary{shadows,arrows}
+\usepackage{program}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 % Define the layers to draw the diagram
 \pgfdeclarelayer{background}
 \pgfdeclarelayer{foreground}
@@ -98,6 +101,15 @@ The trace file is passed on as an input for the scheduler.
 In the above flow diagram, the trace file is read by the main user thread at the start of its execution. 
 It parses the file, creates and passes the trace object to the kernel space as string via a custom file created in the proc file system. 
 
+\begin{algorithmic}
+\If {$i\geq maxval$}
+    \State $i\gets 0$
+\Else
+    \If {$i+k\leq maxval$}
+        \State $i\gets i+k$
+    \EndIf
+\EndIf
+\end{algorithmic}
 \newpage
 \begin{tikzpicture}[scale=0.7,transform shape]
  
