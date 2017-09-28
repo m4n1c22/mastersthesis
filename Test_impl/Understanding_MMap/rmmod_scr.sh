@@ -1,0 +1,1 @@
+sudo rmmod mmap_test.ko
