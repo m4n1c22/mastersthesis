@@ -1,4 +1,15 @@
 *.bin
 *.cpp~
-*.c~
+*.mod.*
+*.ko
+*.symvers
+*.order
+*.ko.*
+*.o
+*.o.*
+.tmp_versions*
+*.out
 *.exe
+*.bin
+*.c~
+

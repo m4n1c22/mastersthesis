@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
+#include <signal.h>
 
 #define NETLINK_USER 31
 
@@ -20,11 +22,21 @@ struct iovec iov;
 int sock_fd;
 struct msghdr msg;
 
-int main()
+
+void local_sig_handler(int signum) {
+       printf("closing socket\n");
+        close(sock_fd); 
+}
+
+int sendrecvmsg_netlink(char *msgbuff)
 {
+
     sock_fd = socket(PF_NETLINK, SOCK_RAW, NETLINK_USER);
     if (sock_fd < 0)
         return -1;
+
+
+    fcntl(sock_fd, O_NONBLOCK );
 
     memset(&src_addr, 0, sizeof(src_addr));
     src_addr.nl_family = AF_NETLINK;
@@ -44,7 +56,7 @@ int main()
     nlh->nlmsg_pid = getpid();
     nlh->nlmsg_flags = 0;
 
-    strcpy(NLMSG_DATA(nlh), "Hello");
+    strcpy(NLMSG_DATA(nlh), msgbuff);
 
     iov.iov_base = (void *)nlh;
     iov.iov_len = nlh->nlmsg_len;
@@ -53,14 +65,41 @@ int main()
     msg.msg_iov = &iov;
     msg.msg_iovlen = 1;
 
+   
+
+    //sleep(1);
     printf("Sending message to kernel\n");
     sendmsg(sock_fd, &msg, 0);
-    printf("Waiting for message from kernel\n");
+    
 
     /* Read message from kernel */
-    recvmsg(sock_fd, &msg, 0);
-    printf("Received message payload: %s\n", NLMSG_DATA(nlh));
-    close(sock_fd);
+    //recvmsg(sock_fd, &msg, 0);
+    //printf("Received message payload: %s\n", NLMSG_DATA(nlh));
 
+    close(sock_fd);
+    printf("closing socket\n");
+    return 0;
+}
+
+
+int main(int argc, char const *argv[])
+{
+
+    int i;
+
+    char msgbuff[20];
+
+    sprintf(msgbuff, "%d", getpid());
+    signal(SIGUSR1, local_sig_handler);
+
+    if(sendrecvmsg_netlink(msgbuff)!=0) {
+        return -1;
+    }
+
+    while(1)
+    {
+      // printf("I am alive... %d\n", getpid());
+        
+    }
     return 0;
 }

@@ -38,7 +38,7 @@ static void hello_nl_recv_msg(struct sk_buff *skb)
 
     res = nlmsg_unicast(nl_sk, skb_out, pid);
     if (res < 0)
-        printk(KERN_INFO "Error while sending bak to user\n");
+        printk(KERN_INFO "Error while sending back to user\n");
 }
 
 static int __init hello_init(void)
