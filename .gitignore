@@ -12,4 +12,8 @@
 *.exe
 *.bin
 *.c~
-
+*.log
+*.synctex.gz
+*.out
+*.aux
+*.toc
