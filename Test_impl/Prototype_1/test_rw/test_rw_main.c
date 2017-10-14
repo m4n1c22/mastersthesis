@@ -1,5 +1,5 @@
 /**
-	\file		:		test_rw.c
+	\file		:		test_rw_main.c
 	\brief		:		Test program for reader writer problem
 	\author 	:		Sreeram Sadasivam
 */
@@ -48,8 +48,8 @@ void *writer() {
 	BeforeMA();
 	pthread_mutex_lock(&mutex1);
 	AfterMA();
-	//printf("\n Enter data in writer %d",wc);
-	//scanf("%d",&val);
+
+
 	BeforeMA();
 	val = 10;
 	printf("Writer %d writing data %d\n",wc, val);
