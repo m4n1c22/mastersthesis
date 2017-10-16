@@ -15,7 +15,7 @@
 
 
 MODULE_AUTHOR("Sreeram Sadasivam");
-MODULE_DESCRIPTION("Process Reg Module");
+MODULE_DESCRIPTION("Thread Reg Module");
 MODULE_LICENSE("GPL");
 
 /** PROC FS RELATED MACROS */

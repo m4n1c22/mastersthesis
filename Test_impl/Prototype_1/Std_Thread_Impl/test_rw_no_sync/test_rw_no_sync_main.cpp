@@ -13,53 +13,58 @@ using namespace std;
 int val;
 
 
-void BeforeMA() {
-	cout<<"Before Memory Access called...\n";
+void BeforeMA(int id) {
+	cout<<"Thread " << id << " : Before Memory Access called...\n";
 }
 
-void AfterMA() {
-	cout<<"After Memory Access called...\n";
+void AfterMA(int id) {
+	cout<<"Thread " << id << " : After Memory Access called...\n";
 }
 
-void writer() {
+void writer(int id) {
 
 	FILE *fp = fopen("/proc/thread_reg","w");
 	fprintf(fp, "reg");
  	fclose(fp);
 
-    BeforeMA();
+    BeforeMA(id);
 	val = 10;
-	cout << "Writer writing data "<<val<<std::endl;
-	AfterMA();
+	cout << "Thread " << id << " : writing data "<<val<<std::endl;
+	AfterMA(id);
 }
 
 
-void reader() {
+void reader(int id) {
 
 	FILE *fp = fopen("/proc/thread_reg","w");
 	fprintf(fp, "reg");
  	fclose(fp);
 
 
-	BeforeMA();
-	cout << "Reader read data "<<val<<std::endl;
-	AfterMA();
+	BeforeMA(id);
+	cout << "Thread " << id << " : read data "<<val<<std::endl;
+	AfterMA(id);
 }
 
 
 int main()
 {
-	thread tw1(&writer);  
-    cout << "writer 1 thread\n";
-    
-    thread tr1(&reader);  
-    cout << "reader 1 thread\n";
+	FILE *fp = fopen("/proc/trace_reg","w");
+	fprintf(fp, "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}");
+ 	fclose(fp);
 
-	thread tr2(&reader);  
-    cout << "reader 2 thread\n";
+
+	thread tw1(writer, 1);  
+    cout << "Thread 1 is writer\n";
     
-	thread tw2(&writer);  
-    cout << "writer 2 thread\n";
+    thread tr1(reader, 2);  
+    cout << "Thread 2 is reader\n";
+
+	thread tr2(reader, 3);  
+    cout << "Thread 3 is reader\n";
+    
+	thread tw2(writer, 4);  
+    cout << "Thread 4 is writer\n";
     
 	tw1.join();  
     tr1.join();  

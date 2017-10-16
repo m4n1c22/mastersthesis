@@ -1,5 +1,6 @@
 #MACROS
 obj-m += thread_reg.o
+obj-m += trace_ctl.o
 
 
 PWD := $(shell pwd)
