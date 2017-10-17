@@ -28,7 +28,7 @@ void BeforeMA(thread_id_t id) {
 
 	vec_clk curr_clk;
 
-	fd = open(file_name, O_RDWR);
+	fd = open(sched_ioctl_comm, O_RDWR);
     if (fd == -1)
     {
         perror("sched_test open");

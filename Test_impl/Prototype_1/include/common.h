@@ -35,10 +35,44 @@ typedef struct {
 typedef int thread_id_t;
 
 
-char *file_name = "/dev/sched_comm";
+char *sched_ioctl_comm = "/dev/sched_comm";
  
 #define GET_CURR_CLK_TIME _IOR('q', 1, vec_clk *)
 #define SIGNAL_OTHER_THREADS _IO('q', 2)
 #define CTXT_SWITCH _IOW('q', 3, thread_id_t *)
- 
+
+/**Enumeration for the memory access permissions*/ 
+typedef enum 
+{
+	e_ma_restricted = 0,
+	e_ma_allowed 	= 1
+}mem_access;
+
+/** Function for checking the permission */
+
+mem_access check_mem_acc_perm(vec_clk curr_vec_clk, vec_clk trace_inst, thread_id_t tid) {
+
+	int i;
+	if(trace_inst.clocks[tid-1] > curr_vec_clk.clocks[tid]) {
+
+		return e_ma_allowed;
+	}
+	else {
+		for (i = 0; i < THREAD_COUNT; ++i)
+		{
+			if(i!=(tid-1)) {
+				if(trace_inst.clocks[i] > curr_vec_clk.clocks[i]) {
+
+					continue;
+				}
+				else {
+					return e_ma_restricted;
+				}
+			}
+		}
+	}
+	return e_ma_allowed;
+}
+
+
 #endif
