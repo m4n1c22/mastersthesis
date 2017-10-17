@@ -34,19 +34,24 @@ typedef struct {
 /**thread id datatype*/
 typedef int thread_id_t;
 
-
-char *sched_ioctl_comm = "/dev/sched_comm";
- 
-#define GET_CURR_CLK_TIME _IOR('q', 1, vec_clk *)
-#define SIGNAL_OTHER_THREADS _IO('q', 2)
-#define CTXT_SWITCH _IOW('q', 3, thread_id_t *)
-
 /**Enumeration for the memory access permissions*/ 
-typedef enum 
-{
+typedef enum  {
 	e_ma_restricted = 0,
 	e_ma_allowed 	= 1
 }mem_access;
+
+/**Macros for file names used by the scheduler setup*/
+#define THREAD_REG_PROC_FILE 	"/proc/thread_reg"
+#define TRACE_REG_PROC_FILE 	"/proc/trace_reg"
+#define SCHED_IOCTL_COMM 		"/dev/sched_comm"
+
+/** IOCTL SETUP */
+
+ 
+#define GET_CURR_CLK_TIME _IOR('c', 1, vec_clk *)
+#define SIGNAL_OTHER_THREADS _IOW('s', 2, thread_id_t *)
+#define CTXT_SWITCH _IOW('t', 3, thread_id_t *)
+#define RESET_CURR_TIME _IO('c', 4)
 
 /** Function for checking the permission */
 

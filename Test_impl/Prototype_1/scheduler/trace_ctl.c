@@ -274,7 +274,12 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             break;
         case SIGNAL_OTHER_THREADS:
     		//Signal other threads...
+         	if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
+            {
+                return -EACCES;
+            }
         	printk(KERN_INFO "IOCTL: Signalling other threads...\n");
+        	curr_clk_time.clocks[tid-1] += 1; 
             break;
         case CTXT_SWITCH:
             if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
@@ -282,6 +287,12 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
                 return -EACCES;
             }
             printk(KERN_INFO "IOCTL: Received thread id %d...\n", tid);
+            break;
+        case RESET_CURR_TIME:
+        	printk(KERN_INFO "IOCTL: Reseting current clock time...\n");
+        	for(i = 0; i < THREAD_COUNT; i++) {
+            	curr_clk_time.clocks[i] = 0;
+            }
             break;
         default:
             return -EINVAL;

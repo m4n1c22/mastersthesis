@@ -28,7 +28,7 @@ void BeforeMA(thread_id_t id) {
 
 	vec_clk curr_clk;
 
-	fd = open(sched_ioctl_comm, O_RDWR);
+	fd = open(SCHED_IOCTL_COMM, O_RDWR);
     if (fd == -1)
     {
         perror("sched_test open");
@@ -56,25 +56,57 @@ void BeforeMA(thread_id_t id) {
 
 void AfterMA(thread_id_t id) {
 
-	int fd;
+	int fd, i;
 
-	fd = open(file_name, O_RDWR);
+    vec_clk curr_clk;
+
+	fd = open(SCHED_IOCTL_COMM, O_RDWR);
     if (fd == -1)
     {
         perror("sched_test open");
     }
 	cout<<"Thread " << id << " : After Memory Access called...\n";
 
-	if (ioctl(fd, SIGNAL_OTHER_THREADS) == -1)
+	if (ioctl(fd, SIGNAL_OTHER_THREADS, &id) == -1)
     {
         perror("sched_test ioctl signal_other_threads");
+    }
+
+    if (ioctl(fd, GET_CURR_CLK_TIME, &curr_clk) == -1)
+    {
+        perror("sched_test ioctl get_curr_clk_time");
+    }
+    cout <<"Current clock value: ";
+    for (i = 0; i < THREAD_COUNT; ++i) {
+        
+        cout<<curr_clk.clocks[i];
+    }
+    cout<<endl;
+
+
+    close(fd);
+}
+
+void reset_clock() {
+
+    int fd;
+
+    fd = open(SCHED_IOCTL_COMM, O_RDWR);
+    if (fd == -1)
+    {
+        perror("sched_test open");
+    }
+
+    if (ioctl(fd, RESET_CURR_TIME) == -1)
+    {
+        perror("sched_test ioctl reset_curr_time");
     }
     close(fd);
 }
 
 void writer(int id) {
 
-	FILE *fp = fopen("/proc/thread_reg","w");
+	FILE *fp = fopen(THREAD_REG_PROC_FILE,"w");
 	fprintf(fp, "reg");
  	fclose(fp);
 
@@ -87,7 +119,7 @@ void writer(int id) {
 
 void reader(int id) {
 
-	FILE *fp = fopen("/proc/thread_reg","w");
+	FILE *fp = fopen(THREAD_REG_PROC_FILE,"w");
 	fprintf(fp, "reg");
  	fclose(fp);
 
@@ -100,7 +132,7 @@ void reader(int id) {
 
 int main()
 {
-	FILE *fp = fopen("/proc/trace_reg","w");
+	FILE *fp = fopen(TRACE_REG_PROC_FILE,"w");
 	fprintf(fp, "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}");
  	fclose(fp);
 
@@ -121,6 +153,8 @@ int main()
     tr1.join();  
     tr2.join();  
     tw2.join();  
+
+    reset_clock();
 
     return 0;
 }
