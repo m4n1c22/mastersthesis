@@ -12,18 +12,31 @@
 #include <linux/kernel.h>
 #include <linux/list.h>
 #include <linux/slab.h>
+#include <linux/version.h>
+#include <linux/cdev.h>
+#include <linux/device.h>
+#include <asm/uaccess.h>
+
+
+#include "../include/common.h"
 
 
 MODULE_AUTHOR("Sreeram Sadasivam");
 MODULE_DESCRIPTION("Trace Control Module");
 MODULE_LICENSE("GPL");
 
+
 /** PROC FS RELATED MACROS */
 #define PROC_CONFIG_FILE_NAME	"trace_reg"
 
-/**Constantly defined macros*/
-#define THREAD_COUNT	4
-#define TRACE_LIMIT		20
+/**MACROS RELATED TO IOCTL*/
+#define FIRST_MINOR 0
+#define MINOR_CNT 1
+ 
+/**Device setup structure variables*/
+static dev_t dev;
+static struct cdev c_dev;
+static struct class *cl;
 
 
 /**Enumeration for Function Execution*/
@@ -37,10 +50,10 @@ enum execution {
 static struct proc_dir_entry *trace_reg_file_entry;
 
 /** Structure for trace node*/
-struct trace_node {
-	int thread_id;
-	int vector_clock[THREAD_COUNT];
-}arr[20];
+trace_node arr[20];
+
+/** Current clock time */
+static vec_clk curr_clk_time;
 
 /**Statically defined variables*/
 static int num_traces = 0;
@@ -107,6 +120,7 @@ void trace_string_parse(char *str, size_t len) {
 			i++;
 			j++;
 			arr[j].thread_id = string_to_int(str+i);
+			arr[j].valid = 1;
 			
 		}
 		else if(str[i] == '[') {
@@ -148,6 +162,7 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 		{
 			printk(KERN_INFO "Trace Registration: Clock value[%d] - %d\n", j, arr[i].vector_clock[j]);
 		}
+		printk(KERN_INFO "Trace Registration: Valid - %d\n", arr[i].valid);
 
 	}
 
@@ -222,6 +237,73 @@ static struct file_operations trace_reg_module_fops = {
 	.release =	trace_reg_module_release,
 };
 
+
+
+static int ioctl_open(struct inode *i, struct file *f)
+{
+	printk(KERN_INFO "IOCTL opened...\n");
+    return 0;
+}
+static int ioctl_close(struct inode *i, struct file *f)
+{
+	printk(KERN_INFO "IOCTL closed...\n");
+    return 0;
+}
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,35))
+static int ioctl_access(struct inode *i, struct file *f, unsigned int cmd, unsigned long arg)
+#else
+static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
+#endif
+{
+ 	vec_clk clk;
+ 	thread_id_t tid;
+
+ 	int i;
+
+    switch (cmd)
+    {
+        case GET_CURR_CLK_TIME:
+            for(i = 0; i < THREAD_COUNT; i++) {
+            	clk.clocks[i] = curr_clk_time.clocks[i];
+            }
+            if (copy_to_user((vec_clk *)arg, &clk, sizeof(vec_clk)))
+            {
+                return -EACCES;
+            }
+            printk(KERN_INFO "IOCTL: Getting current clock value...\n");
+            break;
+        case SIGNAL_OTHER_THREADS:
+    		//Signal other threads...
+        	printk(KERN_INFO "IOCTL: Signalling other threads...\n");
+            break;
+        case CTXT_SWITCH:
+            if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
+            {
+                return -EACCES;
+            }
+            printk(KERN_INFO "IOCTL: Received thread id %d...\n", tid);
+            break;
+        default:
+            return -EINVAL;
+    }
+ 
+    return 0;
+}
+ 
+static struct file_operations ioctl_fops =
+{
+    .owner = THIS_MODULE,
+    .open = ioctl_open,
+    .release = ioctl_close,
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,35))
+    .ioctl = ioctl_access
+#else
+    .unlocked_ioctl = ioctl_access
+#endif
+};
+ 
+
+
 /**
 	Function Name : trace_reg_module_init
 	Function Type : Module INIT
@@ -231,6 +313,11 @@ static struct file_operations trace_reg_module_fops = {
 */
 static int __init trace_reg_module_init(void)
 {
+
+	int ret;
+	int i;
+    struct device *dev_ret;
+
 	printk(KERN_INFO "Trace Registration module is being loaded.\n");
 	
 	/**Proc FS is created with RD&WR permissions with name process_sched_add*/
@@ -241,6 +328,40 @@ static int __init trace_reg_module_init(void)
 		/** File Creation problem.*/
 		return -ENOMEM;
 	}
+
+
+	/**setting the current clock time to nil*/
+
+	for (i = 0; i < THREAD_COUNT; ++i) {
+		
+		curr_clk_time.clocks[i] = 0;
+	}
+	 
+    if ((ret = alloc_chrdev_region(&dev, FIRST_MINOR, MINOR_CNT, "sched_test")) < 0)
+    {
+        return ret;
+    }
+ 
+    cdev_init(&c_dev, &ioctl_fops);
+ 
+    if ((ret = cdev_add(&c_dev, dev, MINOR_CNT)) < 0)
+    {
+        return ret;
+    }
+     
+    if (IS_ERR(cl = class_create(THIS_MODULE, "char")))
+    {
+        cdev_del(&c_dev);
+        unregister_chrdev_region(dev, MINOR_CNT);
+        return PTR_ERR(cl);
+    }
+    if (IS_ERR(dev_ret = device_create(cl, NULL, dev, NULL, "sched_comm")))
+    {
+        class_destroy(cl);
+        cdev_del(&c_dev);
+        unregister_chrdev_region(dev, MINOR_CNT);
+        return PTR_ERR(dev_ret);
+    }
 	
 	
 	/** Successful execution of initialization method. */
@@ -260,6 +381,12 @@ static void __exit trace_reg_module_cleanup(void)
 	printk(KERN_INFO "Trace Registration module is being unloaded.\n");
 	/** Proc FS object removed.*/
 	proc_remove(trace_reg_file_entry);
+
+    device_destroy(cl, dev);
+    class_destroy(cl);
+    cdev_del(&c_dev);
+    unregister_chrdev_region(dev, MINOR_CNT);
+
 }
 /** Initializing the kernel module init with custom init method */
 module_init(trace_reg_module_init);
