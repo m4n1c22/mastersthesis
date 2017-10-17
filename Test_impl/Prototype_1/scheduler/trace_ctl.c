@@ -238,17 +238,38 @@ static struct file_operations trace_reg_module_fops = {
 };
 
 
-
+/**
+	Function Name : ioctl_open
+	Function Type : Kernel Callback Method
+	Description   : Method is invoked whenever the /dev/sched_comm
+					file is opened. 
+*/
 static int ioctl_open(struct inode *i, struct file *f)
 {
 	printk(KERN_INFO "IOCTL opened...\n");
     return 0;
 }
+
+
+/**
+	Function Name : ioctl_close
+	Function Type : Kernel Callback Method
+	Description   : Method is invoked whenever the /dev/sched_comm
+					file is closed. 
+*/
 static int ioctl_close(struct inode *i, struct file *f)
 {
 	printk(KERN_INFO "IOCTL closed...\n");
     return 0;
 }
+
+
+/**
+	Function Name : ioctl_access
+	Function Type : Kernel Callback Method
+	Description   : Method is invoked whenever the /dev/sched_comm
+					file is accessed with various commands. 
+*/
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,35))
 static int ioctl_access(struct inode *i, struct file *f, unsigned int cmd, unsigned long arg)
 #else
@@ -262,6 +283,7 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
 
     switch (cmd)
     {
+    	/**IOCTL CMD for getting current clock time*/
         case GET_CURR_CLK_TIME:
             for(i = 0; i < THREAD_COUNT; i++) {
             	clk.clocks[i] = curr_clk_time.clocks[i];
@@ -272,8 +294,9 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             }
             printk(KERN_INFO "IOCTL: Getting current clock value...\n");
             break;
+        /**IOCTL CMD for signaling other threads*/    
         case SIGNAL_OTHER_THREADS:
-    		//Signal other threads...
+    		//Add code for Signal other threads...
          	if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
             {
                 return -EACCES;
@@ -281,13 +304,16 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
         	printk(KERN_INFO "IOCTL: Signalling other threads...\n");
         	curr_clk_time.clocks[tid-1] += 1; 
             break;
+		/**IOCTL CMD for Context switcing the given thread*/                
         case CTXT_SWITCH:
             if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
             {
                 return -EACCES;
             }
             printk(KERN_INFO "IOCTL: Received thread id %d...\n", tid);
+            //Add code for check perm, signal blocked threads and blocking the given thread.
             break;
+        /**IOCTL CMD for reseting the current clock time.*/        
         case RESET_CURR_TIME:
         	printk(KERN_INFO "IOCTL: Reseting current clock time...\n");
         	for(i = 0; i < THREAD_COUNT; i++) {
@@ -300,7 +326,8 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
  
     return 0;
 }
- 
+
+/** File operations related to IOCTL /dev/sched_comm file */ 
 static struct file_operations ioctl_fops =
 {
     .owner = THIS_MODULE,
@@ -316,20 +343,20 @@ static struct file_operations ioctl_fops =
 
 
 /**
-	Function Name : trace_reg_module_init
+	Function Name : trace_ctl_module_init
 	Function Type : Module INIT
 	Description   : Initialization method of the Kernel module. The
 			method gets invoked when the kernel module is being
 			inserted using the command insmod.
 */
-static int __init trace_reg_module_init(void)
+static int __init trace_ctl_module_init(void)
 {
 
 	int ret;
 	int i;
     struct device *dev_ret;
 
-	printk(KERN_INFO "Trace Registration module is being loaded.\n");
+	printk(KERN_INFO "Trace Control module is being loaded.\n");
 	
 	/**Proc FS is created with RD&WR permissions with name process_sched_add*/
 	trace_reg_file_entry = proc_create(PROC_CONFIG_FILE_NAME,0777,NULL,&trace_reg_module_fops);
@@ -380,16 +407,16 @@ static int __init trace_reg_module_init(void)
 }
 
 /**
-	Function Name : trace_reg_module_cleanup
+	Function Name : trace_ctl_module_cleanup
 	Function Type : Module EXIT
 	Description   : Cleanup method of the Kernel module. The
                 	method gets invoked when the kernel module is being
                  	removed using the command rmmod.
 */
-static void __exit trace_reg_module_cleanup(void)
+static void __exit trace_ctl_module_cleanup(void)
 {
 	
-	printk(KERN_INFO "Trace Registration module is being unloaded.\n");
+	printk(KERN_INFO "Trace Control module is being unloaded.\n");
 	/** Proc FS object removed.*/
 	proc_remove(trace_reg_file_entry);
 
@@ -400,6 +427,6 @@ static void __exit trace_reg_module_cleanup(void)
 
 }
 /** Initializing the kernel module init with custom init method */
-module_init(trace_reg_module_init);
+module_init(trace_ctl_module_init);
 /** Initializing the kernel module exit with custom cleanup method */
-module_exit(trace_reg_module_cleanup);
+module_exit(trace_ctl_module_cleanup);
