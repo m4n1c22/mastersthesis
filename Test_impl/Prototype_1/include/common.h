@@ -11,19 +11,6 @@
 
 /**Custom data types*/
 
-/** Structure for trace node*/
-typedef struct  {
-	
-	int thread_id;
-	int vector_clock[THREAD_COUNT];
-	int valid;
-
-}trace_node;
-
-typedef struct {
-	
-	trace_node arr[TRACE_LIMIT];
-}trace_arr;
 
 /**vector clock data type*/
 typedef struct {
@@ -33,6 +20,20 @@ typedef struct {
 
 /**thread id datatype*/
 typedef int thread_id_t;
+
+/** Structure for trace node*/
+typedef struct  {
+	
+	thread_id_t thread_id;
+	vec_clk clk;
+	int valid;
+
+}trace_node;
+
+typedef struct {
+	
+	trace_node arr[TRACE_LIMIT];
+}trace_arr;
 
 /**Enumeration for the memory access permissions*/ 
 typedef enum  {
@@ -55,18 +56,14 @@ typedef enum  {
 
 /** Function for checking the permission */
 
-mem_access check_mem_acc_perm(vec_clk curr_vec_clk, vec_clk trace_inst, thread_id_t tid) {
+mem_access check_mem_acc_perm(vec_clk* curr_vec_clk, vec_clk* trace_inst, thread_id_t tid) {
 
 	int i;
-	if(trace_inst.clocks[tid-1] > curr_vec_clk.clocks[tid]) {
 
-		return e_ma_allowed;
-	}
-	else {
-		for (i = 0; i < THREAD_COUNT; ++i)
-		{
+	if(trace_inst->clocks[tid-1] == curr_vec_clk->clocks[tid-1]) {
+		for (i = 0; i < THREAD_COUNT; ++i) {
 			if(i!=(tid-1)) {
-				if(trace_inst.clocks[i] > curr_vec_clk.clocks[i]) {
+				if(trace_inst->clocks[i] <= curr_vec_clk->clocks[i]) {
 
 					continue;
 				}
@@ -76,8 +73,14 @@ mem_access check_mem_acc_perm(vec_clk curr_vec_clk, vec_clk trace_inst, thread_i
 			}
 		}
 	}
+
+	else if(trace_inst->clocks[tid-1] < curr_vec_clk->clocks[tid-1]) {
+		return e_ma_restricted;
+	}
 	return e_ma_allowed;
 }
+
+
 
 
 #endif

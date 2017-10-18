@@ -21,6 +21,7 @@
 #include "../include/common.h"
 
 
+
 MODULE_AUTHOR("Sreeram Sadasivam");
 MODULE_DESCRIPTION("Trace Control Module");
 MODULE_LICENSE("GPL");
@@ -58,6 +59,27 @@ static vec_clk curr_clk_time;
 /**Statically defined variables*/
 static int num_traces = 0;
 
+
+/**Semaphores for threads.*/
+static struct semaphore threads_sem[THREAD_COUNT];
+
+/**Semaphore for queue*/
+static struct semaphore mutex_wait_queue;
+
+/**Queue of threads waiting*/
+int wait_queue[THREAD_COUNT];
+
+/** Function Prototypes*/
+int number_trace_nodes(char *str, size_t len);
+int string_to_int(char *str);
+void trace_string_parse(char *str, size_t len);
+vec_clk* thread_inst_in_trace(thread_id_t tid);
+void ctxt_switch_thread(thread_id_t tid);
+void signal_all_other_threads(thread_id_t tid);
+vec_clk* thread_inst_in_trace(thread_id_t tid);
+void unset_valid_thread_inst_in_trace(thread_id_t tid);
+mem_access check_mem_access_with_trace(thread_id_t tid);
+void req_ctxt_switch(thread_id_t tid);
 /**
 	Function Name : number_trace_nodes 
 	Function Type : Parse Method
@@ -126,16 +148,122 @@ void trace_string_parse(char *str, size_t len) {
 		else if(str[i] == '[') {
 			i++;
 			k = 0;
-			arr[j].vector_clock[k] = string_to_int(str+i);
+			arr[j].clk.clocks[k] = string_to_int(str+i);
 		}
 		else if(str[i] == ':') {
 			i++;
 			k++;
-			arr[j].vector_clock[k] = string_to_int(str+i);
+			arr[j].clk.clocks[k] = string_to_int(str+i);
 		}
 	}
 }
 
+/***/
+void ctxt_switch_thread(thread_id_t tid) {
+
+	/** 
+		Condition to verify the down operation on the binary semaphore. 
+		Entry into a Mutually exclusive block is granted by
+		having a successful lock with the mentioned semaphore.
+		mutex semaphore provides a safe access to the following
+		critical section.
+	*/
+	if(down_interruptible(&threads_sem[tid-1])){
+		printk(KERN_ALERT "TRACE CTL:Mutual Exclusive position access failed from ctxt_switch_thread function");
+		/** Issue a restart of syscall which was supposed to be executed.*/
+		return -ERESTARTSYS;
+	}
+}
+
+
+/***/
+void signal_all_other_threads(thread_id_t tid) {
+
+	int i;
+	if(down_interruptible(&mutex_wait_queue)){
+		printk(KERN_ALERT "TRACE CTL:Mutual Exclusive position access failed from signal_all_other_threads function");
+		/** Issue a restart of syscall which was supposed to be executed.*/
+		return -ERESTARTSYS;
+	}
+
+	for (i = 0; i < THREAD_COUNT; ++i) {
+		if(i!=(tid-1) && (wait_queue[i]==1)) {
+			//checkperm(i) signal accordingly...
+			if(check_mem_access_with_trace(i+1)==e_ma_allowed) {
+				up(&threads_sem[i]);
+				wait_queue[i] = 0;
+				//curr_clk_time.clocks[i] += 1; 
+			}
+		}
+	}
+	
+	up(&mutex_wait_queue);
+}
+
+/***/
+vec_clk* thread_inst_in_trace(thread_id_t tid) {
+
+	int i;
+	vec_clk *clk_inst_thread = NULL;
+	for (i = 0; i < TRACE_LIMIT; ++i)
+	{
+		if((arr[i].thread_id == tid) &&(arr[i].valid==1)){
+			clk_inst_thread = &(arr[i].clk);
+			return clk_inst_thread;
+		}
+	}
+	return clk_inst_thread;
+} 
+
+/***/
+void unset_valid_thread_inst_in_trace(thread_id_t tid) {
+
+	int i;
+	for (i = 0; i < TRACE_LIMIT; ++i)
+	{
+		if((arr[i].thread_id == tid) &&(arr[i].valid==1)){
+			arr[i].valid = 0;
+			break;
+		}
+	}
+}
+
+/***/
+mem_access check_mem_access_with_trace(thread_id_t tid) {
+
+	vec_clk *first_thr_inst;
+
+	first_thr_inst = thread_inst_in_trace(tid);
+
+	if(first_thr_inst != NULL) {
+		/**Check permissions first if not allowed then context switch*/
+		if(check_mem_acc_perm(&curr_clk_time, first_thr_inst, tid) == e_ma_restricted) {			
+			return e_ma_restricted;
+		}	
+	}
+	return e_ma_allowed;	
+}
+/***/
+void req_ctxt_switch(thread_id_t tid) {
+	
+	if(check_mem_access_with_trace(tid) == e_ma_restricted) {
+
+		printk(KERN_INFO "thread restricted... %d", tid);
+		signal_all_other_threads(tid);
+		if(down_interruptible(&mutex_wait_queue)){
+			printk(KERN_ALERT "TRACE CTL:Mutual Exclusive position access failed from signalallthreads function");
+			/** Issue a restart of syscall which was supposed to be executed.*/
+			return -ERESTARTSYS;
+		}
+		wait_queue[tid-1] = 1;
+		up(&mutex_wait_queue);
+		ctxt_switch_thread(tid);
+		unset_valid_thread_inst_in_trace(tid);
+	}
+	/*else {
+		curr_clk_time.clocks[tid-1] += 1;
+	}*/
+}
 
 /**
 	Function Name : trace_reg_module_read
@@ -160,7 +288,7 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 		printk(KERN_INFO "Trace Registration: Thread ID - %d\n", arr[i].thread_id);
 		for (j = 0; j < THREAD_COUNT; ++j)
 		{
-			printk(KERN_INFO "Trace Registration: Clock value[%d] - %d\n", j, arr[i].vector_clock[j]);
+			printk(KERN_INFO "Trace Registration: Clock value[%d] - %d\n", j, arr[i].clk.clocks[j]);
 		}
 		printk(KERN_INFO "Trace Registration: Valid - %d\n", arr[i].valid);
 
@@ -301,8 +429,9 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             {
                 return -EACCES;
             }
-        	printk(KERN_INFO "IOCTL: Signalling other threads...\n");
+        	printk(KERN_INFO "IOCTL: Signalling other threads...\n");        	
         	curr_clk_time.clocks[tid-1] += 1; 
+        	signal_all_other_threads(tid);
             break;
 		/**IOCTL CMD for Context switcing the given thread*/                
         case CTXT_SWITCH:
@@ -312,6 +441,7 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             }
             printk(KERN_INFO "IOCTL: Received thread id %d...\n", tid);
             //Add code for check perm, signal blocked threads and blocking the given thread.
+            req_ctxt_switch(tid);
             break;
         /**IOCTL CMD for reseting the current clock time.*/        
         case RESET_CURR_TIME:
@@ -366,13 +496,15 @@ static int __init trace_ctl_module_init(void)
 		/** File Creation problem.*/
 		return -ENOMEM;
 	}
-
+	sema_init(&mutex_wait_queue, 1); 
 
 	/**setting the current clock time to nil*/
 
 	for (i = 0; i < THREAD_COUNT; ++i) {
 		
 		curr_clk_time.clocks[i] = 0;
+		sema_init(&threads_sem[i],0);
+		wait_queue[i] = 0; 
 	}
 	 
     if ((ret = alloc_chrdev_region(&dev, FIRST_MINOR, MINOR_CNT, "sched_test")) < 0)
@@ -401,6 +533,7 @@ static int __init trace_ctl_module_init(void)
         return PTR_ERR(dev_ret);
     }
 	
+
 	
 	/** Successful execution of initialization method. */
 	return 0;
