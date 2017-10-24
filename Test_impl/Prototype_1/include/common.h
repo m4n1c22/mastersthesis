@@ -53,6 +53,7 @@ typedef enum  {
 #define SIGNAL_OTHER_THREADS _IOW('s', 2, thread_id_t *)
 #define CTXT_SWITCH _IOW('t', 3, thread_id_t *)
 #define RESET_CURR_TIME _IO('c', 4)
+#define SET_CLK _IOW('c', 5, thread_id_t *)
 
 /** Function for checking the permission */
 

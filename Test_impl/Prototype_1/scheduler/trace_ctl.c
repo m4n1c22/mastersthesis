@@ -19,6 +19,7 @@
 
 
 #include "../include/common.h"
+#include "../include/kernel_space.h"
 
 
 
@@ -27,59 +28,6 @@ MODULE_DESCRIPTION("Trace Control Module");
 MODULE_LICENSE("GPL");
 
 
-/** PROC FS RELATED MACROS */
-#define PROC_CONFIG_FILE_NAME	"trace_reg"
-
-/**MACROS RELATED TO IOCTL*/
-#define FIRST_MINOR 0
-#define MINOR_CNT 1
- 
-/**Device setup structure variables*/
-static dev_t dev;
-static struct cdev c_dev;
-static struct class *cl;
-
-
-/**Enumeration for Function Execution*/
-enum execution {
-
-	eExecFailed 	= 	-1, /**Function executed failed.*/
-	eExecSuccess 	=	 0  /**Function executed successfully.*/
-};
-
-/** Proc FS Dir Object */
-static struct proc_dir_entry *trace_reg_file_entry;
-
-/** Structure for trace node*/
-trace_node arr[20];
-
-/** Current clock time */
-static vec_clk curr_clk_time;
-
-/**Statically defined variables*/
-static int num_traces = 0;
-
-
-/**Semaphores for threads.*/
-static struct semaphore threads_sem[THREAD_COUNT];
-
-/**Semaphore for queue*/
-static struct semaphore mutex_wait_queue;
-
-/**Queue of threads waiting*/
-int wait_queue[THREAD_COUNT];
-
-/** Function Prototypes*/
-int number_trace_nodes(char *str, size_t len);
-int string_to_int(char *str);
-void trace_string_parse(char *str, size_t len);
-vec_clk* thread_inst_in_trace(thread_id_t tid);
-void ctxt_switch_thread(thread_id_t tid);
-void signal_all_other_threads(thread_id_t tid);
-vec_clk* thread_inst_in_trace(thread_id_t tid);
-void unset_valid_thread_inst_in_trace(thread_id_t tid);
-mem_access check_mem_access_with_trace(thread_id_t tid);
-void req_ctxt_switch(thread_id_t tid);
 /**
 	Function Name : number_trace_nodes 
 	Function Type : Parse Method
@@ -176,29 +124,6 @@ void ctxt_switch_thread(thread_id_t tid) {
 }
 
 
-/***/
-void signal_all_other_threads(thread_id_t tid) {
-
-	int i;
-	if(down_interruptible(&mutex_wait_queue)){
-		printk(KERN_ALERT "TRACE CTL:Mutual Exclusive position access failed from signal_all_other_threads function");
-		/** Issue a restart of syscall which was supposed to be executed.*/
-		return -ERESTARTSYS;
-	}
-
-	for (i = 0; i < THREAD_COUNT; ++i) {
-		if(i!=(tid-1) && (wait_queue[i]==1)) {
-			//checkperm(i) signal accordingly...
-			if(check_mem_access_with_trace(i+1)==e_ma_allowed) {
-				up(&threads_sem[i]);
-				wait_queue[i] = 0;
-				//curr_clk_time.clocks[i] += 1; 
-			}
-		}
-	}
-	
-	up(&mutex_wait_queue);
-}
 
 /***/
 vec_clk* thread_inst_in_trace(thread_id_t tid) {
@@ -263,6 +188,29 @@ void req_ctxt_switch(thread_id_t tid) {
 	/*else {
 		curr_clk_time.clocks[tid-1] += 1;
 	}*/
+}
+/***/
+void signal_all_other_threads(thread_id_t tid) {
+
+	int i;
+	if(down_interruptible(&mutex_wait_queue)){
+		printk(KERN_ALERT "TRACE CTL:Mutual Exclusive position access failed from signal_all_other_threads function");
+		/** Issue a restart of syscall which was supposed to be executed.*/
+		return -ERESTARTSYS;
+	}
+
+	for (i = 0; i < THREAD_COUNT; ++i) {
+		if(i!=(tid-1) && (wait_queue[i]==1)) {
+			//checkperm(i) signal accordingly...
+			if(check_mem_access_with_trace(i+1)==e_ma_allowed) {
+				up(&threads_sem[i]);
+				wait_queue[i] = 0;
+				//curr_clk_time.clocks[i] += 1; 
+			}
+		}
+	}
+	
+	up(&mutex_wait_queue);
 }
 
 /**
@@ -424,11 +372,11 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             break;
         /**IOCTL CMD for signaling other threads*/    
         case SIGNAL_OTHER_THREADS:
-    		//Add code for Signal other threads...
+    		//Add code for Signal other threads... 
          	if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
             {
                 return -EACCES;
-            }
+            }        
         	printk(KERN_INFO "IOCTL: Signalling other threads...\n");        	
         	curr_clk_time.clocks[tid-1] += 1; 
         	signal_all_other_threads(tid);
