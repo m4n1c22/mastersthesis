@@ -1,7 +1,7 @@
 #MACROS
 obj-m += thread_reg.o
 obj-m += trace_ctl.o
-
+obj-m += scheduler.o
 
 PWD := $(shell pwd)
 KVER := $(shell uname -r)
