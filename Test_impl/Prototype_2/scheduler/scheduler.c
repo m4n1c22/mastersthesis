@@ -18,7 +18,7 @@
 #include <asm/uaccess.h>
 #include <linux/workqueue.h>
 #include <linux/sched.h>
-
+#include <linux/delay.h>
 
 #include "../include/common.h"
 #include "../include/kernel_space.h"
@@ -124,15 +124,18 @@ static void sched_signalling(void) {
 	printk(KERN_ALERT "Scheduler instance: Sched signalling\n");
 
 	/**Invoking the signalling valid threads.*/
-	signal_valid_threads();
+	while(flag == 0) {
+		msleep(100);
+		signal_valid_threads();		
+	}
 
 	/** Condition check for producer unloading flag set or not.*/
-	if (flag == 0){
+	//if (flag == 0){
 		/** Setting the delayed work execution for the provided rate */
-		q_status = queue_delayed_work(scheduler_wq, &scheduler_hdlr, time_quantum*HZ);
-	}
+		//q_status = queue_delayed_work(scheduler_wq, &scheduler_hdlr, time_quantum*HZ);
+	/*}
 	else
-		printk(KERN_ALERT "Scheduler instance: scheduler is unloading\n");
+		printk(KERN_ALERT "Scheduler instance: scheduler is unloading\n");*/
 } 
 
 
@@ -323,7 +326,7 @@ static int __init scheduler_module_init(void)
 	else {
 		/** Performing an internal call for context_switch */
 
-		sched_signalling();
+		signal_valid_threads();
 		/** Setting the delayed work execution for the provided rate */
 		q_status = queue_delayed_work(scheduler_wq, &scheduler_hdlr, time_quantum*HZ);
 	}
