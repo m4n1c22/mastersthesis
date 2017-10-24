@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.8)  11 OCT 2017 18:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.8)  24 OCT 2017 17:09
 entering extended mode
 **./pseudo_impl.tex
 (pseudo_impl.tex
@@ -440,35 +440,60 @@ Document Style - pseudocode environments for use with the `algorithmicx' style
 \pgf@layerboxsaved@background=\box39
 \pgf@layerbox@foreground=\box40
 \pgf@layerboxsaved@foreground=\box41
- (pseudo_impl.aux)
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.sty"
+\lst@mode=\count116
+\lst@gtempboxa=\box42
+\lst@token=\toks27
+\lst@length=\count117
+\lst@currlwidth=\dimen258
+\lst@column=\count118
+\lst@pos=\count119
+\lst@lostspace=\dimen259
+\lst@width=\dimen260
+\lst@newlines=\count120
+\lst@lineno=\count121
+\lst@maxwidth=\dimen261
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count122
+\lst@skipnumbers=\count123
+\lst@framebox=\box43
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\listings.cfg"
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
+(pseudo_impl.aux)
 \openout1 = `pseudo_impl.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 117.
+LaTeX Font Info:    ... okay on input line 117.
  ABD: EveryShipout initializing macros
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count116
-\scratchdimen=\dimen258
-\scratchbox=\box42
-\nofMPsegments=\count117
-\nofMParguments=\count118
-\everyMPshowfont=\toks27
-\MPscratchCnt=\count119
-\MPscratchDim=\dimen259
-\MPnumerator=\count120
-\makeMPintoPDFobject=\count121
-\everyMPtoPDFconversion=\toks28
+\scratchcounter=\count124
+\scratchdimen=\dimen262
+\scratchbox=\box44
+\nofMPsegments=\count125
+\nofMParguments=\count126
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count127
+\MPscratchDim=\dimen263
+\MPnumerator=\count128
+\makeMPintoPDFobject=\count129
+\everyMPtoPDFconversion=\toks29
 ) ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\pdftexcmds.sty"
 Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -514,46 +539,69 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
+\c@lstlisting=\count130
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 68.
+(Font)              <12> on input line 132.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 68.
+(Font)              <8> on input line 132.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 68.
+(Font)              <6> on input line 132.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 86.
+(Font)              <10.95> on input line 159.
 
-Overfull \hbox (12.47859pt too wide) in paragraph at lines 98--99
+Overfull \hbox (12.47859pt too wide) in paragraph at lines 171--172
+[] 
+ []
+
+
+Overfull \hbox (12.47859pt too wide) in paragraph at lines 202--203
 [] 
  []
 
 [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Overfull \hbox (29.48842pt too wide) in paragraph at lines 175--176
+Overfull \hbox (59.35062pt too wide) in paragraph at lines 268--269
 [][] 
  []
 
-[2] [3] (pseudo_impl.aux) ) 
+[2] [3] ("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+)
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <9> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 274.
+ [4] [5] [6]
+[7]
+Overfull \hbox (62.26819pt too wide) in paragraph at lines 530--531
+[] 
+ []
+
+[8] [9] [10] [11] (pseudo_impl.aux) ) 
 Here is how much of TeX's memory you used:
- 13010 strings out of 493323
- 262973 string characters out of 3139061
- 323506 words of memory out of 3000000
- 16317 multiletter control sequences out of 15000+200000
- 11452 words of font info for 40 fonts, out of 3000000 for 9000
+ 14549 strings out of 493323
+ 285758 string characters out of 3139061
+ 460479 words of memory out of 3000000
+ 17834 multiletter control sequences out of 15000+200000
+ 12739 words of font info for 45 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,7n,78p,426b,758s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
-onts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmti8.pfb>
-Output written on pseudo_impl.pdf (3 pages, 123638 bytes).
+ 55i,7n,78p,426b,1566s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
+sfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmitt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi1
+0.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:
+/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program 
+Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmti8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmtt9.pfb>
+Output written on pseudo_impl.pdf (11 pages, 193374 bytes).
 PDF statistics:
- 71 PDF objects out of 1000 (max. 8388607)
+ 109 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  109 words of extra memory for PDF output out of 10000 (max. 10000000)
 
