@@ -464,7 +464,6 @@ void req_ctxt_switch(thread_id_t tid) {
 
 \end{lstlisting}
 
-
 \subsection*{Design with an additional scheduler thread}
 
 In this design we create an additional scheduler thread primarily addressing the signaling mechanism pertained in the previous design. 
@@ -572,6 +571,16 @@ module_init() {
 
 //code remains the same
 \end{lstlisting}
+
+\subsubsection*{Variant in blocking implementation}
+
+In the previous designs, the blocking was done using semaphores. 
+In the variant design, we use the combination of \emph{schedule()} and \emph{wake\_up\_process()} functions provided by the Linux scheduler APIs. 
+The kernel level tasks associated for the provided user level threads are moved from running queue to wait queue by initially setting the task status as \emph{TASK\_INTERRUPTIBLE} and yielding the processor by invoking \emph{schedule()}. 
+The task added in wait queue is later resumed, when \emph{wake\_up\_process(sleeping\_task)} is invoked by another task. 
+On calling the \emph{wake\_up\_process(sleeping\_task)}, the task status for \emph{sleeping\_task} is set as \emph{TASK\_RUNNING}. 
+It would be pushed to run queue and executed in future by the operating system scheduler on the basis of priority of tasks in run queue. 
+ 
 
 \section*{Design with checking in user space}
 
