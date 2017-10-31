@@ -8,7 +8,10 @@
 #include <iostream>
 #include <thread>
 
+
+#include "../../include/common.h"
 #include "../../include/user_space.h"
+
 
 int val;
 
@@ -29,17 +32,23 @@ void reader(thread_id_t id) {
 
 	thread_reg(id);
 
+	if(id == 2) {
+		sleep(2);
+	}
+
 	BeforeMA(id);
 	cout << "Thread " << id << " : read data "<<val<<std::endl;
 	AfterMA(id);
 }
 
+
+
 int main()
 {
-	char trace[] = "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}";
+	char trace[] = "{(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}";
  
  	initialize_trace(trace);
-
+ 	initialize_vec_clock();
 
 	thread tw1(writer, 1);  
     cout << "Thread 1 is writer\n";

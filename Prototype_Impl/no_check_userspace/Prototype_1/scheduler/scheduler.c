@@ -84,9 +84,6 @@ void req_ctxt_switch(thread_id_t tid) {
 		ctxt_switch_thread(tid);
 		unset_valid_thread_inst_in_trace(tid);
 	}
-	/*else {
-		curr_clk_time.clocks[tid-1] += 1;
-	}*/
 }
 /***/
 void signal_all_other_threads(thread_id_t tid) {
@@ -103,8 +100,7 @@ void signal_all_other_threads(thread_id_t tid) {
 			//checkperm(i) signal accordingly...
 			if(check_mem_access_with_trace(i+1)==e_ma_allowed) {
 				up(&threads_sem[i]);
-				wait_queue[i] = 0;
-				//curr_clk_time.clocks[i] += 1; 
+				wait_queue[i] = 0;				
 			}
 		}
 	}
@@ -198,6 +194,15 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
         	for(i = 0; i < THREAD_COUNT; i++) {
             	curr_clk_time.clocks[i] = 0;
             }
+            break;
+               /**IOCTL CMD for setting the thread clock*/    
+        case SET_CLK:    
+         	if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
+            {
+                return -EACCES;
+            }
+        	printk(KERN_INFO "IOCTL: Setting clock on thread %d...\n", tid);        	
+        	curr_clk_time.clocks[tid-1] += 1;         	
             break;
         default:
             return -EINVAL;

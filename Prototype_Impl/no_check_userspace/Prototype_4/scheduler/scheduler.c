@@ -189,6 +189,15 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             	curr_clk_time.clocks[i] = 0;
             }
             break;
+        /**IOCTL CMD for setting the thread clock*/    
+        case SET_CLK:
+         	if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
+            {
+                return -EACCES;
+            }
+        	printk(KERN_INFO "IOCTL: Setting clock on thread %d...\n", tid);        	
+        	curr_clk_time.clocks[tid-1] += 1;         	
+            break;
         default:
             return -EINVAL;
     }

@@ -39,7 +39,7 @@ int main()
 	char trace[] = "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}";
  
  	initialize_trace(trace);
-
+ 	initialize_vec_clock();
 
 	thread tw1(writer, 1);  
     cout << "Thread 1 is writer\n";

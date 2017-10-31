@@ -13,11 +13,9 @@
 int val;
 
 
-void writer(int id) {
+void writer(thread_id_t id) {
 
-	FILE *fp = fopen(THREAD_REG_PROC_FILE,"w");
-	fprintf(fp, "reg");
- 	fclose(fp);
+	thread_reg(id);
 
     BeforeMA(id);
 	val = 10;
@@ -26,24 +24,20 @@ void writer(int id) {
 }
 
 
-void reader(int id) {
+void reader(thread_id_t id) {
 
-	FILE *fp = fopen(THREAD_REG_PROC_FILE,"w");
-	fprintf(fp, "reg");
- 	fclose(fp);
-
+	thread_reg(id);
 
 	BeforeMA(id);
 	cout << "Thread " << id << " : read data "<<val<<std::endl;
 	AfterMA(id);
 }
 
-
 int main()
 {
-	FILE *fp = fopen(TRACE_REG_PROC_FILE,"w");
-	fprintf(fp, "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}");
- 	fclose(fp);
+	char trace[] = "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}";
+ 
+ 	initialize_trace(trace);
 
 
 	thread tw1(writer, 1);  

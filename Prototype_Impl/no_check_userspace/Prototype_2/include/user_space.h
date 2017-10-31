@@ -12,6 +12,18 @@
 
 using namespace std;
 
+void initialize_trace(char *trace) {
+    FILE *fp = fopen(TRACE_REG_PROC_FILE,"w");    
+    fprintf(fp, "%s", trace);
+    fclose(fp);
+}
+void thread_reg(thread_id_t id) {
+
+    FILE *fp = fopen(THREAD_REG_PROC_FILE,"w");
+    fprintf(fp, "reg");
+    fclose(fp);
+}
+
 
 void BeforeMA(thread_id_t id) {
 	
