@@ -19,7 +19,9 @@ void writer(thread_id_t id) {
 
     BeforeMA(id);
 	val = 10;
+	#ifdef DEBUG
 	cout << "Thread " << id << " : writing data "<<val<<std::endl;
+	#endif
 	AfterMA(id);
 }
 
@@ -29,7 +31,9 @@ void reader(thread_id_t id) {
 	thread_reg(id);
 
 	BeforeMA(id);
+	#ifdef DEBUG
 	cout << "Thread " << id << " : read data "<<val<<std::endl;
+	#endif
 	AfterMA(id);
 }
 
@@ -41,17 +45,25 @@ int main()
  	initialize_vec_clock();
 
 	thread tw1(writer, 1);  
+	#ifdef DEBUG
     cout << "Thread 1 is writer\n";
-    
+    #endif
+
     thread tr1(reader, 2);  
+    #ifdef DEBUG
     cout << "Thread 2 is reader\n";
+    #endif
 
 	thread tr2(reader, 3);  
+	#ifdef DEBUG
     cout << "Thread 3 is reader\n";
-    
+    #endif
+
 	thread tw2(writer, 4);  
+	#ifdef DEBUG
     cout << "Thread 4 is writer\n";
-    
+    #endif
+
 	tw1.join();  
     tr1.join();  
     tr2.join();  

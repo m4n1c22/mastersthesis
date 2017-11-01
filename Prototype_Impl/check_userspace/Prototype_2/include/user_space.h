@@ -198,14 +198,14 @@ void req_context_switch(thread_id_t id) {
         perror("sched_test open");
     }
 
-   
+    #ifdef DEBUG
     cout <<"Current clock value: ";
     for (i = 0; i < THREAD_COUNT; ++i) {
         
         cout<<curr_clk_time.clocks[i];
     }
     cout<<endl;
-
+    #endif
     if (ioctl(fd, CTXT_SWITCH, &id) == -1)
     {
         perror("sched_test ioctl ctxtswitch");
@@ -236,6 +236,7 @@ void set_vector_clock(thread_id_t id) {
 void BeforeMA(thread_id_t id) {
 	
     int i;
+    #ifdef DEBUG
     cout<<"Thread " << id << " : Before Memory Access called...\n";
     cout <<"Current clock value: ";
     for (i = 0; i < THREAD_COUNT; ++i) {
@@ -243,32 +244,41 @@ void BeforeMA(thread_id_t id) {
         cout<<curr_clk_time.clocks[i];
     }
     cout<<endl;
+    #endif
     ma_status[id-1] = check_mem_access_with_trace(id);
 
     if(ma_status[id-1] == e_ma_restricted) {
+        #ifdef DEBUG
         cout<<"Memory access restricted"<<endl;
+        #endif
         req_context_switch(id);
     }
     else {
+        #ifdef DEBUG
         cout<<"Memory access allowed"<<endl;
+        #endif
     }
 }
 /***/
 void AfterMA(thread_id_t id) {
 
     int i;
+    #ifdef DEBUG
     cout<<"Thread " << id << " : After Memory Access called...\n";	
+    #endif
     set_vector_clock(id);
     curr_clk_time.clocks[id-1]++;
     if(ma_status[id-1]==e_ma_restricted) {
         unset_valid_thread_inst_in_trace(id);
     }
+    #ifdef DEBUG
     cout <<"Current clock value: ";
     for (i = 0; i < THREAD_COUNT; ++i) {
         
         cout<<curr_clk_time.clocks[i];
     }
     cout<<endl;
+    #endif
 }
 /***/
 void reset_clock() {

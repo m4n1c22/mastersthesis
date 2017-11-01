@@ -5,6 +5,9 @@
 #include <linux/ioctl.h>
  
 
+/**DEBUG FLAG*/
+//#define DEBUG			1
+
 /**Constantly defined macros*/
 #define THREAD_COUNT	4
 #define TRACE_LIMIT		20

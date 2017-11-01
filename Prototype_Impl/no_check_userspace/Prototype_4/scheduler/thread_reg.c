@@ -50,11 +50,11 @@ static int thread_count = 0;
 */
 static ssize_t thread_reg_module_read(struct file *file, char *buf, size_t count, loff_t *ppos)
 {
-	
+	#ifdef DEBUG
 	printk(KERN_INFO "Thread Registration Module read.\n");
 
 	printk(KERN_INFO "Thread Registration Module: %d\n", thread_count);
-
+	#endif
 	return 0;
 }
 
@@ -71,9 +71,9 @@ static ssize_t thread_reg_module_read(struct file *file, char *buf, size_t count
 */
 static ssize_t thread_reg_module_write(struct file *file, const char *buf, size_t count, loff_t *ppos)
 {
-	
+	#ifdef DEBUG
 	printk(KERN_INFO "Thread Registration Module write.\n");
-
+	#endif
 
 	/** 
 		Condition to verify the down operation on the binary semaphore
@@ -83,7 +83,9 @@ static ssize_t thread_reg_module_write(struct file *file, const char *buf, size_
 		critical section.
 	*/
 	if(down_interruptible(&mutex)){
+		#ifdef DEBUG
 		printk(KERN_ALERT "Thread Registration ERROR:Mutual Exclusive position access failed from write function");
+		#endif
 		/** Issue a restart of syscall which was supposed to be executed.*/
 		return -ERESTARTSYS;
 	}
@@ -115,8 +117,9 @@ static ssize_t thread_reg_module_write(struct file *file, const char *buf, size_
 */
 static int thread_reg_module_open(struct inode * inode, struct file * file)
 {
+	#ifdef DEBUG
 	printk(KERN_INFO "Thread Registration Module open.\n");
-	
+	#endif
 	/** Successful execution of open call back.*/
 	return 0;
 }
@@ -133,7 +136,9 @@ static int thread_reg_module_open(struct inode * inode, struct file * file)
 */
 static int thread_reg_module_release(struct inode * inode, struct file * file)
 {
+	#ifdef DEBUG
 	printk(KERN_INFO "Thread Registration Module released.\n");
+	#endif
 	/** Successful execution of release callback.*/
 	return 0;
 }
@@ -156,13 +161,16 @@ static struct file_operations thread_reg_module_fops = {
 */
 static int __init thread_reg_module_init(void)
 {
+	#ifdef DEBUG
 	printk(KERN_INFO "Thread Registration module is being loaded.\n");
-	
+	#endif
 	/**Proc FS is created with RD&WR permissions with name process_sched_add*/
 	thread_reg_file_entry = proc_create(PROC_CONFIG_FILE_NAME,0777,NULL,&thread_reg_module_fops);
 	/** Condition to verify if process_sched_add creation was successful*/
 	if(thread_reg_file_entry == NULL) {
+		#ifdef DEBUG
 		printk(KERN_ALERT "Error: Could not initialize /proc/%s\n",PROC_CONFIG_FILE_NAME);
+		#endif
 		/** File Creation problem.*/
 		return -ENOMEM;
 	}
@@ -186,8 +194,9 @@ static int __init thread_reg_module_init(void)
 */
 static void __exit thread_reg_module_cleanup(void)
 {
-	
+	#ifdef DEBUG
 	printk(KERN_INFO "Thread Registration module is being unloaded.\n");
+	#endif
 	/** Proc FS object removed.*/
 	proc_remove(thread_reg_file_entry);
 }

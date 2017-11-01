@@ -166,7 +166,7 @@ void unset_valid_thread_inst_in_trace(thread_id_t tid) {
 static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count, loff_t *ppos)
 {
 	int i ,j;
-
+	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module read.\n");
 
 
@@ -180,7 +180,7 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 		printk(KERN_INFO "Trace Registration: Valid - %d\n", arr[i].valid);
 
 	}
-
+	#endif
 	return 0;
 }
 
@@ -197,10 +197,11 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 */
 static ssize_t trace_reg_module_write(struct file *file, const char *buf, size_t count, loff_t *ppos)
 {
-
+	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module write.\n");
 
 	printk(KERN_INFO "Trace Registration Module: %s %d\n", buf, count);
+	#endif
 
 	trace_string_parse(buf, count);
 
@@ -220,8 +221,10 @@ static ssize_t trace_reg_module_write(struct file *file, const char *buf, size_t
 */
 static int trace_reg_module_open(struct inode * inode, struct file * file)
 {
+	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module open.\n");
-	
+	#endif
+
 	/** Successful execution of open call back.*/
 	return 0;
 }
@@ -238,7 +241,9 @@ static int trace_reg_module_open(struct inode * inode, struct file * file)
 */
 static int trace_reg_module_release(struct inode * inode, struct file * file)
 {
+	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module released.\n");
+	#endif
 	/** Successful execution of release callback.*/
 	return 0;
 }
@@ -262,13 +267,16 @@ static struct file_operations trace_reg_module_fops = {
 */
 static int __init trace_ctl_module_init(void)
 {
+	#ifdef DEBUG
 	printk(KERN_INFO "Trace Control module is being loaded.\n");
-	
+	#endif
 	/**Proc FS is created with RD&WR permissions with name process_sched_add*/
 	trace_reg_file_entry = proc_create(PROC_CONFIG_FILE_NAME,0777,NULL,&trace_reg_module_fops);
 	/** Condition to verify if process_sched_add creation was successful*/
 	if(trace_reg_file_entry == NULL) {
+		#ifdef DEBUG
 		printk(KERN_ALERT "Error: Could not initialize /proc/%s\n",PROC_CONFIG_FILE_NAME);
+		#endif
 		/** File Creation problem.*/
 		return -ENOMEM;
 	}
@@ -286,8 +294,9 @@ static int __init trace_ctl_module_init(void)
 */
 static void __exit trace_ctl_module_cleanup(void)
 {
-	
+	#ifdef DEBUG
 	printk(KERN_INFO "Trace Control module is being unloaded.\n");
+	#endif
 	/** Proc FS object removed.*/
 	proc_remove(trace_reg_file_entry);
 }

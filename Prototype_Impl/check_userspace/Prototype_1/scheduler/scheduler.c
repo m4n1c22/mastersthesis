@@ -43,7 +43,9 @@ void ctxt_switch_thread(thread_id_t tid) {
 		critical section.
 	*/
 	if(down_interruptible(&threads_sem[tid-1])){
+		#ifdef DEBUG
 		printk(KERN_ALERT "Scheduler:Mutual Exclusive position access failed from ctxt_switch_thread function");
+		#endif
 		/** Issue a restart of syscall which was supposed to be executed.*/
 		return -ERESTARTSYS;
 	}
@@ -71,11 +73,14 @@ mem_access check_mem_access_with_trace(thread_id_t tid) {
 void req_ctxt_switch(thread_id_t tid) {
 	
 	if(check_mem_access_with_trace(tid) == e_ma_restricted) {
-
+		#ifdef DEBUG
 		printk(KERN_INFO "thread restricted... %d", tid);
+		#endif
 		signal_all_other_threads(tid);
 		if(down_interruptible(&mutex_wait_queue)){
+			#ifdef DEBUG
 			printk(KERN_ALERT "Scheduler:Mutual Exclusive position access failed from req_ctxt_switch function");
+			#endif
 			/** Issue a restart of syscall which was supposed to be executed.*/
 			return -ERESTARTSYS;
 		}
@@ -90,7 +95,9 @@ void signal_all_other_threads(thread_id_t tid) {
 
 	int i;
 	if(down_interruptible(&mutex_wait_queue)){
+		#ifdef DEBUG
 		printk(KERN_ALERT "Scheduler:Mutual Exclusive position access failed from signal_all_other_threads function");
+		#endif
 		/** Issue a restart of syscall which was supposed to be executed.*/
 		return -ERESTARTSYS;
 	}
@@ -119,7 +126,9 @@ void signal_all_other_threads(thread_id_t tid) {
 */
 static int ioctl_open(struct inode *i, struct file *f)
 {
+	#ifdef DEBUG
 	printk(KERN_INFO "IOCTL opened...\n");
+	#endif
     return 0;
 }
 
@@ -132,7 +141,9 @@ static int ioctl_open(struct inode *i, struct file *f)
 */
 static int ioctl_close(struct inode *i, struct file *f)
 {
+	#ifdef DEBUG
 	printk(KERN_INFO "IOCTL closed...\n");
+	#endif
     return 0;
 }
 
@@ -165,7 +176,9 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             {
                 return -EACCES;
             }
+          	#ifdef DEBUG
             printk(KERN_INFO "IOCTL: Getting current clock value...\n");
+            #endif
             break;
         /**IOCTL CMD for signaling other threads*/    
         case SIGNAL_OTHER_THREADS:
@@ -173,8 +186,10 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
          	if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
             {
                 return -EACCES;
-            }        
+            }     
+            #ifdef DEBUG   
         	printk(KERN_INFO "IOCTL: Signalling other threads...\n");        	
+        	#endif
         	curr_clk_time.clocks[tid-1] += 1; 
         	signal_all_other_threads(tid);
             break;
@@ -184,13 +199,16 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             {
                 return -EACCES;
             }
+            #ifdef DEBUG
             printk(KERN_INFO "IOCTL: Received thread id %d...\n", tid);
-            //Add code for check perm, signal blocked threads and blocking the given thread.
+            #endif
             req_ctxt_switch(tid);
             break;
         /**IOCTL CMD for reseting the current clock time.*/        
         case RESET_CURR_TIME:
+        	#ifdef DEBUG
         	printk(KERN_INFO "IOCTL: Reseting current clock time...\n");
+        	#endif
         	for(i = 0; i < THREAD_COUNT; i++) {
             	curr_clk_time.clocks[i] = 0;
             }
@@ -201,7 +219,9 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             {
                 return -EACCES;
             }
+            #ifdef DEBUG
         	printk(KERN_INFO "IOCTL: Setting clock on thread %d...\n", tid);        	
+        	#endif
         	curr_clk_time.clocks[tid-1] += 1;         	
             break;
         default:
@@ -239,9 +259,9 @@ static int __init scheduler_module_init(void)
 	int ret;
 	int i;
     struct device *dev_ret;
-
+	#ifdef DEBUG
 	printk(KERN_INFO "Scheduler module is being loaded.\n");
-	
+	#endif
 	
 	sema_init(&mutex_wait_queue, 1); 
 
@@ -295,9 +315,9 @@ static int __init scheduler_module_init(void)
 */
 static void __exit scheduler_module_cleanup(void)
 {
-	
+	#ifdef DEBUG
 	printk(KERN_INFO "Scheduler module is being unloaded.\n");
-	
+	#endif
 
     device_destroy(cl, dev);
     class_destroy(cl);

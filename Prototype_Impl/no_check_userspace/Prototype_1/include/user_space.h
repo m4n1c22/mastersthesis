@@ -36,19 +36,23 @@ void BeforeMA(thread_id_t id) {
     {
         perror("sched_test open");
     }
-
+    #ifdef DEBUG
 	cout<<"Thread " << id << " : Before Memory Access called...\n";
+    #endif
 
 	if (ioctl(fd, GET_CURR_CLK_TIME, &curr_clk) == -1)
     {
         perror("sched_test ioctl get_curr_clk_time");
     }
+
+    #ifdef DEBUG
     cout <<"Current clock value: ";
     for (i = 0; i < THREAD_COUNT; ++i) {
     	
     	cout<<curr_clk.clocks[i];
     }
     cout<<endl;
+    #endif
 
 	if (ioctl(fd, CTXT_SWITCH, &id) == -1)
     {
@@ -68,7 +72,9 @@ void AfterMA(thread_id_t id) {
     {
         perror("sched_test open");
     }
+    #ifdef DEBUG
 	cout<<"Thread " << id << " : After Memory Access called...\n";
+    #endif
 
 	if (ioctl(fd, SIGNAL_OTHER_THREADS, &id) == -1)
     {
@@ -79,13 +85,14 @@ void AfterMA(thread_id_t id) {
     {
         perror("sched_test ioctl get_curr_clk_time");
     }
+    #ifdef DEBUG
     cout <<"Current clock value: ";
     for (i = 0; i < THREAD_COUNT; ++i) {
         
         cout<<curr_clk.clocks[i];
     }
     cout<<endl;
-
+    #endif
 
     close(fd);
 }
