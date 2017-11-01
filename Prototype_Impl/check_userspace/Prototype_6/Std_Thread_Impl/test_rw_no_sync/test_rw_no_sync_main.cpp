@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <thread>
-
+#include <time.h>
 #include "../../include/user_space.h"
 
 int val;
@@ -39,6 +39,11 @@ void reader(thread_id_t id) {
 
 int main()
 {
+	clock_t begin, end;
+
+ 	double pgm_exec_time;
+
+	begin = clock();
 	char trace[] = "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}";
  
  	initialize_trace(trace);
@@ -70,6 +75,17 @@ int main()
     tw2.join();  
 
     reset_clock();
+    end = clock();
 
+    pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
+
+	FILE *exec_time_file_ptr = fopen("exec_time_proto_6.dat", "a");
+
+	fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
+
+	fclose(exec_time_file_ptr);
+    #ifdef DEBUG
+    printf("Execution time for the program: %lf\n", pgm_exec_time);
+    #endif
     return 0;
 }
