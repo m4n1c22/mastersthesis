@@ -155,10 +155,16 @@ mem_access check_mem_access_with_trace(thread_id_t tid) {
 
     first_thr_inst = thread_inst_in_trace(tid);
 
+    mem_access mem_check;
+
     if(first_thr_inst != NULL) {
         /**Check permissions first if not allowed then context switch*/
-        if(check_mem_acc_perm(&curr_clk_time, first_thr_inst, tid) == e_ma_restricted) {            
+        mem_check = check_mem_acc_perm(&curr_clk_time, first_thr_inst, tid);
+        if(mem_check == e_ma_restricted) {          
             return e_ma_restricted;
+        }
+        else if(mem_check == e_ma_allowed_inst_rem) {
+            unset_valid_thread_inst_in_trace(tid);
         }   
     }
     return e_ma_allowed;    
@@ -256,6 +262,7 @@ void BeforeMA(thread_id_t id) {
         cout<<"Memory access restricted"<<endl;
         #endif
         req_context_switch(id);
+        unset_valid_thread_inst_in_trace(id);
     }
     else {
         #ifdef DEBUG
@@ -273,9 +280,7 @@ void AfterMA(thread_id_t id) {
     #endif
     set_vector_clock(id);
     curr_clk_time.clocks[id-1]++;
-    if(ma_status[id-1]==e_ma_restricted) {
-        unset_valid_thread_inst_in_trace(id);
-    }
+
     #ifdef DEBUG
     cout <<"Current clock value: ";
     for (i = 0; i < THREAD_COUNT; ++i) {

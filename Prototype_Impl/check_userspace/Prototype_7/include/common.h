@@ -6,7 +6,7 @@
 #include <linux/sched.h>
 
 /**DEBUG FLAG*/
-//#define DEBUG			1
+#define DEBUG			1
 
 
 /**Constantly defined macros*/
@@ -47,7 +47,8 @@ typedef struct {
 /**Enumeration for the memory access permissions*/ 
 typedef enum  {
 	e_ma_restricted = 0,
-	e_ma_allowed 	= 1
+	e_ma_allowed 	= 1, 
+	e_ma_allowed_inst_rem = 2
 }mem_access;
 
 /**Macros for file names used by the scheduler setup*/
@@ -65,6 +66,7 @@ typedef enum  {
 #define SET_CLK _IOW('c', 5, thread_id_t *)
 
 /** Function for checking the permission */
+
 
 mem_access check_mem_acc_perm(vec_clk* curr_vec_clk, vec_clk* trace_inst, thread_id_t tid) {
 
@@ -87,10 +89,11 @@ mem_access check_mem_acc_perm(vec_clk* curr_vec_clk, vec_clk* trace_inst, thread
 	else if(trace_inst->clocks[tid-1] < curr_vec_clk->clocks[tid-1]) {
 		return e_ma_restricted;
 	}
-	return e_ma_allowed;
+	else {
+		return e_ma_allowed;
+	}
+	return e_ma_allowed_inst_rem;
 }
-
-
 
 
 #endif

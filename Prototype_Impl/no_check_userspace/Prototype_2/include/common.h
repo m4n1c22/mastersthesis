@@ -42,7 +42,8 @@ typedef struct {
 /**Enumeration for the memory access permissions*/ 
 typedef enum  {
 	e_ma_restricted = 0,
-	e_ma_allowed 	= 1
+	e_ma_allowed 	= 1, 
+	e_ma_allowed_inst_rem = 2
 }mem_access;
 
 /**Macros for file names used by the scheduler setup*/
@@ -82,7 +83,10 @@ mem_access check_mem_acc_perm(vec_clk* curr_vec_clk, vec_clk* trace_inst, thread
 	else if(trace_inst->clocks[tid-1] < curr_vec_clk->clocks[tid-1]) {
 		return e_ma_restricted;
 	}
-	return e_ma_allowed;
+	else {
+		return e_ma_allowed;
+	}
+	return e_ma_allowed_inst_rem;
 }
 
 
