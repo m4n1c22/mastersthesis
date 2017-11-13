@@ -4,10 +4,7 @@
 /**Additional headerfiles*/
 #include <linux/ioctl.h>
 #include <linux/sched.h>
-
-/**DEBUG FLAG*/
-#define DEBUG			1
-
+#include "../../../include/debug_logger.h" 
 
 /**Constantly defined macros*/
 #define THREAD_COUNT	4
