@@ -28,13 +28,6 @@ void writer(thread_id_t id) {
 	#endif
 	AfterMA(id);
 
-    BeforeMA(id);
-	val = 10;
-	#ifdef DEBUG
-	cout << "Thread " << id << " : writing data "<<val<<std::endl;
-	#endif
-	AfterMA(id);
-
 }
 
 
@@ -48,11 +41,6 @@ void reader(thread_id_t id) {
 	#endif
 	AfterMA(id);
 
-	BeforeMA(id);
-	#ifdef DEBUG
-	cout << "Thread " << id << " : read data "<<val<<std::endl;
-	#endif
-	AfterMA(id);
 }
 
 
@@ -65,7 +53,7 @@ int main()
 
 	begin = clock();
 
-	char trace[] = "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:2:0:0]),(4,[1:1:0:0])}";
+	char trace[] = "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}";
  
  	initialize_trace(trace);
 

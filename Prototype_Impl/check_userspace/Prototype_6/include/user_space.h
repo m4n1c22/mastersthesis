@@ -12,7 +12,6 @@
 
 using namespace std;
 
-
 trace_node arr[TRACE_LIMIT];
 
 /** Current clock time */
@@ -180,6 +179,7 @@ void initialize_vec_clock() {
         curr_clk_time.clocks[i] = 0;
     }
 }
+
 /***/
 void initialize_trace(char *trace) {
     FILE *fp = fopen(TRACE_REG_PROC_FILE,"w");    
@@ -187,6 +187,7 @@ void initialize_trace(char *trace) {
     fclose(fp);
     trace_string_parse(trace, strlen(trace));
 }
+
 /***/
 void thread_reg(thread_id_t id) {
 
@@ -194,6 +195,7 @@ void thread_reg(thread_id_t id) {
     fprintf(fp, "reg");
     fclose(fp);
 }
+
 /***/
 void req_context_switch(thread_id_t id) {
 
@@ -213,25 +215,25 @@ void req_context_switch(thread_id_t id) {
     }
     cout<<endl;
     #endif
+    
     if (ioctl(fd, CTXT_SWITCH, &id) == -1)
     {
         perror("sched_test ioctl ctxtswitch");
     }
     close(fd);
 }
+
 /***/
 void set_vector_clock(thread_id_t id) {
     
-    int fd, i;
+    int fd;
 
- 
     fd = open(SCHED_IOCTL_COMM, O_RDWR);
     if (fd == -1)
     {
         perror("sched_test open");
     }
     
-
     if (ioctl(fd, SET_CLK, &id) == -1)
     {
         perror("sched_test ioctl set_clk");
@@ -239,9 +241,10 @@ void set_vector_clock(thread_id_t id) {
 
     close(fd);
 }
+
 /***/
 void BeforeMA(thread_id_t id) {
-	
+    
     int i;
     #ifdef DEBUG
     cout<<"Thread " << id << " : Before Memory Access called...\n";
@@ -267,15 +270,17 @@ void BeforeMA(thread_id_t id) {
         #endif
     }
 }
+
 /***/
 void AfterMA(thread_id_t id) {
 
     int i;
     #ifdef DEBUG
-    cout<<"Thread " << id << " : After Memory Access called...\n";	
+    cout<<"Thread " << id << " : After Memory Access called...\n";      
     #endif
     set_vector_clock(id);
     curr_clk_time.clocks[id-1]++;
+
     #ifdef DEBUG
     cout <<"Current clock value: ";
     for (i = 0; i < THREAD_COUNT; ++i) {
@@ -285,6 +290,7 @@ void AfterMA(thread_id_t id) {
     cout<<endl;
     #endif
 }
+
 /***/
 void reset_clock() {
 

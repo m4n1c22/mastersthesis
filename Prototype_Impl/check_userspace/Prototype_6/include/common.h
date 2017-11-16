@@ -3,6 +3,7 @@
 
 /**Additional headerfiles*/
 #include <linux/ioctl.h>
+#include <linux/sched.h>
 #include "../../../include/debug_logger.h" 
 
 /**Constantly defined macros*/
@@ -35,6 +36,11 @@ typedef struct {
 	trace_node arr[TRACE_LIMIT];
 }trace_arr;
 
+typedef struct {
+	int is_waiting;
+	struct task_struct *my_task;
+}wait_queue_threads_t;
+
 /**Enumeration for the memory access permissions*/ 
 typedef enum  {
 	e_ma_restricted = 0,
@@ -57,6 +63,7 @@ typedef enum  {
 #define SET_CLK _IOW('c', 5, thread_id_t *)
 
 /** Function for checking the permission */
+
 
 mem_access check_mem_acc_perm(vec_clk* curr_vec_clk, vec_clk* trace_inst, thread_id_t tid) {
 
@@ -84,9 +91,6 @@ mem_access check_mem_acc_perm(vec_clk* curr_vec_clk, vec_clk* trace_inst, thread
 	}
 	return e_ma_allowed_inst_rem;
 }
-
-
-
 
 
 #endif

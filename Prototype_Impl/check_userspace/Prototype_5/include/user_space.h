@@ -12,6 +12,7 @@
 
 using namespace std;
 
+
 trace_node arr[TRACE_LIMIT];
 
 /** Current clock time */
@@ -34,12 +35,13 @@ void initialize_vec_clock();
 void initialize_trace(char *trace);
 void thread_reg(thread_id_t id);
 void req_context_switch(thread_id_t id);
-void signal_other_threads(thread_id_t id);
+void set_vector_clock(thread_id_t id);
 void set_clock(thread_id_t id);
 void reset_clock();
 
 void BeforeMA(thread_id_t id);
 void AfterMA(thread_id_t id);
+
 /**
     Function Name : number_trace_nodes 
     Function Type : Parse Method
@@ -169,29 +171,30 @@ mem_access check_mem_access_with_trace(thread_id_t tid) {
     return e_ma_allowed;    
 }
 
+/***/
 void initialize_vec_clock() {
+
     int i;
     for (i = 0; i < THREAD_COUNT; ++i)
     {
         curr_clk_time.clocks[i] = 0;
     }
 }
-
+/***/
 void initialize_trace(char *trace) {
-    
     FILE *fp = fopen(TRACE_REG_PROC_FILE,"w");    
     fprintf(fp, "%s", trace);
     fclose(fp);
     trace_string_parse(trace, strlen(trace));
 }
-
+/***/
 void thread_reg(thread_id_t id) {
 
     FILE *fp = fopen(THREAD_REG_PROC_FILE,"w");
     fprintf(fp, "reg");
     fclose(fp);
 }
-
+/***/
 void req_context_switch(thread_id_t id) {
 
     int fd;
@@ -203,9 +206,6 @@ void req_context_switch(thread_id_t id) {
     }
 
     #ifdef DEBUG
-    cout<<"Thread " << id << " : Before Memory Access called...\n";
-
-
     cout <<"Current clock value: ";
     for (i = 0; i < THREAD_COUNT; ++i) {
         
@@ -213,36 +213,38 @@ void req_context_switch(thread_id_t id) {
     }
     cout<<endl;
     #endif
-
     if (ioctl(fd, CTXT_SWITCH, &id) == -1)
     {
         perror("sched_test ioctl ctxtswitch");
     }
     close(fd);
 }
-
-void signal_other_threads(thread_id_t id) {
+/***/
+void set_vector_clock(thread_id_t id) {
     
     int fd, i;
 
-
+ 
     fd = open(SCHED_IOCTL_COMM, O_RDWR);
     if (fd == -1)
     {
         perror("sched_test open");
     }
-    #ifdef DEBUG
-    cout<<"Thread " << id << " : After Memory Access called...\n";
-    #endif
+    
 
-    if (ioctl(fd, SIGNAL_OTHER_THREADS, &id) == -1)
+    if (ioctl(fd, SET_CLK, &id) == -1)
     {
-        perror("sched_test ioctl signal_other_threads");
+        perror("sched_test ioctl set_clk");
     }
-    curr_clk_time.clocks[id-1]++;
-    unset_valid_thread_inst_in_trace(id);
 
+    close(fd);
+}
+/***/
+void BeforeMA(thread_id_t id) {
+	
+    int i;
     #ifdef DEBUG
+    cout<<"Thread " << id << " : Before Memory Access called...\n";
     cout <<"Current clock value: ";
     for (i = 0; i < THREAD_COUNT; ++i) {
         
@@ -250,13 +252,6 @@ void signal_other_threads(thread_id_t id) {
     }
     cout<<endl;
     #endif
-
-    close(fd);
-}
-
-void BeforeMA(thread_id_t id) {
-		
-
     ma_status[id-1] = check_mem_access_with_trace(id);
 
     if(ma_status[id-1] == e_ma_restricted) {
@@ -264,61 +259,36 @@ void BeforeMA(thread_id_t id) {
         cout<<"Memory access restricted"<<endl;
         #endif
         req_context_switch(id);
-    }
-    else if(ma_status[id-1] == e_ma_allowed_no_trace) {
-        #ifdef DEBUG
-        cout<<"Memory access allowed no presence in trace"<<endl;
-        #endif
+        unset_valid_thread_inst_in_trace(id);
     }
     else {
         #ifdef DEBUG
         cout<<"Memory access allowed"<<endl;
         #endif
     }
-
-
-	
 }
-
+/***/
 void AfterMA(thread_id_t id) {
 
-    if(ma_status[id-1] == e_ma_restricted) {
+    int i;
+    #ifdef DEBUG
+    cout<<"Thread " << id << " : After Memory Access called...\n";	
+    #endif
+    set_vector_clock(id);
+    curr_clk_time.clocks[id-1]++;
+    #ifdef DEBUG
+    cout <<"Current clock value: ";
+    for (i = 0; i < THREAD_COUNT; ++i) {
         
-        signal_other_threads(id);
+        cout<<curr_clk_time.clocks[i];
     }
-    else if(ma_status[id-1] == e_ma_allowed_no_trace) {
-        #ifdef DEBUG
-        cout<<"Memory access allowed no presence in trace"<<endl;
-        #endif
-    }
-    else {
-        #ifdef DEBUG
-        cout<<"Memory access allowed"<<endl;
-        #endif
-    }
+    cout<<endl;
+    #endif
 }
-
-void set_clock(thread_id_t id) {
-    
-    int fd;
-
-    fd = open(SCHED_IOCTL_COMM, O_RDWR);
-    if (fd == -1)
-    {
-        perror("sched_test open");
-    }
-
-    if (ioctl(fd, SET_CLK, &id) == -1)
-    {
-        perror("sched_test ioctl set_clock");
-    }
-    close(fd);
-}
-
+/***/
 void reset_clock() {
 
     int fd;
-    int i;
 
     fd = open(SCHED_IOCTL_COMM, O_RDWR);
     if (fd == -1)
@@ -331,11 +301,7 @@ void reset_clock() {
         perror("sched_test ioctl reset_curr_time");
     }
     close(fd);
-
-    for (i = 0; i < THREAD_COUNT; ++i)
-    {
-        curr_clk_time.clocks[i] = 0;
-    }
 }
+
 
 #endif

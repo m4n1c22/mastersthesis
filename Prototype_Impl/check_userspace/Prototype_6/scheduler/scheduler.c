@@ -39,21 +39,23 @@ extern void unset_valid_thread_inst_in_trace(thread_id_t tid);
 /***/
 void ctxt_switch_thread(thread_id_t tid) {
 
-	/** 
-		Condition to verify the down operation on the binary semaphore. 
-		Entry into a Mutually exclusive block is granted by
-		having a successful lock with the mentioned semaphore.
-		mutex semaphore provides a safe access to the following
-		critical section.
-	*/
-	if(down_interruptible(&threads_sem[tid-1])){
+	#ifdef DEBUG
+	printk(KERN_INFO "thread restricted... %d", tid);		
+	#endif
+	if(down_interruptible(&mutex_wait_queue)){
 		#ifdef DEBUG
 		printk(KERN_ALERT "Scheduler:Mutual Exclusive position access failed from ctxt_switch_thread function");
 		#endif
 		/** Issue a restart of syscall which was supposed to be executed.*/
 		return -ERESTARTSYS;
 	}
+	wait_queue[tid-1].is_waiting = 1;
+	wait_queue[tid-1].my_task = current;
+	set_current_state(TASK_INTERRUPTIBLE);
+	up(&mutex_wait_queue);
+	schedule();
 }
+
 
 
 /***/
@@ -82,21 +84,10 @@ void req_ctxt_switch(thread_id_t tid) {
 	
 	if(check_mem_access_with_trace(tid) == e_ma_restricted) {
 
-		#ifdef DEBUG
-		printk(KERN_INFO "thread restricted... %d", tid);
-		#endif
-		if(down_interruptible(&mutex_wait_queue)){
-			#ifdef DEBUG
-			printk(KERN_ALERT "Scheduler:Mutual Exclusive position access failed from req_ctxt_switch function");
-			#endif
-			/** Issue a restart of syscall which was supposed to be executed.*/
-			return -ERESTARTSYS;
-		}
-		wait_queue[tid-1] = 1;
-		up(&mutex_wait_queue);
 		ctxt_switch_thread(tid);
 		unset_valid_thread_inst_in_trace(tid);
 	}
+	
 }
 
 /***/
@@ -114,12 +105,12 @@ void signal_valid_threads(void) {
 		return -ERESTARTSYS;
 	}
 	for (i = 0; i < THREAD_COUNT; ++i) {
-		if(wait_queue[i]==1) {
-			/**Check permissions first if allowed then signal other threads*/
+		if(wait_queue[i].is_waiting==1) {
+			/**Check permissions first if allowed then wake up the thread*/
 			if(check_mem_access_with_trace(i+1)==e_ma_allowed) {
 				
-				wait_queue[i] = 0;
-				up(&threads_sem[i]);
+				wait_queue[i].is_waiting = 0;
+				wake_up_process(wait_queue[i].my_task);				
 			}
 		}
 	}
@@ -138,7 +129,7 @@ static void sched_signalling(void) {
 	while(flag == 0) {
 		msleep(100);
 		signal_valid_threads();		
-	}	
+	}
 } 
 
 
@@ -200,20 +191,20 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             {
                 return -EACCES;
             }
-          	#ifdef DEBUG
+            #ifdef DEBUG
             printk(KERN_INFO "IOCTL: Getting current clock value...\n");
             #endif
             break;
         /**IOCTL CMD for signaling other threads*/    
         case SIGNAL_OTHER_THREADS:
     		#ifdef DEBUG
-        	printk(KERN_INFO "IOCTL: Signalling other threads...\n");  
-        	#endif      	
+        	printk(KERN_INFO "IOCTL: Signalling other threads...\n");        	
+        	#endif
         	//curr_clk_time.clocks[tid-1] += 1; 
         	signal_valid_threads();
             break;
         /**IOCTL CMD for setting the thread clock*/    
-        case SET_CLK:
+        case SET_CLK:    	
          	if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
             {
                 return -EACCES;
@@ -230,7 +221,7 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
                 return -EACCES;
             }
             #ifdef DEBUG
-            printk(KERN_INFO "IOCTL: Received thread id %d...\n", tid);           
+            printk(KERN_INFO "IOCTL: Received thread id %d...\n", tid);            
             #endif
             req_ctxt_switch(tid);
             break;
@@ -293,8 +284,9 @@ static int __init scheduler_module_init(void)
 	for (i = 0; i < THREAD_COUNT; ++i) {
 		
 		curr_clk_time.clocks[i] = 0;
-		sema_init(&threads_sem[i],0);
-		wait_queue[i] = 0; 
+		
+		wait_queue[i].is_waiting = 0; 
+		wait_queue[i].my_task = NULL;
 	}
 
 

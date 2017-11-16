@@ -13,6 +13,7 @@
 int val;
 
 
+
 void writer(thread_id_t id) {
 
 	thread_reg(id);
@@ -43,7 +44,7 @@ int main()
 
  	double pgm_exec_time;
 
-	begin = clock();
+	begin = clock();	
 	char trace[] = "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}";
  
  	initialize_trace(trace);
@@ -65,7 +66,7 @@ int main()
     #endif
 
 	thread tw2(writer, 4);  
-	#ifdef DEBUG
+    #ifdef DEBUG
     cout << "Thread 4 is writer\n";
     #endif
 

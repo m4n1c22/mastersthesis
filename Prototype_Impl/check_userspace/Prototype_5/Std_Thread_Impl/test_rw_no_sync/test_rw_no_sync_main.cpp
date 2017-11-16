@@ -8,14 +8,9 @@
 #include <iostream>
 #include <thread>
 #include <time.h>
-
-
-#include "../../include/common.h"
 #include "../../include/user_space.h"
 
-
 int val;
-
 
 
 void writer(thread_id_t id) {
@@ -35,18 +30,12 @@ void reader(thread_id_t id) {
 
 	thread_reg(id);
 
-	if(id == 2) {
-		sleep(2);
-	}
-
 	BeforeMA(id);
 	#ifdef DEBUG
 	cout << "Thread " << id << " : read data "<<val<<std::endl;
 	#endif
 	AfterMA(id);
 }
-
-
 
 int main()
 {
@@ -55,7 +44,7 @@ int main()
  	double pgm_exec_time;
 
 	begin = clock();
-	char trace[] = "{(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}";
+	char trace[] = "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}";
  
  	initialize_trace(trace);
  	initialize_vec_clock();
@@ -71,12 +60,12 @@ int main()
     #endif
 
 	thread tr2(reader, 3);  
-    #ifdef DEBUG
+	#ifdef DEBUG
     cout << "Thread 3 is reader\n";
     #endif
 
 	thread tw2(writer, 4);  
-    #ifdef DEBUG
+	#ifdef DEBUG
     cout << "Thread 4 is writer\n";
     #endif
 

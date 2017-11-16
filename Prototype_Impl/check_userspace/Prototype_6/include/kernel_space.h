@@ -24,13 +24,14 @@ enum execution {
 static vec_clk curr_clk_time;
 
 /**Semaphores for threads.*/
-static struct semaphore threads_sem[THREAD_COUNT];
+//static struct semaphore threads_sem[THREAD_COUNT];
 
 /**Semaphore for queue*/
 static struct semaphore mutex_wait_queue;
 
 /**Queue of threads waiting*/
-static int wait_queue[THREAD_COUNT];
+static wait_queue_threads_t wait_queue[THREAD_COUNT];
+
 
 /**Time Quantum storage variable for pre-emptive based schedulers.*/
 static int time_quantum=1;

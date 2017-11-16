@@ -82,7 +82,7 @@ int main()
 
     pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
 
-	FILE *exec_time_file_ptr = fopen("exec_time_proto_3.dat", "a");
+	FILE *exec_time_file_ptr = fopen("exec_time_proto_4.dat", "a");
 
 	fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
 

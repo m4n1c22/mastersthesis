@@ -16,9 +16,12 @@
 #include <linux/cdev.h>
 #include <linux/device.h>
 #include <asm/uaccess.h>
+#include <linux/workqueue.h>
+#include <linux/sched.h>
 
 
 #include "../include/common.h"
+
 
 
 MODULE_AUTHOR("Sreeram Sadasivam");
@@ -31,20 +34,20 @@ MODULE_LICENSE("GPL");
 /** Proc FS Dir Object */
 static struct proc_dir_entry *trace_reg_file_entry;
 
+/** Structure for trace node*/
+static trace_node arr[TRACE_LIMIT];
+
 /**Statically defined variables*/
 static int num_traces = 0;
 
 
-/** Structure for trace node*/
-static trace_node arr[TRACE_LIMIT];
 
+/** Function Prototypes*/
 int number_trace_nodes(char *str, size_t len);
 int string_to_int(char *str);
 void trace_string_parse(char *str, size_t len);
 vec_clk* thread_inst_in_trace(thread_id_t tid);
 void unset_valid_thread_inst_in_trace(thread_id_t tid);
-
-
 /**
 	Function Name : number_trace_nodes 
 	Function Type : Parse Method
@@ -124,6 +127,7 @@ void trace_string_parse(char *str, size_t len) {
 }
 
 
+
 /***/
 vec_clk* thread_inst_in_trace(thread_id_t tid) {
 
@@ -166,6 +170,7 @@ void unset_valid_thread_inst_in_trace(thread_id_t tid) {
 static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count, loff_t *ppos)
 {
 	int i ,j;
+
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module read.\n");
 
@@ -181,6 +186,7 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 
 	}
 	#endif
+
 	return 0;
 }
 
@@ -197,13 +203,12 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 */
 static ssize_t trace_reg_module_write(struct file *file, const char *buf, size_t count, loff_t *ppos)
 {
-
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module write.\n");
 
 	printk(KERN_INFO "Trace Registration Module: %s %d\n", buf, count);
-
 	#endif
+
 	trace_string_parse(buf, count);
 
 	/** Successful execution of write call back.*/
@@ -258,6 +263,9 @@ static struct file_operations trace_reg_module_fops = {
 };
 
 
+
+
+
 /**
 	Function Name : trace_ctl_module_init
 	Function Type : Module INIT
@@ -300,6 +308,7 @@ static void __exit trace_ctl_module_cleanup(void)
 	#endif
 	/** Proc FS object removed.*/
 	proc_remove(trace_reg_file_entry);
+
 }
 /** Initializing the kernel module init with custom init method */
 module_init(trace_ctl_module_init);

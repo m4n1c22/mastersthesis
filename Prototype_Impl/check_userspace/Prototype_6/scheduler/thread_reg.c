@@ -165,7 +165,6 @@ static int __init thread_reg_module_init(void)
 	#ifdef DEBUG
 	printk(KERN_INFO "Thread Registration module is being loaded.\n");
 	#endif
-	
 	/**Proc FS is created with RD&WR permissions with name process_sched_add*/
 	thread_reg_file_entry = proc_create(PROC_CONFIG_FILE_NAME,0777,NULL,&thread_reg_module_fops);
 	/** Condition to verify if process_sched_add creation was successful*/
