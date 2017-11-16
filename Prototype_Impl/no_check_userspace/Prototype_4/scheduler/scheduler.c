@@ -16,7 +16,9 @@
 #include <linux/cdev.h>
 #include <linux/device.h>
 #include <asm/uaccess.h>
-
+#include <linux/workqueue.h>
+#include <linux/sched.h>
+#include <linux/delay.h>
 
 #include "../include/common.h"
 #include "../include/kernel_space.h"
@@ -24,12 +26,14 @@
 
 
 MODULE_AUTHOR("Sreeram Sadasivam");
-MODULE_DESCRIPTION("Scheduler Module");
+MODULE_DESCRIPTION("Trace Control Module");
 MODULE_LICENSE("GPL");
 
 /**External Function Prototypes for trace control Functions*/
 extern vec_clk* thread_inst_in_trace(thread_id_t tid);
 extern void unset_valid_thread_inst_in_trace(thread_id_t tid);
+
+
 
 
 /***/
@@ -51,7 +55,6 @@ void ctxt_switch_thread(thread_id_t tid) {
 	up(&mutex_wait_queue);
 	schedule();
 }
-
 
 
 
@@ -81,41 +84,53 @@ void req_ctxt_switch(thread_id_t tid) {
 	
 	if(check_mem_access_with_trace(tid) == e_ma_restricted) {
 
-		#ifdef DEBUG
-		printk(KERN_INFO "thread restricted... %d", tid);
-		#endif
-		signal_all_other_threads(tid);
 		ctxt_switch_thread(tid);
 		unset_valid_thread_inst_in_trace(tid);
 	}
+	
 }
-/***/
-void signal_all_other_threads(thread_id_t tid) {
 
+/***/
+void signal_valid_threads(void) {
+	
 	int i;
+	#ifdef DEBUG
+	printk(KERN_INFO "SIG_VALID_THREADS:I am called...\n");
+	#endif
 	if(down_interruptible(&mutex_wait_queue)){
 		#ifdef DEBUG
-		printk(KERN_ALERT "Scheduler:Mutual Exclusive position access failed from signal_all_other_threads function");
+		printk(KERN_ALERT "Scheduler:Mutual Exclusive position access failed from signal_valid_threads function");
 		#endif
 		/** Issue a restart of syscall which was supposed to be executed.*/
 		return -ERESTARTSYS;
 	}
-
 	for (i = 0; i < THREAD_COUNT; ++i) {
-		if(i!=(tid-1) && (wait_queue[i].is_waiting==1)) {
+		if(wait_queue[i].is_waiting==1) {
 			/**Check permissions first if allowed then wake up the thread*/
 			if(check_mem_access_with_trace(i+1)==e_ma_allowed) {
-				wait_queue[i].is_waiting = 0;
-				wake_up_process(wait_queue[i].my_task);			
 				
+				wait_queue[i].is_waiting = 0;
+				wake_up_process(wait_queue[i].my_task);				
 			}
 		}
 	}
-	
 	up(&mutex_wait_queue);
+	
 }
 
-
+/***/
+static void sched_signalling(void) {
+	/** Boolean status of the queue.*/
+	bool q_status=false;
+	#ifdef DEBUG
+	printk(KERN_ALERT "Scheduler instance: Sched signalling\n");
+	#endif
+	/**Invoking the signalling valid threads.*/
+	while(flag == 0) {
+		msleep(100);
+		signal_valid_threads();		
+	}
+} 
 
 
 /**
@@ -182,16 +197,22 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             break;
         /**IOCTL CMD for signaling other threads*/    
         case SIGNAL_OTHER_THREADS:
-    		//Add code for Signal other threads... 
+    		#ifdef DEBUG
+        	printk(KERN_INFO "IOCTL: Signalling other threads...\n");        	
+        	#endif
+        	//curr_clk_time.clocks[tid-1] += 1; 
+        	signal_valid_threads();
+            break;
+        /**IOCTL CMD for setting the thread clock*/    
+        case SET_CLK:    	
          	if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
             {
                 return -EACCES;
-            }     
-            #ifdef DEBUG   
-        	printk(KERN_INFO "IOCTL: Signalling other threads...\n");        	
+            }
+            #ifdef DEBUG
+        	printk(KERN_INFO "IOCTL: Setting clock on thread %d...\n", tid);        	
         	#endif
-        	curr_clk_time.clocks[tid-1] += 1; 
-        	signal_all_other_threads(tid);
+        	curr_clk_time.clocks[tid-1] += 1;         	
             break;
 		/**IOCTL CMD for Context switcing the given thread*/                
         case CTXT_SWITCH:
@@ -200,8 +221,8 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
                 return -EACCES;
             }
             #ifdef DEBUG
-            printk(KERN_INFO "IOCTL: Received thread id %d...\n", tid);
-            #endif            
+            printk(KERN_INFO "IOCTL: Received thread id %d...\n", tid);            
+            #endif
             req_ctxt_switch(tid);
             break;
         /**IOCTL CMD for reseting the current clock time.*/        
@@ -212,17 +233,6 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
         	for(i = 0; i < THREAD_COUNT; i++) {
             	curr_clk_time.clocks[i] = 0;
             }
-            break;
-        /**IOCTL CMD for setting the thread clock*/    
-        case SET_CLK:
-         	if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
-            {
-                return -EACCES;
-            }
-            #ifdef DEBUG
-        	printk(KERN_INFO "IOCTL: Setting clock on thread %d...\n", tid);        	
-        	#endif
-        	curr_clk_time.clocks[tid-1] += 1;         	
             break;
         default:
             return -EINVAL;
@@ -260,6 +270,8 @@ static int __init scheduler_module_init(void)
 	int i;
     struct device *dev_ret;
 
+    /** Boolean status of the queue.*/
+	bool q_status=false;
 	#ifdef DEBUG
 	printk(KERN_INFO "Scheduler module is being loaded.\n");
 	#endif
@@ -271,10 +283,13 @@ static int __init scheduler_module_init(void)
 	for (i = 0; i < THREAD_COUNT; ++i) {
 		
 		curr_clk_time.clocks[i] = 0;
-				
+		
 		wait_queue[i].is_waiting = 0; 
 		wait_queue[i].my_task = NULL;
 	}
+
+
+	
 	 
     if ((ret = alloc_chrdev_region(&dev, FIRST_MINOR, MINOR_CNT, "sched_test")) < 0)
     {
@@ -301,9 +316,28 @@ static int __init scheduler_module_init(void)
         unregister_chrdev_region(dev, MINOR_CNT);
         return PTR_ERR(dev_ret);
     }
-	
+	/**
+		Allocating the workqueue under the name scheduler-wq and max 1
+		active schedulers.
+	*/
+	scheduler_wq = alloc_workqueue("scheduler-wq", WQ_UNBOUND, 1);
 
-	
+	/** Condition check if the workqueue allocation failed */
+	if (scheduler_wq== NULL){
+		#ifdef DEBUG
+		printk(KERN_ERR "Scheduler instance ERROR:Workqueue cannot be allocated\n");
+		#endif
+		/** Memory Allocation Problem */
+		return -ENOMEM;
+	}
+	else {
+		/** Performing an internal call for context_switch */
+
+		signal_valid_threads();
+		/** Setting the delayed work execution for the provided rate */
+		q_status = queue_delayed_work(scheduler_wq, &scheduler_hdlr, time_quantum*HZ);
+	}
+
 	/** Successful execution of initialization method. */
 	return 0;
 }
@@ -320,6 +354,14 @@ static void __exit scheduler_module_cleanup(void)
 	#ifdef DEBUG
 	printk(KERN_INFO "Scheduler module is being unloaded.\n");
 	#endif
+	/** Signalling the scheduler module unloading */
+	flag = 1;
+	/** Cancelling pending jobs in the Work Queue.*/
+	cancel_delayed_work(&scheduler_hdlr);
+	/** Removing all the pending jobs from the Work Queue*/
+	flush_workqueue(scheduler_wq);
+	/** Deallocating the Work Queue */
+	destroy_workqueue(scheduler_wq);
 
     device_destroy(cl, dev);
     class_destroy(cl);
@@ -331,3 +373,6 @@ static void __exit scheduler_module_cleanup(void)
 module_init(scheduler_module_init);
 /** Initializing the kernel module exit with custom cleanup method */
 module_exit(scheduler_module_cleanup);
+
+/**Initializing the time_quantum*/
+module_param(time_quantum, int, 0);

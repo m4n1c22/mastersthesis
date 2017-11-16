@@ -58,7 +58,7 @@ typedef enum  {
 
  
 #define GET_CURR_CLK_TIME _IOR('c', 1, vec_clk *)
-#define SIGNAL_OTHER_THREADS _IO('s', 2)
+#define SIGNAL_OTHER_THREADS _IOW('s', 2, thread_id_t *)
 #define CTXT_SWITCH _IOW('t', 3, thread_id_t *)
 #define RESET_CURR_TIME _IO('c', 4)
 #define SET_CLK _IOW('c', 5, thread_id_t *)

@@ -9,7 +9,10 @@
 #include <thread>
 #include <time.h>
 
+
+#include "../../include/common.h"
 #include "../../include/user_space.h"
+
 
 int val;
 
@@ -53,7 +56,7 @@ int main()
 
 
 	thread tw1(writer, 1);  
-	#ifdef DEBUG
+    #ifdef DEBUG
     cout << "Thread 1 is writer\n";
     #endif
 
@@ -63,15 +66,15 @@ int main()
     #endif
 
 	thread tr2(reader, 3);  
-	#ifdef DEBUG
+    #ifdef DEBUG
     cout << "Thread 3 is reader\n";
     #endif
 
 	thread tw2(writer, 4);  
-	#ifdef DEBUG
+    #ifdef DEBUG
     cout << "Thread 4 is writer\n";
     #endif
-    
+
 	tw1.join();  
     tr1.join();  
     tr2.join();  
@@ -82,7 +85,7 @@ int main()
 
     pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
 
-	FILE *exec_time_file_ptr = fopen("exec_time_proto_3.dat", "a");
+	FILE *exec_time_file_ptr = fopen("exec_time_proto_4.dat", "a");
 
 	fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
 

@@ -55,6 +55,7 @@ static ssize_t thread_reg_module_read(struct file *file, char *buf, size_t count
 
 	printk(KERN_INFO "Thread Registration Module: %d\n", thread_count);
 	#endif
+
 	return 0;
 }
 
@@ -71,7 +72,7 @@ static ssize_t thread_reg_module_read(struct file *file, char *buf, size_t count
 */
 static ssize_t thread_reg_module_write(struct file *file, const char *buf, size_t count, loff_t *ppos)
 {
-	#ifdef DEBUG
+	#ifdef DEBUG	
 	printk(KERN_INFO "Thread Registration Module write.\n");
 	#endif
 

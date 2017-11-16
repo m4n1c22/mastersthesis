@@ -16,12 +16,9 @@
 #include <linux/cdev.h>
 #include <linux/device.h>
 #include <asm/uaccess.h>
-#include <linux/workqueue.h>
-#include <linux/sched.h>
 
 
 #include "../include/common.h"
-
 
 
 MODULE_AUTHOR("Sreeram Sadasivam");
@@ -34,20 +31,20 @@ MODULE_LICENSE("GPL");
 /** Proc FS Dir Object */
 static struct proc_dir_entry *trace_reg_file_entry;
 
-/** Structure for trace node*/
-static trace_node arr[TRACE_LIMIT];
-
 /**Statically defined variables*/
 static int num_traces = 0;
 
 
+/** Structure for trace node*/
+static trace_node arr[TRACE_LIMIT];
 
-/** Function Prototypes*/
 int number_trace_nodes(char *str, size_t len);
 int string_to_int(char *str);
 void trace_string_parse(char *str, size_t len);
 vec_clk* thread_inst_in_trace(thread_id_t tid);
 void unset_valid_thread_inst_in_trace(thread_id_t tid);
+
+
 /**
 	Function Name : number_trace_nodes 
 	Function Type : Parse Method
@@ -125,7 +122,6 @@ void trace_string_parse(char *str, size_t len) {
 		}
 	}
 }
-
 
 
 /***/
@@ -206,6 +202,7 @@ static ssize_t trace_reg_module_write(struct file *file, const char *buf, size_t
 
 	printk(KERN_INFO "Trace Registration Module: %s %d\n", buf, count);
 	#endif
+
 	trace_string_parse(buf, count);
 
 	/** Successful execution of write call back.*/
@@ -260,9 +257,6 @@ static struct file_operations trace_reg_module_fops = {
 };
 
 
-
-
-
 /**
 	Function Name : trace_ctl_module_init
 	Function Type : Module INIT
@@ -274,7 +268,7 @@ static int __init trace_ctl_module_init(void)
 {
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Control module is being loaded.\n");
-	#endif	
+	#endif
 	/**Proc FS is created with RD&WR permissions with name process_sched_add*/
 	trace_reg_file_entry = proc_create(PROC_CONFIG_FILE_NAME,0777,NULL,&trace_reg_module_fops);
 	/** Condition to verify if process_sched_add creation was successful*/
@@ -304,7 +298,6 @@ static void __exit trace_ctl_module_cleanup(void)
 	#endif
 	/** Proc FS object removed.*/
 	proc_remove(trace_reg_file_entry);
-
 }
 /** Initializing the kernel module init with custom init method */
 module_init(trace_ctl_module_init);
