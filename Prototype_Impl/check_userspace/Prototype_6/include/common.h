@@ -7,7 +7,7 @@
 #include "../../../include/debug_logger.h" 
 
 /**Constantly defined macros*/
-#define THREAD_COUNT	4
+#define THREAD_COUNT	12
 #define TRACE_LIMIT		20
 
 /**Custom data types*/

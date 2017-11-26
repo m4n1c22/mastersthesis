@@ -107,16 +107,16 @@ int main()
 		char filename[30];
 		switch(j) {
 			case 0: trace = trace0;
-					strcpy(filename,"exec_time_trace_0_proto_1.dat");
+					strcpy(filename,"exec_time_trace_0_proto_2.dat");
 					break;
 			case 1: trace = trace1;
-					strcpy(filename,"exec_time_trace_1_proto_1.dat");
+					strcpy(filename,"exec_time_trace_1_proto_2.dat");
 					break;
 			case 2: trace = trace2;
-					strcpy(filename,"exec_time_trace_2_proto_1.dat");
+					strcpy(filename,"exec_time_trace_2_proto_2.dat");
 					break;
 			case 3: trace = trace3;
-					strcpy(filename,"exec_time_trace_3_proto_1.dat");
+					strcpy(filename,"exec_time_trace_3_proto_2.dat");
 					break;
 		}		
 	

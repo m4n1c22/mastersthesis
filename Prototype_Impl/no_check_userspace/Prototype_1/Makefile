@@ -95,6 +95,8 @@ clean_modules:
 clean_rw_no_sync_cpp:
 	rm -f $(TEST_RW_NO_SYNC_EXE_CPP)
 
+clean_cpp:
+	rm -f $(TEST_EXE_CPP)
 
 #Target option for cleaning the test reader writer program and the generated kernel modules
-cleanall:clean_rw_no_sync_cpp clean_modules #clean_rw clean_rw_no_sync clean_rw_cpp 
+cleanall:clean_cpp clean_modules #clean_rw clean_rw_no_sync clean_rw_cpp 
