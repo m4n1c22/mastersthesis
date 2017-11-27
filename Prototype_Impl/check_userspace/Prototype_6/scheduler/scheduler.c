@@ -119,7 +119,7 @@ void signal_valid_threads(void) {
 }
 
 /***/
-static void sched_signalling(void) {
+static void sched_signalling(struct work_struct *w) {
 	/** Boolean status of the queue.*/
 	bool q_status=false;
 	#ifdef DEBUG
