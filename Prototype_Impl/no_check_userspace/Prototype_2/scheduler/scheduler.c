@@ -96,7 +96,7 @@ void req_ctxt_switch(thread_id_t tid) {
 		wait_queue[tid-1] = 1;
 		up(&mutex_wait_queue);
 		ctxt_switch_thread(tid);
-		unset_valid_thread_inst_in_trace(tid);
+		//unset_valid_thread_inst_in_trace(tid);
 	}
 	
 }

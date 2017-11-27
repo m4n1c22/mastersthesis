@@ -124,11 +124,12 @@ int main()
 
 		init_hash_array();
 
-		begin = clock();
+		
 	 
 	 	initialize_trace(trace);
+	 	initialize_vec_clock();
 
-
+		begin = clock();
 	 	for (i = 0; i < THREAD_COUNT; ++i)
 	 	{
 	 		tin[i] = thread(indexer, (i+1));  
@@ -143,9 +144,9 @@ int main()
 	 	{
 			tin[i].join();  
 	 	}
+	    end = clock();
 	    reset_clock();
 
-	    end = clock();
 
 	    pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
 

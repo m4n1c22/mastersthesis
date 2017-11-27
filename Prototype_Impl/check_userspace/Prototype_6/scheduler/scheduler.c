@@ -70,7 +70,8 @@ mem_access check_mem_access_with_trace(thread_id_t tid) {
 	if(first_thr_inst != NULL) {
 		/**Check permissions first if not allowed then context switch*/
 		mem_check = check_mem_acc_perm(&curr_clk_time, first_thr_inst, tid);
-		if(mem_check == e_ma_restricted) {			
+		if(mem_check == e_ma_restricted) {
+			
 			return e_ma_restricted;
 		}
 		else if(mem_check == e_ma_allowed_inst_rem) {
@@ -85,9 +86,30 @@ void req_ctxt_switch(thread_id_t tid) {
 	if(check_mem_access_with_trace(tid) == e_ma_restricted) {
 
 		ctxt_switch_thread(tid);
-		unset_valid_thread_inst_in_trace(tid);
+		//unset_valid_thread_inst_in_trace(tid);
 	}
 	
+}
+
+/***/
+void print_vec_clk(vec_clk clk) {
+	int i;
+	for (i = 0; i < THREAD_COUNT; ++i)
+	{
+		printk(KERN_INFO "%d", clk.clocks[i]);
+	}
+}
+
+/***/
+void print_wait_queue(void) {
+
+	int i;
+	for (i = 0; i < THREAD_COUNT; ++i)
+	{
+		if(wait_queue[i].is_waiting == 1) {
+			printk(KERN_INFO "Thread %d is waiting", (i+1));
+		}
+	}
 }
 
 /***/
@@ -96,6 +118,8 @@ void signal_valid_threads(void) {
 	int i;
 	#ifdef DEBUG
 	printk(KERN_INFO "SIG_VALID_THREADS:I am called...\n");
+	print_vec_clk(curr_clk_time);
+	print_wait_queue();
 	#endif
 	if(down_interruptible(&mutex_wait_queue)){
 		#ifdef DEBUG
@@ -107,8 +131,9 @@ void signal_valid_threads(void) {
 	for (i = 0; i < THREAD_COUNT; ++i) {
 		if(wait_queue[i].is_waiting==1) {
 			/**Check permissions first if allowed then wake up the thread*/
-			if(check_mem_access_with_trace(i+1)==e_ma_allowed) {
-				
+			
+			if(check_mem_access_with_trace(i+1)!=e_ma_restricted) {
+								
 				wait_queue[i].is_waiting = 0;
 				wake_up_process(wait_queue[i].my_task);				
 			}

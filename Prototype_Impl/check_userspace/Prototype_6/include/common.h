@@ -83,9 +83,9 @@ mem_access check_mem_acc_perm(vec_clk* curr_vec_clk, vec_clk* trace_inst, thread
 		}
 	}
 
-	else if(trace_inst->clocks[tid-1] < curr_vec_clk->clocks[tid-1]) {
+	/*else if(trace_inst->clocks[tid-1] < curr_vec_clk->clocks[tid-1]) {
 		return e_ma_restricted;
-	}
+	}*/
 	else {
 		return e_ma_allowed;
 	}

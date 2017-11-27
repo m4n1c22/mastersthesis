@@ -51,8 +51,8 @@ void signal_valid_threads(void);
 mem_access check_mem_access_with_trace(thread_id_t tid);
 void req_ctxt_switch(thread_id_t tid);
 static void sched_signalling(struct work_struct *w);
-
-
+void print_vec_clk(vec_clk clk);
+void print_wait_queue(void);
 /** Creating a delayed_work object with the provided function handler.*/
 static DECLARE_DELAYED_WORK(scheduler_hdlr, sched_signalling);
 

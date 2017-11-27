@@ -85,7 +85,7 @@ void req_ctxt_switch(thread_id_t tid) {
 	if(check_mem_access_with_trace(tid) == e_ma_restricted) {
 
 		ctxt_switch_thread(tid);
-		unset_valid_thread_inst_in_trace(tid);
+		//unset_valid_thread_inst_in_trace(tid);
 	}
 	
 }

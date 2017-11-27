@@ -289,7 +289,7 @@ void AfterMA(thread_id_t id) {
 void reset_clock() {
 
     int fd;
-
+    
     fd = open(SCHED_IOCTL_COMM, O_RDWR);
     if (fd == -1)
     {

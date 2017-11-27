@@ -86,7 +86,7 @@ void req_ctxt_switch(thread_id_t tid) {
 		#endif
 		signal_all_other_threads(tid);
 		ctxt_switch_thread(tid);
-		unset_valid_thread_inst_in_trace(tid);
+		//unset_valid_thread_inst_in_trace(tid);
 	}
 }
 /***/
