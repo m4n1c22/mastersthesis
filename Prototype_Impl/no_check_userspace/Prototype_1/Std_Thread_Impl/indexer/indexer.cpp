@@ -19,8 +19,8 @@
 #define MESSAGE_LIMIT 		4
 #define SIZE				128
 
-double begin_time[THREAD_COUNT];
-double end_time[THREAD_COUNT];
+//double begin_time[THREAD_COUNT];
+//double end_time[THREAD_COUNT];
 
 int gTable[SIZE];
 
@@ -52,7 +52,7 @@ bool comp_swap(int *val, int oldval, int newval) {
 		return false;
 	}
 }
-
+/*
 int stick_this_thread_to_core(int core_id) {
    int num_cores = sysconf(_SC_NPROCESSORS_ONLN);
    if (core_id < 0 || core_id >= num_cores)
@@ -66,7 +66,7 @@ int stick_this_thread_to_core(int core_id) {
    return pthread_setaffinity_np(current_thread, sizeof(cpu_set_t), &cpuset);
 }
 
-
+*/
 void indexer(thread_id_t id) {
 
 
