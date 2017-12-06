@@ -17,3 +17,5 @@
 *.out
 *.aux
 *.toc
+*.lot
+*.lof
