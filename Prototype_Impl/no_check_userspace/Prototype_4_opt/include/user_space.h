@@ -38,12 +38,12 @@ void BeforeMA(thread_id_t id) {
     }
     #ifdef DEBUG
 	cout<<"Thread " << id << " : Before Memory Access called...\n";
+ 
 
 	if (ioctl(fd, GET_CURR_CLK_TIME, &curr_clk) == -1)
     {
         perror("sched_test ioctl get_curr_clk_time");
     }
-
     cout <<"Current clock value: ";
     for (i = 0; i < THREAD_COUNT; ++i) {
     	
@@ -73,12 +73,10 @@ void AfterMA(thread_id_t id) {
     #ifdef DEBUG
 	cout<<"Thread " << id << " : After Memory Access called...\n";
     #endif
-
-	if (ioctl(fd, SIGNAL_OTHER_THREADS, &id) == -1)
+	if (ioctl(fd, SET_CLK, &id) == -1)
     {
-        perror("sched_test ioctl signal_other_threads");
+        perror("sched_test ioctl set_clk");
     }
-
     #ifdef DEBUG
     if (ioctl(fd, GET_CURR_CLK_TIME, &curr_clk) == -1)
     {
@@ -112,5 +110,6 @@ void reset_clock() {
     }
     close(fd);
 }
+
 
 #endif

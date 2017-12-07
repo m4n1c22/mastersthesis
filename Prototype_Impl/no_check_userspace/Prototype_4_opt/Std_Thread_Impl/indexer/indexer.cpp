@@ -12,15 +12,10 @@
 #include <algorithm>
 #include "../../include/common.h"
 #include "../../include/user_space.h"
-#include <unistd.h>
-#include <sched.h>
 
 
 #define MESSAGE_LIMIT 		4
 #define SIZE				128
-
-//double begin_time[THREAD_COUNT];
-//double end_time[THREAD_COUNT];
 
 int gTable[SIZE];
 
@@ -53,19 +48,6 @@ bool comp_swap(int *val, int oldval, int newval) {
 	}
 }
 
-int stick_this_thread_to_core(int core_id) {
-   int num_cores = sysconf(_SC_NPROCESSORS_ONLN);
-   if (core_id < 0 || core_id >= num_cores)
-      return EINVAL;
-
-   cpu_set_t cpuset;
-   CPU_ZERO(&cpuset);
-   CPU_SET(core_id, &cpuset);
-
-   pthread_t current_thread = pthread_self();    
-   return pthread_setaffinity_np(current_thread, sizeof(cpu_set_t), &cpuset);
-}
-
 void indexer(thread_id_t id) {
 
 
@@ -75,11 +57,8 @@ void indexer(thread_id_t id) {
 
 	bool ret_val;
 
-	//stick_this_thread_to_core(1);
+	thread_reg(id);
 
-	//begin_time[id-1] = clock();
-
-	thread_reg(id);	
 
  	while (true) {
 		w = getMsg(&m, id);
@@ -99,7 +78,6 @@ void indexer(thread_id_t id) {
             h = (h + 1) % SIZE;
         }
     }
-    //end_time[id-1] = clock();
 }
 
 void init_hash_array() {
@@ -109,8 +87,6 @@ void init_hash_array() {
         gTable[i] = 0;
     }
 }
-
-
 
 int main()
 {
@@ -131,16 +107,16 @@ int main()
 		char filename[30];
 		switch(j) {
 			case 0: trace = trace0;
-					strcpy(filename,"exec_time_trace_0_proto_1.dat");
+					strcpy(filename,"exec_time_trace_0_proto_4.dat");
 					break;
 			case 1: trace = trace1;
-					strcpy(filename,"exec_time_trace_1_proto_1.dat");
+					strcpy(filename,"exec_time_trace_1_proto_4.dat");
 					break;
 			case 2: trace = trace2;
-					strcpy(filename,"exec_time_trace_2_proto_1.dat");
+					strcpy(filename,"exec_time_trace_2_proto_4.dat");
 					break;
 			case 3: trace = trace3;
-					strcpy(filename,"exec_time_trace_3_proto_1.dat");
+					strcpy(filename,"exec_time_trace_3_proto_4.dat");
 					break;
 		}		
 	
@@ -148,9 +124,11 @@ int main()
 
 		init_hash_array();
 
-
-	 	initialize_trace(trace);
 		begin = clock();
+	 
+	 	initialize_trace(trace);
+
+
 	 	for (i = 0; i < THREAD_COUNT; ++i)
 	 	{
 	 		tin[i] = thread(indexer, (i+1));  
@@ -165,18 +143,15 @@ int main()
 	 	{
 			tin[i].join();  
 	 	}
-
+	    reset_clock();
 
 	    end = clock();
-	    reset_clock();
 
 	    pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
 
 		FILE *exec_time_file_ptr = fopen(filename, "a");
 
 		fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
-
-		//fprintf(exec_time_file_ptr, "%lf\n", execution_time());		
 
 		fclose(exec_time_file_ptr);
 	    #ifdef DEBUG
