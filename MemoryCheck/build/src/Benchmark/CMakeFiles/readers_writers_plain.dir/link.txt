@@ -1,1 +1,0 @@
-/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/readers_writers_plain.dir/readers_writers.cpp.o CMakeFiles/readers_writers_plain.dir/readers_writers_main.cpp.o  -o ../../bin/readers_writers_plain -rdynamic 

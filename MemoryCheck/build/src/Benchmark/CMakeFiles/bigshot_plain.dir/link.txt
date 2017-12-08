@@ -1,1 +1,0 @@
-/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/bigshot_plain.dir/bigshot.cpp.o CMakeFiles/bigshot_plain.dir/bigshot_main.cpp.o  -o ../../bin/bigshot_plain -rdynamic 
