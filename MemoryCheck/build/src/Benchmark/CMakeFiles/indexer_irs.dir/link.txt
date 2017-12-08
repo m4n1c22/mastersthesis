@@ -1,0 +1,1 @@
+/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/indexer_irs.dir/indexer_main.cpp.o  -o ../../bin/indexer_irs -rdynamic ../../bin/indexer_irs.o ../../lib/libscheduler.a -Wl,-Bstatic -lboost_system -lboost_filesystem -lboost_program_options -lboost_graph -lboost_regex -Wl,-Bdynamic 

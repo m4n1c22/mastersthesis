@@ -15,9 +15,10 @@
 #include <unistd.h>
 #include <sched.h>
 
+#define SEC2NANO 1000000000.0f
 
-#define MESSAGE_LIMIT 		4
-#define SIZE				128
+#define MESSAGE_LIMIT 		100
+#define SIZE				10240
 
 //double begin_time[THREAD_COUNT];
 //double end_time[THREAD_COUNT];
@@ -116,7 +117,8 @@ int main()
 {
 
 	clock_t begin, end;
-
+ 	timespec ts;
+    timespec ts2;
  	double pgm_exec_time;
 
 	char trace0[] = "{(1,[1:0:0:0:0:0:0:0:0:0:0:1]),(1,[3:0:0:0:0:0:0:0:0:0:0:2]), (1,[5:0:0:0:0:0:0:0:0:0:0:3])}";
@@ -150,7 +152,11 @@ int main()
 
 
 	 	initialize_trace(trace);
-		begin = clock();
+	 	//begin = clock();
+		clock_gettime(CLOCK_MONOTONIC_RAW,&ts);
+	 	double v1 = ts.tv_nsec ;
+    	double v2 = ts.tv_sec ;
+		
 	 	for (i = 0; i < THREAD_COUNT; ++i)
 	 	{
 	 		tin[i] = thread(indexer, (i+1));  
@@ -166,15 +172,22 @@ int main()
 			tin[i].join();  
 	 	}
 
+	 	clock_gettime(CLOCK_MONOTONIC_RAW,&ts2);
 
-	    end = clock();
+	    //end = clock();
 	    reset_clock();
+	    v1 = ts2.tv_nsec - v1;
+    	v2 = ts2.tv_sec - v2;
+	    
+    	long long totaltime = ((ts2.tv_sec*SEC2NANO + ts2.tv_nsec) - (ts.tv_sec*SEC2NANO + ts.tv_nsec));
 
-	    pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
+	    //pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
 
 		FILE *exec_time_file_ptr = fopen(filename, "a");
 
-		fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
+		fprintf(exec_time_file_ptr, "%lld\n", totaltime);
+
+		//fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
 
 		//fprintf(exec_time_file_ptr, "%lf\n", execution_time());		
 
