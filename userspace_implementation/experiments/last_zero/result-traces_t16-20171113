@@ -1,0 +1,324 @@
+['-itraces_t16/ip_trace_t16_000001.gv', '-itraces_t16/ip_trace_t16_000128.gv', '-itraces_t16/ip_trace_t16_001024.gv', '-itraces_t16/ip_trace_t16_016384.gv', '-itraces_t16/ip_trace_t16_147456.gv']
+=== plain ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_plain', '-t', '16', '']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+=== IRS -itraces_t16/ip_trace_t16_000001.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_000001.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   247.978
+Mean time (IRS):     11844.129
+Overhead (%):        4676.282170192518
+Median time (plain): 192
+Median time (IRS):   11833
+Overhead (%):        6063.020833333334
+Variance (plain):    144612.37188788792
+Variance (IRS):      39813742.88324224
+Std. dev. (plain):   380.2793340268281
+Std. dev. (IRS):     6309.8132209473715
+=== IRS -itraces_t16/ip_trace_t16_000128.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_000128.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   247.978
+Mean time (IRS):     5950.413
+Overhead (%):        2299.5729459871436
+Median time (plain): 192
+Median time (IRS):   5577
+Overhead (%):        2804.6875
+Variance (plain):    144612.37188788792
+Variance (IRS):      29590393.01144244
+Std. dev. (plain):   380.2793340268281
+Std. dev. (IRS):     5439.70523203624
+=== IRS -itraces_t16/ip_trace_t16_001024.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_001024.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   247.978
+Mean time (IRS):     2856.036
+Overhead (%):        1051.7295889151458
+Median time (plain): 192
+Median time (IRS):   407
+Overhead (%):        111.97916666666667
+Variance (plain):    144612.37188788792
+Variance (IRS):      18817326.899603605
+Std. dev. (plain):   380.2793340268281
+Std. dev. (IRS):     4337.89429327221
+=== IRS -itraces_t16/ip_trace_t16_016384.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_016384.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   247.978
+Mean time (IRS):     370.924
+Overhead (%):        49.57939817241851
+Median time (plain): 192
+Median time (IRS):   265
+Overhead (%):        38.02083333333333
+Variance (plain):    144612.37188788792
+Variance (IRS):      585241.4276516518
+Std. dev. (plain):   380.2793340268281
+Std. dev. (IRS):     765.0107369518756
+=== IRS -itraces_t16/ip_trace_t16_147456.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_147456.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   247.978
+Mean time (IRS):     269.624
+Overhead (%):        8.729000153239406
+Median time (plain): 192
+Median time (IRS):   227
+Overhead (%):        18.229166666666664
+Variance (plain):    144612.37188788792
+Variance (IRS):      20410.89551951952
+Std. dev. (plain):   380.2793340268281
+Std. dev. (IRS):     142.86670542684016
+| benchmark            | #traces | median time (µs) | overhead(%) |
+| last_zero(16) |  000001 |            11833 |        6063 |
+| last_zero(16) |  000128 |             5577 |        2805 |
+| last_zero(16) |  001024 |              407 |         112 |
+| last_zero(16) |  016384 |              265 |          38 |
+| last_zero(16) |  147456 |              227 |          18 |
+['-itraces_t16/ip_trace_t16_000001.gv', '-itraces_t16/ip_trace_t16_000128.gv', '-itraces_t16/ip_trace_t16_001024.gv', '-itraces_t16/ip_trace_t16_016384.gv', '-itraces_t16/ip_trace_t16_147456.gv']
+=== plain ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_plain', '-t', '16', '']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+=== IRS -itraces_t16/ip_trace_t16_000001.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_000001.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   351.422
+Mean time (IRS):     11039.321
+Overhead (%):        3041.3289435493507
+Median time (plain): 328
+Median time (IRS):   10625
+Overhead (%):        3139.329268292683
+Variance (plain):    238544.26618218218
+Variance (IRS):      36831222.204163164
+Std. dev. (plain):   488.4099366128644
+Std. dev. (IRS):     6068.87322360281
+=== IRS -itraces_t16/ip_trace_t16_000128.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_000128.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   351.422
+Mean time (IRS):     5490.174
+Overhead (%):        1462.2738473971465
+Median time (plain): 328
+Median time (IRS):   4969
+Overhead (%):        1414.9390243902437
+Variance (plain):    238544.26618218218
+Variance (IRS):      30615051.551275276
+Std. dev. (plain):   488.4099366128644
+Std. dev. (IRS):     5533.086982081095
+=== IRS -itraces_t16/ip_trace_t16_001024.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_001024.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   351.422
+Mean time (IRS):     3048.078
+Overhead (%):        767.3554871351251
+Median time (plain): 328
+Median time (IRS):   405
+Overhead (%):        23.47560975609756
+Variance (plain):    238544.26618218218
+Variance (IRS):      18806643.02293894
+Std. dev. (plain):   488.4099366128644
+Std. dev. (IRS):     4336.6626595734815
+=== IRS -itraces_t16/ip_trace_t16_016384.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_016384.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   351.422
+Mean time (IRS):     329.002
+Overhead (%):        -6.3797940937107
+Median time (plain): 328
+Median time (IRS):   240
+Overhead (%):        -26.82926829268293
+Variance (plain):    238544.26618218218
+Variance (IRS):      469769.9559519519
+Std. dev. (plain):   488.4099366128644
+Std. dev. (IRS):     685.3976626396911
+=== IRS -itraces_t16/ip_trace_t16_147456.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_147456.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   351.422
+Mean time (IRS):     289.64
+Overhead (%):        -17.580572644854346
+Median time (plain): 328
+Median time (IRS):   228
+Overhead (%):        -30.48780487804878
+Variance (plain):    238544.26618218218
+Variance (IRS):      253007.67807807808
+Std. dev. (plain):   488.4099366128644
+Std. dev. (IRS):     502.99868596058786
+| benchmark            | #traces | median time (µs) | overhead(%) |
+| last_zero(16) |  000001 |            10625 |        3139 |
+| last_zero(16) |  000128 |             4969 |        1415 |
+| last_zero(16) |  001024 |              405 |          23 |
+| last_zero(16) |  016384 |              240 |         -27 |
+| last_zero(16) |  147456 |              228 |         -30 |
+['-itraces_t16/ip_trace_t16_000001.gv', '-itraces_t16/ip_trace_t16_000128.gv', '-itraces_t16/ip_trace_t16_001024.gv', '-itraces_t16/ip_trace_t16_016384.gv', '-itraces_t16/ip_trace_t16_147456.gv']
+=== plain ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_plain', '-t', '16', '']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+=== IRS -itraces_t16/ip_trace_t16_000001.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_000001.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   304.559
+Mean time (IRS):     10898.588
+Overhead (%):        3478.481673501686
+Median time (plain): 233
+Median time (IRS):   9874
+Overhead (%):        4137.768240343347
+Variance (plain):    262712.16468368366
+Variance (IRS):      35380613.11136737
+Std. dev. (plain):   512.5545480079985
+Std. dev. (IRS):     5948.160481305743
+=== IRS -itraces_t16/ip_trace_t16_000128.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_000128.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   304.559
+Mean time (IRS):     6034.523
+Overhead (%):        1881.3970363706212
+Median time (plain): 233
+Median time (IRS):   5601
+Overhead (%):        2303.862660944206
+Variance (plain):    262712.16468368366
+Variance (IRS):      33726461.17664765
+Std. dev. (plain):   512.5545480079985
+Std. dev. (IRS):     5807.448766596882
+=== IRS -itraces_t16/ip_trace_t16_001024.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_001024.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   304.559
+Mean time (IRS):     3215.589
+Overhead (%):        955.8180845090769
+Median time (plain): 233
+Median time (IRS):   457
+Overhead (%):        96.13733905579399
+Variance (plain):    262712.16468368366
+Variance (IRS):      17584849.0231021
+Std. dev. (plain):   512.5545480079985
+Std. dev. (IRS):     4193.429267687974
+=== IRS -itraces_t16/ip_trace_t16_016384.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_016384.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   304.559
+Mean time (IRS):     356.631
+Overhead (%):        17.09750820038152
+Median time (plain): 233
+Median time (IRS):   249
+Overhead (%):        6.866952789699571
+Variance (plain):    262712.16468368366
+Variance (IRS):      548801.4562952954
+Std. dev. (plain):   512.5545480079985
+Std. dev. (IRS):     740.8113500043688
+=== IRS -itraces_t16/ip_trace_t16_147456.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_147456.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   304.559
+Mean time (IRS):     337.818
+Overhead (%):        10.92037995921971
+Median time (plain): 233
+Median time (IRS):   305
+Overhead (%):        30.90128755364807
+Variance (plain):    262712.16468368366
+Variance (IRS):      49402.28315915915
+Std. dev. (plain):   512.5545480079985
+Std. dev. (IRS):     222.26624385893408
+| benchmark            | #traces | median time (µs) | overhead(%) |
+| last_zero(16) |  000001 |             9874 |        4138 |
+| last_zero(16) |  000128 |             5601 |        2304 |
+| last_zero(16) |  001024 |              457 |          96 |
+| last_zero(16) |  016384 |              249 |           7 |
+| last_zero(16) |  147456 |              305 |          31 |
+['-itraces_t16/ip_trace_t16_000001.gv', '-itraces_t16/ip_trace_t16_000128.gv', '-itraces_t16/ip_trace_t16_001024.gv', '-itraces_t16/ip_trace_t16_016384.gv', '-itraces_t16/ip_trace_t16_147456.gv']
+=== plain ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_plain', '-t', '16', '']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+=== IRS -itraces_t16/ip_trace_t16_000001.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_000001.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   280.624
+Mean time (IRS):     11613.721
+Overhead (%):        4038.5344803010425
+Median time (plain): 193
+Median time (IRS):   11317
+Overhead (%):        5763.730569948187
+Variance (plain):    39331.80442842843
+Variance (IRS):      35089627.1423013
+Std. dev. (plain):   198.3224758529109
+Std. dev. (IRS):     5923.6498159750545
+=== IRS -itraces_t16/ip_trace_t16_000128.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_000128.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   280.624
+Mean time (IRS):     5747.783
+Overhead (%):        1948.2150493186612
+Median time (plain): 193
+Median time (IRS):   5367
+Overhead (%):        2680.8290155440413
+Variance (plain):    39331.80442842843
+Variance (IRS):      31869968.752663665
+Std. dev. (plain):   198.3224758529109
+Std. dev. (IRS):     5645.34930298061
+=== IRS -itraces_t16/ip_trace_t16_001024.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_001024.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   280.624
+Mean time (IRS):     3049.884
+Overhead (%):        986.8222247562575
+Median time (plain): 193
+Median time (IRS):   438
+Overhead (%):        126.94300518134716
+Variance (plain):    39331.80442842843
+Variance (IRS):      18784088.048592594
+Std. dev. (plain):   198.3224758529109
+Std. dev. (IRS):     4334.061380344376
+=== IRS -itraces_t16/ip_trace_t16_016384.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_016384.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   280.624
+Mean time (IRS):     371.805
+Overhead (%):        32.492231598152685
+Median time (plain): 193
+Median time (IRS):   241
+Overhead (%):        24.870466321243523
+Variance (plain):    39331.80442842843
+Variance (IRS):      1000102.6616366366
+Std. dev. (plain):   198.3224758529109
+Std. dev. (IRS):     1000.0513295009595
+=== IRS -itraces_t16/ip_trace_t16_147456.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/last_zero/last_zero_irs', '-t', '16', '-itraces_t16/ip_trace_t16_147456.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   280.624
+Mean time (IRS):     391.455
+Overhead (%):        39.494483721990974
+Median time (plain): 193
+Median time (IRS):   326
+Overhead (%):        68.9119170984456
+Variance (plain):    39331.80442842843
+Variance (IRS):      586632.0620370371
+Std. dev. (plain):   198.3224758529109
+Std. dev. (IRS):     765.9190962739061
+| benchmark            | #traces | median time (µs) | overhead(%) |
+| last_zero(16) |  000001 |            11317 |        5764 |
+| last_zero(16) |  000128 |             5367 |        2681 |
+| last_zero(16) |  001024 |              438 |         127 |
+| last_zero(16) |  016384 |              241 |          25 |
+| last_zero(16) |  147456 |              326 |          69 |
