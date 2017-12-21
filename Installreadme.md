@@ -22,3 +22,4 @@ done
         cmake .. && \
         make && \
         make install
+
