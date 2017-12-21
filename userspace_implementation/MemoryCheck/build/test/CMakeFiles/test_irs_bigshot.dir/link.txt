@@ -1,0 +1,1 @@
+/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/test_irs_bigshot.dir/irs/test_irs_bigshot.cpp.o  -o ../bin/test_irs_bigshot -rdynamic -lboost_filesystem -lboost_system -lpthread ../lib/libscheduler.a ../bin/bigshot_irs.o -lpthread -lcgraph -lgvc -Wl,-Bstatic -lboost_system -lboost_filesystem -lboost_program_options -lboost_graph -lboost_regex -Wl,-Bdynamic 

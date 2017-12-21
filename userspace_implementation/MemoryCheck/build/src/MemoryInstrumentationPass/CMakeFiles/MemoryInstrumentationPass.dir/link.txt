@@ -1,0 +1,1 @@
+/usr/bin/clang++  -fPIC  -g -std=c++11 -O3  -shared  -o ../../lib/libMemoryInstrumentationPass.so CMakeFiles/MemoryInstrumentationPass.dir/InstrumentMemoryInstruction.cpp.o CMakeFiles/MemoryInstrumentationPass.dir/Utility.cpp.o CMakeFiles/MemoryInstrumentationPass.dir/AnnotationManager.cpp.o 

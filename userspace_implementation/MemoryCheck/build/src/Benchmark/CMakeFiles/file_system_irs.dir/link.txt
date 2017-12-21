@@ -1,0 +1,1 @@
+/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/file_system_irs.dir/file_system_main.cpp.o  -o ../../bin/file_system_irs -rdynamic ../../bin/file_system_irs.o ../../lib/libscheduler.a -Wl,-Bstatic -lboost_system -lboost_filesystem -lboost_program_options -lboost_graph -lboost_regex -Wl,-Bdynamic 
