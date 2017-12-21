@@ -19,8 +19,7 @@
 
 #define MESSAGE_LIMIT 		4
 #define SIZE				128
-
-//#define USE_CLOCK			1
+#define USE_CLOCK			1
 
 //#define SET_CPU_AFF			1
 //double begin_time[THREAD_COUNT];
