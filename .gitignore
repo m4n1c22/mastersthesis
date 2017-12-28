@@ -19,3 +19,4 @@
 *.toc
 *.lot
 *.lof
+userspace_implementation/MemoryCheck/build
