@@ -1,0 +1,1 @@
+/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/fibonacci_irs.dir/fibonacci_main.cpp.o  -o ../../bin/fibonacci_irs -rdynamic ../../bin/fibonacci_irs.o ../../lib/libscheduler.a -Wl,-Bstatic -lboost_system -lboost_filesystem -lboost_program_options -lboost_graph -lboost_regex -Wl,-Bdynamic 

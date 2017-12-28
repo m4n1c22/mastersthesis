@@ -1,0 +1,1 @@
+/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/shared_pointer_irs.dir/shared_pointer_main.cpp.o  -o ../../bin/shared_pointer_irs -rdynamic ../../bin/shared_pointer_irs.o ../../lib/libscheduler.a -Wl,-Bstatic -lboost_system -lboost_filesystem -lboost_program_options -lboost_graph -lboost_regex -Wl,-Bdynamic 
