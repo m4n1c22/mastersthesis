@@ -10,7 +10,7 @@ make load
 
 
 #configurable value for the test_runs counter.
-test_runs=100
+test_runs=99
 error_count=0
 success_count=0
 count=0
@@ -24,26 +24,27 @@ exitfn () {
 trap "exitfn" INT            # Set up SIGINT trap to call function.
 
 #check if the log file exists or not.
-if [ -f exec_time_trace_0_proto_5.dat ]
+if [ -f exec_time_trace_0_proto_1.dat ]
 then
-	sudo rm exec_time_trace_0_proto_5.dat
+	sudo rm exec_time_trace_0_proto_1.dat
 fi
-if [ -f exec_time_trace_1_proto_5.dat ]
+if [ -f exec_time_trace_1_proto_1.dat ]
 then
-	sudo rm exec_time_trace_1_proto_5.dat
+	sudo rm exec_time_trace_1_proto_1.dat
 fi
-if [ -f exec_time_trace_2_proto_5.dat ]
+if [ -f exec_time_trace_2_proto_1.dat ]
 then
-	sudo rm exec_time_trace_2_proto_5.dat
+	sudo rm exec_time_trace_2_proto_1.dat
 fi
-if [ -f exec_time_trace_3_proto_5.dat ]
+if [ -f exec_time_trace_3_proto_1.dat ]
 then
-	sudo rm exec_time_trace_3_proto_5.dat
+	sudo rm exec_time_trace_3_proto_1.dat
 fi
+sudo make test_cpp
 #Execute the prog binary file for test runs times. And write the output in the overall log file.
 while [ "$count" -lt "$test_runs" ]
 do		
-	sudo make test_cpp
+	sudo make run_cpp
 	count=`expr $count + 1`
 done
 make unload

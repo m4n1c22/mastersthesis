@@ -65,7 +65,8 @@ comp_test_cpp:
 #Target option for running the test reader writer program implemented using std thread.
 test_cpp: comp_test_cpp
 	./$(TEST_EXE_CPP)
-
+run_cpp: 
+	./$(TEST_EXE_CPP)
 
 #Target option for compiling the test reader writer program without synchronization implemented using std thread.
 comp_rw_no_sync_cpp:
