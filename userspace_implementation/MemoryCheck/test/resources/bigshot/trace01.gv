@@ -1,8 +1,0 @@
-digraph G {
-0 [count=0, is_write=1, label="tid=0 count=0 start_addr=0x74ffe8 is_write=1", start_addr="0x74ffe8", tid=0];
-10 [count=0, is_write=0, label="tid=1 count=0 start_addr=0x74ffe8 is_write=0", start_addr="0x74ffe8", tid=1];
-11 [count=1, is_write=0, label="tid=1 count=1 start_addr=0x74ffe8 is_write=0", start_addr="0x74ffe8", tid=1];
-10->11 ;
-0->11 ;
-0->10 ;
-}

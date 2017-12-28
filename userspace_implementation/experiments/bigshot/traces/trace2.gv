@@ -1,5 +1,0 @@
-digraph G {
-0 [count=0, label="tid=0 count=0", tid=0];
-10 [count=0, label="tid=1 count=0", tid=1];
-10->0 ;
-}
