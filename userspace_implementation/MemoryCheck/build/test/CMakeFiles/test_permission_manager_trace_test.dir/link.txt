@@ -1,1 +1,0 @@
-/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/test_permission_manager_trace_test.dir/Scheduler/PermissionManagerTraceTest.cpp.o  -o ../bin/test_permission_manager_trace_test -rdynamic ../lib/libscheduler.a -lpthread -lcgraph -lgvc -Wl,-Bstatic -lboost_system -lboost_filesystem -lboost_program_options -lboost_graph -lboost_regex -Wl,-Bdynamic 

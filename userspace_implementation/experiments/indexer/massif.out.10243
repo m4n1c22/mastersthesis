@@ -1,0 +1,768 @@
+desc: (none)
+cmd: ./indexer_irs -t15 -iip_trace_t15_060.gv
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=3424022
+mem_heap_B=72704
+mem_heap_extra_B=8
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=2
+#-----------
+time=6813520
+mem_heap_B=139253
+mem_heap_extra_B=2787
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=8227279
+mem_heap_B=128716
+mem_heap_extra_B=4060
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=75644765
+mem_heap_B=67515908
+mem_heap_extra_B=9868
+mem_stacks_B=0
+heap_tree=detailed
+n2: 67515908 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 67372152 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372152 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372152 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372152 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372152 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372152 0x46A02A: main (indexer_main.cpp:22)
+ n0: 143756 in 126 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=5
+#-----------
+time=77488943
+mem_heap_B=69579812
+mem_heap_extra_B=66860
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=79512492
+mem_heap_B=71845028
+mem_heap_extra_B=129516
+mem_stacks_B=0
+heap_tree=detailed
+n3: 71845028 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 67372040 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372040 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372040 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372040 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372040 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372040 0x46A02A: main (indexer_main.cpp:22)
+ n1: 3310560 0x4715F8: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 3310560 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 3310560 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 3310560 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 3310560 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 3310560 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 3310560 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 3310560 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 3310560 0x46A02A: main (indexer_main.cpp:22)
+ n0: 1162428 in 130 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=7
+#-----------
+time=82084163
+mem_heap_B=74725924
+mem_heap_extra_B=208988
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=85178779
+mem_heap_B=78186884
+mem_heap_extra_B=305116
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=87131280
+mem_heap_B=80421108
+mem_heap_extra_B=364916
+mem_stacks_B=0
+heap_tree=detailed
+n5: 80421108 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 67372040 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372040 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372040 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372040 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372040 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372040 0x46A02A: main (indexer_main.cpp:22)
+ n1: 9828960 0x4715F8: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 9828960 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 9828960 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 9828960 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 9828960 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 9828960 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 9828960 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 9828960 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 9828960 0x46A02A: main (indexer_main.cpp:22)
+ n1: 1637760 0x4A6288: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_new_elements_at_back(unsigned long) (new_allocator.h:104)
+  n1: 1637760 0x4A6070: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_deque.h:2091)
+   n1: 1637760 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+    n1: 1637760 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+     n1: 1637760 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+      n1: 1637760 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+       n1: 1637760 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+        n0: 1637760 0x46A02A: main (indexer_main.cpp:22)
+ n1: 1310528 0x4715C3: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 1310528 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 1310528 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 1310528 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 1310528 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 1310528 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 1310528 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 1310528 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 1310528 0x46A02A: main (indexer_main.cpp:22)
+ n0: 271820 in 128 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=10
+#-----------
+time=89908571
+mem_heap_B=83486116
+mem_heap_extra_B=451204
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=92854811
+mem_heap_B=86780836
+mem_heap_extra_B=542724
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=95801051
+mem_heap_B=90075556
+mem_heap_extra_B=634244
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=97723881
+mem_heap_B=92225700
+mem_heap_extra_B=693972
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=99502321
+mem_heap_B=94235236
+mem_heap_extra_B=747516
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=101578081
+mem_heap_B=96556516
+mem_heap_extra_B=811996
+mem_stacks_B=0
+heap_tree=detailed
+n5: 96556516 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 67372040 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372040 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372040 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372040 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372040 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372040 0x46A02A: main (indexer_main.cpp:22)
+ n1: 22209120 0x4715F8: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 22209120 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 22209120 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 22209120 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 22209120 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 22209120 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 22209120 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 22209120 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 22209120 0x46A02A: main (indexer_main.cpp:22)
+ n1: 3701280 0x4A6288: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_new_elements_at_back(unsigned long) (new_allocator.h:104)
+  n1: 3701280 0x4A6070: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_deque.h:2091)
+   n1: 3701280 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+    n1: 3701280 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+     n1: 3701280 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+      n1: 3701280 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+       n1: 3701280 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+        n0: 3701280 0x46A02A: main (indexer_main.cpp:22)
+ n1: 2961280 0x4715C3: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 2961280 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 2961280 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 2961280 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 2961280 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 2961280 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 2961280 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 2961280 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 2961280 0x46A02A: main (indexer_main.cpp:22)
+ n0: 312796 in 128 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=16
+#-----------
+time=103653841
+mem_heap_B=98877796
+mem_heap_extra_B=876476
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=105729601
+mem_heap_B=101199076
+mem_heap_extra_B=940956
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=107805361
+mem_heap_B=103520356
+mem_heap_extra_B=1005436
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=110474256
+mem_heap_B=106504868
+mem_heap_extra_B=1088340
+mem_stacks_B=0
+heap_tree=detailed
+n5: 106504868 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 67372040 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372040 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372040 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372040 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372040 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372040 0x46A02A: main (indexer_main.cpp:22)
+ n1: 29861760 0x4715F8: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 29861760 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 29861760 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 29861760 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 29861760 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 29861760 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 29861760 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 29861760 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 29861760 0x46A02A: main (indexer_main.cpp:22)
+ n1: 4976640 0x4A6288: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_new_elements_at_back(unsigned long) (new_allocator.h:104)
+  n1: 4976640 0x4A6070: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_deque.h:2091)
+   n1: 4976640 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+    n1: 4976640 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+     n1: 4976640 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+      n1: 4976640 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+       n1: 4976640 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+        n0: 4976640 0x46A02A: main (indexer_main.cpp:22)
+ n1: 3981632 0x4715C3: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 3981632 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 3981632 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 3981632 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 3981632 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 3981632 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 3981632 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 3981632 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 3981632 0x46A02A: main (indexer_main.cpp:22)
+ n0: 312796 in 128 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=20
+#-----------
+time=113249748
+mem_heap_B=109608644
+mem_heap_extra_B=1174556
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=115607265
+mem_heap_B=112245380
+mem_heap_extra_B=1247788
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=22
+#-----------
+time=118436325
+mem_heap_B=115409060
+mem_heap_extra_B=1335668
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=121578934
+mem_heap_B=119128308
+mem_heap_extra_B=1429892
+mem_stacks_B=0
+heap_tree=detailed
+n5: 119128308 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 67372040 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372040 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372040 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372040 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372040 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372040 0x46A02A: main (indexer_main.cpp:22)
+ n1: 39320160 0x4715F8: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 39320160 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 39320160 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 39320160 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 39320160 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 39320160 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 39320160 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 39320160 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 39320160 0x46A02A: main (indexer_main.cpp:22)
+ n1: 6552960 0x4A6288: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_new_elements_at_back(unsigned long) (new_allocator.h:104)
+  n1: 6552960 0x4A6070: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_deque.h:2091)
+   n1: 6552960 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+    n1: 6552960 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+     n1: 6552960 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+      n1: 6552960 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+       n1: 6552960 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+        n0: 6552960 0x46A02A: main (indexer_main.cpp:22)
+ n1: 5242688 0x4715C3: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 5242688 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 5242688 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 5242688 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 5242688 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 5242688 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 5242688 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 5242688 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 5242688 0x46A02A: main (indexer_main.cpp:22)
+ n0: 640460 in 128 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=24
+#-----------
+time=122993589
+mem_heap_B=120546628
+mem_heap_extra_B=1473852
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=125822649
+mem_heap_B=123710308
+mem_heap_extra_B=1561732
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=128651709
+mem_heap_B=126873988
+mem_heap_extra_B=1649612
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=27
+#-----------
+time=131480769
+mem_heap_B=130037668
+mem_heap_extra_B=1737492
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=133366771
+mem_heap_B=132146628
+mem_heap_extra_B=1796076
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=136560763
+mem_heap_B=135718404
+mem_heap_extra_B=1895292
+mem_stacks_B=0
+heap_tree=detailed
+n5: 135718404 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 67372040 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372040 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372040 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372040 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372040 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372040 0x46A02A: main (indexer_main.cpp:22)
+ n1: 52207680 0x4715F8: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 52207680 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 52207680 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 52207680 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 52207680 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 52207680 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 52207680 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 52207680 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 52207680 0x46A02A: main (indexer_main.cpp:22)
+ n1: 8700960 0x4A6288: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_new_elements_at_back(unsigned long) (new_allocator.h:104)
+  n1: 8700960 0x4A6070: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_deque.h:2091)
+   n1: 8700960 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+    n1: 8700960 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+     n1: 8700960 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+      n1: 8700960 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+       n1: 8700960 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+        n0: 8700960 0x46A02A: main (indexer_main.cpp:22)
+ n1: 6961088 0x4715C3: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 6961088 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 6961088 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 6961088 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 6961088 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 6961088 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 6961088 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 6961088 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 6961088 0x46A02A: main (indexer_main.cpp:22)
+ n0: 476636 in 128 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=30
+#-----------
+time=140119687
+mem_heap_B=139698276
+mem_heap_extra_B=2005844
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=143678611
+mem_heap_B=143678148
+mem_heap_extra_B=2116396
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=145458130
+mem_heap_B=145668324
+mem_heap_extra_B=2171676
+mem_stacks_B=0
+heap_tree=detailed
+n5: 145668324 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 67372040 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372040 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372040 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372040 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372040 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372040 0x46A02A: main (indexer_main.cpp:22)
+ n1: 59861280 0x4715F8: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 59861280 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 59861280 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 59861280 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 59861280 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 59861280 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 59861280 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 59861280 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 59861280 0x46A02A: main (indexer_main.cpp:22)
+ n1: 9976800 0x4A6288: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_new_elements_at_back(unsigned long) (new_allocator.h:104)
+  n1: 9976800 0x4A6070: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_deque.h:2091)
+   n1: 9976800 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+    n1: 9976800 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+     n1: 9976800 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+      n1: 9976800 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+       n1: 9976800 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+        n0: 9976800 0x46A02A: main (indexer_main.cpp:22)
+ n1: 7981568 0x4715C3: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 7981568 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 7981568 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 7981568 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 7981568 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 7981568 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 7981568 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 7981568 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 7981568 0x46A02A: main (indexer_main.cpp:22)
+ n0: 476636 in 128 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=33
+#-----------
+time=147237535
+mem_heap_B=147658020
+mem_heap_extra_B=2226948
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=149017054
+mem_heap_B=149648196
+mem_heap_extra_B=2282228
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=150796459
+mem_heap_B=151637892
+mem_heap_extra_B=2337500
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=152575978
+mem_heap_B=153628068
+mem_heap_extra_B=2392780
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=37
+#-----------
+time=154355383
+mem_heap_B=155617764
+mem_heap_extra_B=2448052
+mem_stacks_B=0
+heap_tree=detailed
+n5: 155617764 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 67514880 0x4715F8: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 67514880 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 67514880 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 67514880 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 67514880 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 67514880 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 67514880 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 67514880 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 67514880 0x46A02A: main (indexer_main.cpp:22)
+ n1: 67372040 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372040 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372040 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372040 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372040 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372040 0x46A02A: main (indexer_main.cpp:22)
+ n1: 11252160 0x4A6288: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_new_elements_at_back(unsigned long) (new_allocator.h:104)
+  n1: 11252160 0x4A6070: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_deque.h:2091)
+   n1: 11252160 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+    n1: 11252160 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+     n1: 11252160 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+      n1: 11252160 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+       n1: 11252160 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+        n0: 11252160 0x46A02A: main (indexer_main.cpp:22)
+ n1: 9002048 0x4715C3: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 9002048 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 9002048 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 9002048 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 9002048 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 9002048 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 9002048 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 9002048 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 9002048 0x46A02A: main (indexer_main.cpp:22)
+ n0: 476636 in 128 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=38
+#-----------
+time=156134902
+mem_heap_B=157607940
+mem_heap_extra_B=2503332
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=157914307
+mem_heap_B=159597636
+mem_heap_extra_B=2558604
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=159693826
+mem_heap_B=161587812
+mem_heap_extra_B=2613884
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=161473231
+mem_heap_B=163577508
+mem_heap_extra_B=2669156
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=163252750
+mem_heap_B=165567684
+mem_heap_extra_B=2724436
+mem_stacks_B=0
+heap_tree=detailed
+n5: 165567684 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 75168480 0x4715F8: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 75168480 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 75168480 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 75168480 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 75168480 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 75168480 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 75168480 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 75168480 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 75168480 0x46A02A: main (indexer_main.cpp:22)
+ n1: 67372040 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372040 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372040 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372040 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372040 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372040 0x46A02A: main (indexer_main.cpp:22)
+ n1: 12528000 0x4A6288: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_new_elements_at_back(unsigned long) (new_allocator.h:104)
+  n1: 12528000 0x4A6070: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_deque.h:2091)
+   n1: 12528000 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+    n1: 12528000 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+     n1: 12528000 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+      n1: 12528000 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+       n1: 12528000 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+        n0: 12528000 0x46A02A: main (indexer_main.cpp:22)
+ n1: 10022528 0x4715C3: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 10022528 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 10022528 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 10022528 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 10022528 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 10022528 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 10022528 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 10022528 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 10022528 0x46A02A: main (indexer_main.cpp:22)
+ n0: 476636 in 128 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=43
+#-----------
+time=165032155
+mem_heap_B=167557380
+mem_heap_extra_B=2779708
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=168397335
+mem_heap_B=171403876
+mem_heap_extra_B=2877452
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=170176854
+mem_heap_B=173394052
+mem_heap_extra_B=2932732
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=172845791
+mem_heap_B=176379044
+mem_heap_extra_B=3015644
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=47
+#-----------
+time=174625679
+mem_heap_B=178369220
+mem_heap_extra_B=3070924
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=176404715
+mem_heap_B=180358916
+mem_heap_extra_B=3126196
+mem_stacks_B=0
+heap_tree=detailed
+n5: 180358916 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 86294400 0x4715F8: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 86294400 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 86294400 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 86294400 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 86294400 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 86294400 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 86294400 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 86294400 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 86294400 0x46A02A: main (indexer_main.cpp:22)
+ n1: 67372040 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372040 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372040 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372040 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372040 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372040 0x46A02A: main (indexer_main.cpp:22)
+ n1: 14382240 0x4A6288: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_new_elements_at_back(unsigned long) (new_allocator.h:104)
+  n1: 14382240 0x4A6070: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_deque.h:2091)
+   n1: 14382240 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+    n1: 14382240 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+     n1: 14382240 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+      n1: 14382240 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+       n1: 14382240 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+        n0: 14382240 0x46A02A: main (indexer_main.cpp:22)
+ n1: 11505920 0x4715C3: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 11505920 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 11505920 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 11505920 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 11505920 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 11505920 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 11505920 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 11505920 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 11505920 0x46A02A: main (indexer_main.cpp:22)
+ n0: 804316 in 128 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=49
+#-----------
+time=178214121
+mem_heap_B=182380132
+mem_heap_extra_B=3182340
+mem_stacks_B=0
+heap_tree=peak
+n5: 182380132 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 87849120 0x4715F8: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 87849120 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 87849120 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 87849120 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 87849120 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 87849120 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 87849120 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 87849120 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 87849120 0x46A02A: main (indexer_main.cpp:22)
+ n1: 67372040 0x499D59: std::vector<int, std::allocator<int> >::_M_default_append(unsigned long) (new_allocator.h:104)
+  n1: 67372040 0x498970: TraceGraphConverter::convert(TraceGraph) (stl_vector.h:677)
+   n1: 67372040 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+    n1: 67372040 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+     n1: 67372040 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+      n0: 67372040 0x46A02A: main (indexer_main.cpp:22)
+ n1: 14641440 0x4A6288: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_new_elements_at_back(unsigned long) (new_allocator.h:104)
+  n1: 14641440 0x4A6070: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_deque.h:2091)
+   n1: 14641440 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+    n1: 14641440 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+     n1: 14641440 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+      n1: 14641440 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+       n1: 14641440 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+        n0: 14641440 0x46A02A: main (indexer_main.cpp:22)
+ n1: 11713216 0x4715C3: std::_Deque_base<TraceEvent, std::allocator<TraceEvent> >::_M_initialize_map(unsigned long) (new_allocator.h:104)
+  n1: 11713216 0x4A64C8: void std::__uninitialized_default_1<false>::__uninit_default<std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*> >(std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>, std::_Deque_iterator<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::deque<TraceEvent, std::allocator<TraceEvent> >&, std::deque<TraceEvent, std::allocator<TraceEvent> >*>) (stl_deque.h:490)
+   n1: 11713216 0x4A613B: std::deque<std::deque<TraceEvent, std::allocator<TraceEvent> >, std::allocator<std::deque<TraceEvent, std::allocator<TraceEvent> > > >::_M_default_append(unsigned long) (stl_uninitialized.h:557)
+    n1: 11713216 0x4A4A99: Trace::add(Event, std::unordered_set<Event, std::hash<Event>, std::equal_to<Event>, std::allocator<Event> >) (Trace.cpp:47)
+     n1: 11713216 0x498A33: TraceGraphConverter::convert(TraceGraph) (TraceGraphConverter.cpp:76)
+      n1: 11713216 0x498F29: TraceGraphConverter::convert(std::vector<TraceGraph, std::allocator<TraceGraph> > const&) (TraceGraphConverter.cpp:95)
+       n1: 11713216 0x46FB18: Runtime::initScheduler(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (Runtime.cpp:199)
+        n1: 11713216 0x46C812: Runtime::registerBenchmark(int, char**, int, void (*)()) (Runtime.cpp:52)
+         n0: 11713216 0x46A02A: main (indexer_main.cpp:22)
+ n0: 804316 in 128 places, all below massif's threshold (1.00%)

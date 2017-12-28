@@ -1,1 +1,0 @@
-/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/blackscholes_plain.dir/blackscholes.cpp.o CMakeFiles/blackscholes_plain.dir/blackscholes_main.cpp.o  -o ../../bin/blackscholes_plain -rdynamic 

@@ -1,0 +1,6 @@
+BasedOnStyle: LLVM
+ColumnLimit:     100
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ConstructorInitializerIndentWidth: 8
+ContinuationIndentWidth: 8
+IndentWidth: 4

@@ -1,1 +1,0 @@
-/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/file_system_plain.dir/file_system.cpp.o CMakeFiles/file_system_plain.dir/file_system_main.cpp.o  -o ../../bin/file_system_plain -rdynamic 

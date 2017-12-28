@@ -1,1 +1,0 @@
-/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/test_irs_last_zero.dir/irs/test_irs_last_zero.cpp.o  -o ../bin/test_irs_last_zero -rdynamic -lboost_filesystem -lboost_system -lpthread ../lib/libscheduler.a ../bin/last_zero_irs.o -lpthread -lcgraph -lgvc -Wl,-Bstatic -lboost_system -lboost_filesystem -lboost_program_options -lboost_graph -lboost_regex -Wl,-Bdynamic 

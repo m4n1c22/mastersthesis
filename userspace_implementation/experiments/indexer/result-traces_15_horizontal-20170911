@@ -1,0 +1,111 @@
+['-itraces_15_horizontal/ip_trace_t15_0001.gv', '-itraces_15_horizontal/ip_trace_t15_0016.gv', '-itraces_15_horizontal/ip_trace_t15_0256.gv', '-itraces_15_horizontal/ip_trace_t15_0512.gv', '-itraces_15_horizontal/ip_trace_t15_1024.gv', '-itraces_15_horizontal/ip_trace_t15_2048.gv', '-itraces_15_horizontal/ip_trace_t15_4096.gv']
+=== plain ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_plain', '-t', '15', '']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+=== IRS -itraces_15_horizontal/ip_trace_t15_0001.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_irs', '-t', '15', '-itraces_15_horizontal/ip_trace_t15_0001.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   272.348
+Mean time (IRS):     7279.438
+Overhead (%):        2572.8443021428466
+Median time (plain): 228
+Median time (IRS):   7572
+Overhead (%):        3221.052631578947
+Variance (plain):    221145.2881841842
+Variance (IRS):      27196993.779935934
+Std. dev. (plain):   470.26087247844066
+Std. dev. (IRS):     5215.073708006046
+=== IRS -itraces_15_horizontal/ip_trace_t15_0016.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_irs', '-t', '15', '-itraces_15_horizontal/ip_trace_t15_0016.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   272.348
+Mean time (IRS):     7141.795
+Overhead (%):        2522.3049187069487
+Median time (plain): 228
+Median time (IRS):   7965
+Overhead (%):        3393.4210526315787
+Variance (plain):    221145.2881841842
+Variance (IRS):      25303479.93691191
+Std. dev. (plain):   470.26087247844066
+Std. dev. (IRS):     5030.2564484240675
+=== IRS -itraces_15_horizontal/ip_trace_t15_0256.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_irs', '-t', '15', '-itraces_15_horizontal/ip_trace_t15_0256.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   272.348
+Mean time (IRS):     7158.157
+Overhead (%):        2528.3126734912685
+Median time (plain): 228
+Median time (IRS):   7329
+Overhead (%):        3114.4736842105262
+Variance (plain):    221145.2881841842
+Variance (IRS):      23726593.752103105
+Std. dev. (plain):   470.26087247844066
+Std. dev. (IRS):     4870.9951500800225
+=== IRS -itraces_15_horizontal/ip_trace_t15_0512.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_irs', '-t', '15', '-itraces_15_horizontal/ip_trace_t15_0512.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   272.348
+Mean time (IRS):     5681.988
+Overhead (%):        1986.2969436162557
+Median time (plain): 228
+Median time (IRS):   5500
+Overhead (%):        2312.280701754386
+Variance (plain):    221145.2881841842
+Variance (IRS):      20148488.180036034
+Std. dev. (plain):   470.26087247844066
+Std. dev. (IRS):     4488.706738030012
+=== IRS -itraces_15_horizontal/ip_trace_t15_1024.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_irs', '-t', '15', '-itraces_15_horizontal/ip_trace_t15_1024.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   272.348
+Mean time (IRS):     2898.69
+Overhead (%):        964.3331326097492
+Median time (plain): 228
+Median time (IRS):   423
+Overhead (%):        85.52631578947368
+Variance (plain):    221145.2881841842
+Variance (IRS):      13086694.45035035
+Std. dev. (plain):   470.26087247844066
+Std. dev. (IRS):     3617.5536554901782
+=== IRS -itraces_15_horizontal/ip_trace_t15_2048.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_irs', '-t', '15', '-itraces_15_horizontal/ip_trace_t15_2048.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   272.348
+Mean time (IRS):     1488.36
+Overhead (%):        446.4919881915784
+Median time (plain): 228
+Median time (IRS):   336
+Overhead (%):        47.368421052631575
+Variance (plain):    221145.2881841842
+Variance (IRS):      7054582.592992993
+Std. dev. (plain):   470.26087247844066
+Std. dev. (IRS):     2656.0464214680046
+=== IRS -itraces_15_horizontal/ip_trace_t15_4096.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_irs', '-t', '15', '-itraces_15_horizontal/ip_trace_t15_4096.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   272.348
+Mean time (IRS):     270.002
+Overhead (%):        -0.8613979173704245
+Median time (plain): 228
+Median time (IRS):   200
+Overhead (%):        -12.280701754385964
+Variance (plain):    221145.2881841842
+Variance (IRS):      171130.74674274272
+Std. dev. (plain):   470.26087247844066
+Std. dev. (IRS):     413.6795217831585
+| benchmark            | #traces | median time (µs) | overhead(%) |
+| indexer(15) |    0001 |             7572 |        3221 |
+| indexer(15) |    0016 |             7965 |        3393 |
+| indexer(15) |    0256 |             7329 |        3114 |
+| indexer(15) |    0512 |             5500 |        2312 |
+| indexer(15) |    1024 |              423 |          86 |
+| indexer(15) |    2048 |              336 |          47 |
+| indexer(15) |    4096 |              200 |         -12 |

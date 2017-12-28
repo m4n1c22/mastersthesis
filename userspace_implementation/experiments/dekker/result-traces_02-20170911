@@ -1,0 +1,244 @@
+['-itraces_02/ip_trace_0001.gv', '-itraces_02/ip_trace_0002.gv', '-itraces_02/ip_trace_0003.gv', '-itraces_02/ip_trace_0004.gv', '-itraces_02/ip_trace_0005.gv']
+=== plain ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_plain', '-t', '2', '']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+=== IRS -itraces_02/ip_trace_0001.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0001.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   121.483
+Mean time (IRS):     211.541
+Overhead (%):        74.13218310380876
+Median time (plain): 114
+Median time (IRS):   124
+Overhead (%):        8.771929824561402
+Variance (plain):    17051.705416416415
+Variance (IRS):      1259095.9582772772
+Std. dev. (plain):   130.58217878568428
+Std. dev. (IRS):     1122.0944515847484
+=== IRS -itraces_02/ip_trace_0002.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0002.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   121.483
+Mean time (IRS):     174.017
+Overhead (%):        43.24391067062881
+Median time (plain): 114
+Median time (IRS):   127
+Overhead (%):        11.403508771929824
+Variance (plain):    17051.705416416415
+Variance (IRS):      818212.3350460461
+Std. dev. (plain):   130.58217878568428
+Std. dev. (IRS):     904.5509024074024
+=== IRS -itraces_02/ip_trace_0003.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0003.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   121.483
+Mean time (IRS):     204.827
+Overhead (%):        68.60548389486594
+Median time (plain): 114
+Median time (IRS):   127
+Overhead (%):        11.403508771929824
+Variance (plain):    17051.705416416415
+Variance (IRS):      1176286.8098808809
+Std. dev. (plain):   130.58217878568428
+Std. dev. (IRS):     1084.567568149113
+=== IRS -itraces_02/ip_trace_0004.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0004.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   121.483
+Mean time (IRS):     162.332
+Overhead (%):        33.625280903500894
+Median time (plain): 114
+Median time (IRS):   112
+Overhead (%):        -1.7543859649122806
+Variance (plain):    17051.705416416415
+Variance (IRS):      389569.70948548545
+Std. dev. (plain):   130.58217878568428
+Std. dev. (IRS):     624.1551966342068
+=== IRS -itraces_02/ip_trace_0005.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0005.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   121.483
+Mean time (IRS):     128.079
+Overhead (%):        5.429566276763007
+Median time (plain): 114
+Median time (IRS):   115
+Overhead (%):        0.8771929824561403
+Variance (plain):    17051.705416416415
+Variance (IRS):      85294.18093993995
+Std. dev. (plain):   130.58217878568428
+Std. dev. (IRS):     292.05167511921576
+| benchmark            | #traces | median time (µs) | overhead(%) |
+| dekker(2) |    0001 |              124 |           9 |
+| dekker(2) |    0002 |              127 |          11 |
+| dekker(2) |    0003 |              127 |          11 |
+| dekker(2) |    0004 |              112 |          -2 |
+| dekker(2) |    0005 |              115 |           1 |
+['-itraces_02/ip_trace_0001.gv', '-itraces_02/ip_trace_0002.gv', '-itraces_02/ip_trace_0003.gv', '-itraces_02/ip_trace_0004.gv', '-itraces_02/ip_trace_0005.gv']
+=== plain ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_plain', '-t', '2', '']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+=== IRS -itraces_02/ip_trace_0001.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0001.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   117.119
+Mean time (IRS):     203.447
+Overhead (%):        73.7096457449261
+Median time (plain): 115
+Median time (IRS):   129
+Overhead (%):        12.173913043478262
+Variance (plain):    14478.383222222223
+Variance (IRS):      1371818.2254164163
+Std. dev. (plain):   120.326153525417
+Std. dev. (IRS):     1171.2464409407683
+=== IRS -itraces_02/ip_trace_0002.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0002.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   117.119
+Mean time (IRS):     184.872
+Overhead (%):        57.84970841622624
+Median time (plain): 115
+Median time (IRS):   124
+Overhead (%):        7.82608695652174
+Variance (plain):    14478.383222222223
+Variance (IRS):      1024873.7293453454
+Std. dev. (plain):   120.326153525417
+Std. dev. (IRS):     1012.3604740137504
+=== IRS -itraces_02/ip_trace_0003.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0003.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   117.119
+Mean time (IRS):     184.746
+Overhead (%):        57.7421255304434
+Median time (plain): 115
+Median time (IRS):   123
+Overhead (%):        6.956521739130435
+Variance (plain):    14478.383222222223
+Variance (IRS):      739550.6241081082
+Std. dev. (plain):   120.326153525417
+Std. dev. (IRS):     859.9712926069732
+=== IRS -itraces_02/ip_trace_0004.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0004.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   117.119
+Mean time (IRS):     165.088
+Overhead (%):        40.957487683467235
+Median time (plain): 115
+Median time (IRS):   119
+Overhead (%):        3.4782608695652173
+Variance (plain):    14478.383222222223
+Variance (IRS):      483008.08434034034
+Std. dev. (plain):   120.326153525417
+Std. dev. (IRS):     694.9878303541295
+=== IRS -itraces_02/ip_trace_0005.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0005.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   117.119
+Mean time (IRS):     131.518
+Overhead (%):        12.294333114183011
+Median time (plain): 115
+Median time (IRS):   115
+Overhead (%):        0.0
+Variance (plain):    14478.383222222223
+Variance (IRS):      109783.29296896896
+Std. dev. (plain):   120.326153525417
+Std. dev. (IRS):     331.3356198312656
+| benchmark            | #traces | median time (µs) | overhead(%) |
+| dekker(2) |    0001 |              129 |          12 |
+| dekker(2) |    0002 |              124 |           8 |
+| dekker(2) |    0003 |              123 |           7 |
+| dekker(2) |    0004 |              119 |           3 |
+| dekker(2) |    0005 |              115 |           0 |
+['-itraces_02/ip_trace_0001.gv', '-itraces_02/ip_trace_0002.gv', '-itraces_02/ip_trace_0003.gv', '-itraces_02/ip_trace_0004.gv', '-itraces_02/ip_trace_0005.gv']
+=== plain ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_plain', '-t', '2', '']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+=== IRS -itraces_02/ip_trace_0001.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0001.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   144.816
+Mean time (IRS):     209.429
+Overhead (%):        44.617307479836484
+Median time (plain): 113
+Median time (IRS):   127
+Overhead (%):        12.389380530973451
+Variance (plain):    115173.88202602604
+Variance (IRS):      829675.2442032032
+Std. dev. (plain):   339.37277737913223
+Std. dev. (IRS):     910.8651075780668
+=== IRS -itraces_02/ip_trace_0002.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0002.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||error while executing benchmark
+
+Mean time (plain):   144.816
+Mean time (IRS):     210.064
+Overhead (%):        45.055794939785656
+Median time (plain): 113
+Median time (IRS):   129
+Overhead (%):        14.15929203539823
+Variance (plain):    115173.88202602604
+Variance (IRS):      924136.1320360361
+Std. dev. (plain):   339.37277737913223
+Std. dev. (IRS):     961.3199946095141
+=== IRS -itraces_02/ip_trace_0003.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0003.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   144.816
+Mean time (IRS):     202.496
+Overhead (%):        39.82985305491106
+Median time (plain): 113
+Median time (IRS):   123
+Overhead (%):        8.849557522123893
+Variance (plain):    115173.88202602604
+Variance (IRS):      1190431.1311151152
+Std. dev. (plain):   339.37277737913223
+Std. dev. (IRS):     1091.0688021912804
+=== IRS -itraces_02/ip_trace_0004.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0004.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   144.816
+Mean time (IRS):     161.464
+Overhead (%):        11.495967296431331
+Median time (plain): 113
+Median time (IRS):   110
+Overhead (%):        -2.6548672566371683
+Variance (plain):    115173.88202602604
+Variance (IRS):      299814.5932972973
+Std. dev. (plain):   339.37277737913223
+Std. dev. (IRS):     547.5532789576712
+=== IRS -itraces_02/ip_trace_0005.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/dekker/dekker_irs', '-t', '2', '-itraces_02/ip_trace_0005.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   144.816
+Mean time (IRS):     123.392
+Overhead (%):        -14.793945420395541
+Median time (plain): 113
+Median time (IRS):   109
+Overhead (%):        -3.5398230088495577
+Variance (plain):    115173.88202602604
+Variance (IRS):      20263.221557557557
+Std. dev. (plain):   339.37277737913223
+Std. dev. (IRS):     142.3489429449954
+| benchmark            | #traces | median time (µs) | overhead(%) |
+| dekker(2) |    0001 |              127 |          12 |
+| dekker(2) |    0002 |              129 |          14 |
+| dekker(2) |    0003 |              123 |           9 |
+| dekker(2) |    0004 |              110 |          -3 |
+| dekker(2) |    0005 |              109 |          -4 |

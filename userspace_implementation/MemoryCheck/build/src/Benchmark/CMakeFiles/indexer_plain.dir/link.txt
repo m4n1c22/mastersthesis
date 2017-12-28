@@ -1,1 +1,0 @@
-/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/indexer_plain.dir/indexer.cpp.o CMakeFiles/indexer_plain.dir/indexer_main.cpp.o  -o ../../bin/indexer_plain -rdynamic 

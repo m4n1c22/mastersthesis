@@ -1,0 +1,51 @@
+['-itraces_15_vertical/ip_trace_t15_0001.gv', '-itraces_15_vertical/ip_trace_t15_0008.gv', '-itraces_15_vertical/ip_trace_t15_0064.gv']
+=== plain ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_plain', '-t', '15', '']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+=== IRS -itraces_15_vertical/ip_trace_t15_0001.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_irs', '-t', '15', '-itraces_15_vertical/ip_trace_t15_0001.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   267.581
+Mean time (IRS):     6123.273
+Overhead (%):        2188.3810883433425
+Median time (plain): 252
+Median time (IRS):   5650
+Overhead (%):        2142.063492063492
+Variance (plain):    53639.01245145145
+Variance (IRS):      17693625.321792793
+Std. dev. (plain):   231.60097679295623
+Std. dev. (IRS):     4206.379122451136
+=== IRS -itraces_15_vertical/ip_trace_t15_0008.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_irs', '-t', '15', '-itraces_15_vertical/ip_trace_t15_0008.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   267.581
+Mean time (IRS):     2039.86
+Overhead (%):        662.3336485026964
+Median time (plain): 252
+Median time (IRS):   294
+Overhead (%):        16.666666666666664
+Variance (plain):    53639.01245145145
+Variance (IRS):      10802067.898298299
+Std. dev. (plain):   231.60097679295623
+Std. dev. (IRS):     3286.6499506790037
+=== IRS -itraces_15_vertical/ip_trace_t15_0064.gv ===
+['/home/ulmo/dat/phd/llvm-scheduling/rep/llvm-scheduling/experiments/indexer/indexer_irs', '-t', '15', '-itraces_15_vertical/ip_trace_t15_0064.gv']
+----------------------------------------------------------------------------------------------------
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Mean time (plain):   267.581
+Mean time (IRS):     839.892
+Overhead (%):        213.8832727286317
+Median time (plain): 252
+Median time (IRS):   271
+Overhead (%):        7.5396825396825395
+Variance (plain):    53639.01245145145
+Variance (IRS):      3848729.1634994997
+Std. dev. (plain):   231.60097679295623
+Std. dev. (IRS):     1961.8178211800146
+| benchmark            | #traces | median time (µs) | overhead(%) |
+| indexer(15) |    0001 |             5650 |        2142 |
+| indexer(15) |    0008 |              294 |          17 |
+| indexer(15) |    0064 |              271 |           8 |
