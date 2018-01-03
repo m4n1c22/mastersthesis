@@ -9,9 +9,12 @@
 #include <thread>
 #include <time.h>
 
+#include "../../include/common.h"
 #include "../../include/user_space.h"
 
+
 int val;
+
 
 
 void writer(thread_id_t id) {
@@ -23,8 +26,8 @@ void writer(thread_id_t id) {
 	#ifdef DEBUG
 	cout << "Thread " << id << " : writing data "<<val<<std::endl;
 	#endif
-
 	AfterMA(id);
+
 }
 
 
@@ -37,7 +40,9 @@ void reader(thread_id_t id) {
 	cout << "Thread " << id << " : read data "<<val<<std::endl;
 	#endif
 	AfterMA(id);
+
 }
+
 
 int main()
 {
@@ -64,12 +69,12 @@ int main()
     #endif
 
 	thread tr2(reader, 3);  
-	#ifdef DEBUG
+    #ifdef DEBUG
     cout << "Thread 3 is reader\n";
     #endif
 
 	thread tw2(writer, 4);  
-	#ifdef DEBUG
+    #ifdef DEBUG
     cout << "Thread 4 is writer\n";
     #endif
 
@@ -79,11 +84,12 @@ int main()
     tw2.join();  
 
     reset_clock();
+
     end = clock();
 
     pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
 
-	FILE *exec_time_file_ptr = fopen("exec_time_proto_2.dat", "a");
+	FILE *exec_time_file_ptr = fopen("exec_time_proto_1.dat", "a");
 
 	fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
 

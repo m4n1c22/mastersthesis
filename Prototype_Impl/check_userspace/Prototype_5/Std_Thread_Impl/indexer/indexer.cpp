@@ -12,10 +12,18 @@
 #include <algorithm>
 #include "../../include/common.h"
 #include "../../include/user_space.h"
+#include <unistd.h>
+#include <sched.h>
 
+#define SEC2NANO 1000000000.0f
 
 #define MESSAGE_LIMIT 		4
 #define SIZE				128
+#define USE_CLOCK			1
+
+//#define SET_CPU_AFF			1
+//double begin_time[THREAD_COUNT];
+//double end_time[THREAD_COUNT];
 
 int gTable[SIZE];
 
@@ -48,6 +56,19 @@ bool comp_swap(int *val, int oldval, int newval) {
 	}
 }
 
+int stick_this_thread_to_core(int core_id) {
+   int num_cores = sysconf(_SC_NPROCESSORS_ONLN);
+   if (core_id < 0 || core_id >= num_cores)
+      return EINVAL;
+
+   cpu_set_t cpuset;
+   CPU_ZERO(&cpuset);
+   CPU_SET(core_id, &cpuset);
+
+   pthread_t current_thread = pthread_self();    
+   return pthread_setaffinity_np(current_thread, sizeof(cpu_set_t), &cpuset);
+}
+
 void indexer(thread_id_t id) {
 
 
@@ -56,9 +77,12 @@ void indexer(thread_id_t id) {
 	int m=0;
 
 	bool ret_val;
+	#ifdef SET_CPU_AFF
+	stick_this_thread_to_core(0);
+	#endif
+	//begin_time[id-1] = clock();
 
-	thread_reg(id);
-
+	thread_reg(id);	
 
  	while (true) {
 		w = getMsg(&m, id);
@@ -78,6 +102,7 @@ void indexer(thread_id_t id) {
             h = (h + 1) % SIZE;
         }
     }
+    //end_time[id-1] = clock();
 }
 
 void init_hash_array() {
@@ -88,11 +113,16 @@ void init_hash_array() {
     }
 }
 
+
+
 int main()
 {
-
+	#ifdef USE_CLOCK
 	clock_t begin, end;
-
+ 	#else
+ 	timespec ts;
+    timespec ts2;
+ 	#endif
  	double pgm_exec_time;
 
 	char trace0[] = "{(1,[1:0:0:0:0:0:0:0:0:0:0:1]),(1,[3:0:0:0:0:0:0:0:0:0:0:2]), (1,[5:0:0:0:0:0:0:0:0:0:0:3])}";
@@ -124,12 +154,15 @@ int main()
 
 		init_hash_array();
 
-		
-	 
-	 	initialize_trace(trace);
-	 	initialize_vec_clock();
 
-		begin = clock();
+	 	initialize_trace(trace);
+	 	#ifdef USE_CLOCK
+	 	begin = clock();
+		#else
+		clock_gettime(CLOCK_MONOTONIC_RAW,&ts);
+	 	double v1 = ts.tv_nsec ;
+    	double v2 = ts.tv_sec ;
+		#endif
 	 	for (i = 0; i < THREAD_COUNT; ++i)
 	 	{
 	 		tin[i] = thread(indexer, (i+1));  
@@ -144,15 +177,26 @@ int main()
 	 	{
 			tin[i].join();  
 	 	}
-	    end = clock();
+
+	 	#ifdef USE_CLOCK
+	 	end = clock();
+	 	#else
+	 	clock_gettime(CLOCK_MONOTONIC_RAW,&ts2);
+	 	#endif
 	    reset_clock();
-
-
+	    FILE *exec_time_file_ptr = fopen(filename, "a");
+	    #ifdef USE_CLOCK
 	    pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
-
-		FILE *exec_time_file_ptr = fopen(filename, "a");
-
 		fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
+	    #else
+	    v1 = ts2.tv_nsec - v1;
+    	v2 = ts2.tv_sec - v2;
+	    
+    	long long totaltime = ((ts2.tv_sec*SEC2NANO + ts2.tv_nsec) - (ts.tv_sec*SEC2NANO + ts.tv_nsec));
+    	fprintf(exec_time_file_ptr, "%lld\n", totaltime);
+		#endif
+
+				//fprintf(exec_time_file_ptr, "%lf\n", execution_time());		
 
 		fclose(exec_time_file_ptr);
 	    #ifdef DEBUG

@@ -8,7 +8,10 @@
 #include <iostream>
 #include <thread>
 #include <time.h>
+
+#include "../../include/common.h"
 #include "../../include/user_space.h"
+
 
 int val;
 
@@ -24,6 +27,7 @@ void writer(thread_id_t id) {
 	cout << "Thread " << id << " : writing data "<<val<<std::endl;
 	#endif
 	AfterMA(id);
+
 }
 
 
@@ -36,19 +40,23 @@ void reader(thread_id_t id) {
 	cout << "Thread " << id << " : read data "<<val<<std::endl;
 	#endif
 	AfterMA(id);
+
 }
+
 
 int main()
 {
+
 	clock_t begin, end;
 
  	double pgm_exec_time;
 
-	begin = clock();	
+	begin = clock();
+
 	char trace[] = "{(1,[0:0:0:0]),(2,[1:0:0:0]),(3,[1:0:0:0]),(4,[1:1:1:0])}";
  
  	initialize_trace(trace);
- 	initialize_vec_clock();
+
 
 	thread tw1(writer, 1);  
 	#ifdef DEBUG
@@ -61,7 +69,7 @@ int main()
     #endif
 
 	thread tr2(reader, 3);  
-	#ifdef DEBUG
+    #ifdef DEBUG
     cout << "Thread 3 is reader\n";
     #endif
 
@@ -76,11 +84,12 @@ int main()
     tw2.join();  
 
     reset_clock();
+
     end = clock();
 
     pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
 
-	FILE *exec_time_file_ptr = fopen("exec_time_proto_6.dat", "a");
+	FILE *exec_time_file_ptr = fopen("exec_time_proto_1.dat", "a");
 
 	fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
 

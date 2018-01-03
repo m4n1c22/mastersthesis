@@ -18,7 +18,7 @@
 
 #define USE_CLOCK			1
 
-int arr[THREAD_COUNT];
+int g_arr[THREAD_COUNT];
 
 
 
@@ -29,7 +29,7 @@ void ZeroThreadFunction(thread_id_t id) {
 	thread_reg(id);
 	for(;;) {
     	BeforeMA(id);
-    	if(arr[i]==0) {
+    	if(g_arr[i]==0) {
     		done = 1;
     	}
 		AfterMA(id);
@@ -50,11 +50,11 @@ void OtherThreadsFunction(thread_id_t id) {
 	thread_reg(id);
 
 	BeforeMA(id);
-	temp = arr[id-2];
+	temp = g_arr[id-2];
 	AfterMA(id);
 	
 	BeforeMA(id);
-	arr[id-1] = temp;
+	g_arr[id-1] = temp;
 	AfterMA(id);
 }
 
@@ -62,7 +62,7 @@ void init_array() {
 
 	int i;
 	for (i = 0; i < THREAD_COUNT; i++) {
-        arr[i] = 0;
+        g_arr[i] = 0;
     }
 }
 
@@ -117,7 +117,7 @@ int main()
  	clock_gettime(CLOCK_MONOTONIC_RAW,&ts2);
  	#endif
     reset_clock();
-    FILE *exec_time_file_ptr = fopen("exec_time_proto_1.dat", "a");
+    FILE *exec_time_file_ptr = fopen("last_zero_proto_2.dat", "a");
     #ifdef USE_CLOCK
     pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
 	fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
