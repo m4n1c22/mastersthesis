@@ -1,9 +1,0 @@
-python eval_scr.py
-Trace 0 Exec Time(micro seconds) for each prototype:
-[416.29, 477.89, 337.61, 338.39, 700.24, 310.38]
-Trace 1 Exec Time(micro seconds) for each prototype:
-[377.84, 547.77, 303.41, 585.3, 556.65, 460.37]
-Trace 2 Exec Time(micro seconds) for each prototype:
-[360.81, 918.47, 614.03, 819.37, 965.91, 864.91]
-Trace 3 Exec Time(micro seconds) for each prototype:
-[406.38, 1075.32, 299.74, 996.34, 1177.64, 1069.72]
