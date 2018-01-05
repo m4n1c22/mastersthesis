@@ -51,8 +51,13 @@ void ctxt_switch_thread(thread_id_t tid) {
 	}
 }
 
-
-
+/***/
+void print_curr_clk(void) {
+	int i;
+    for(i = 0; i < THREAD_COUNT; i++) {
+    	printk(KERN_INFO "CLK[%d] - %d", i, curr_clk_time.clocks[i]);
+    }
+}
 
 /***/
 mem_access check_mem_access_with_trace(thread_id_t tid) {
@@ -82,6 +87,7 @@ void req_ctxt_switch(thread_id_t tid) {
 
 		#ifdef DEBUG
 		printk(KERN_INFO "thread restricted... %d", tid);
+		print_curr_clk();
 		#endif
 		signal_all_other_threads(tid);
 		if(down_interruptible(&mutex_wait_queue)){
@@ -101,6 +107,9 @@ void req_ctxt_switch(thread_id_t tid) {
 void signal_all_other_threads(thread_id_t tid) {
 
 	int i;
+	#ifdef DEBUG
+	printk(KERN_INFO "Signalling Thread ID: %d\n", tid);
+	#endif
 	if(down_interruptible(&mutex_wait_queue)){
 		#ifdef DEBUG
 		printk(KERN_ALERT "Scheduler:Mutual Exclusive position access failed from signal_all_other_threads function");
@@ -116,6 +125,11 @@ void signal_all_other_threads(thread_id_t tid) {
 				up(&threads_sem[i]);
 				wait_queue[i] = 0;				
 			}
+			#ifdef DEBUG
+			else {
+				printk(KERN_INFO "thread restricted... %d", (i+1));
+			}
+			#endif
 		}
 	}
 	

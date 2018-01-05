@@ -11,7 +11,7 @@ make load
 
 
 #configurable value for the test_runs counter.
-test_runs=99
+test_runs=999
 error_count=0
 success_count=0
 count=0

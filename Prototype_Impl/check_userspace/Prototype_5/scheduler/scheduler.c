@@ -136,7 +136,7 @@ static void sched_signalling(struct work_struct *w) {
 	#endif
 	/**Invoking the signalling valid threads.*/
 	while(flag == 0) {
-		msleep(100);
+		msleep(1);
 		signal_valid_threads();		
 	}	
 } 

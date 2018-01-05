@@ -169,6 +169,9 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module read.\n");
 
+	int d= THREAD_COUNT;
+
+	printk(KERN_INFO "Thread count %d\n", d);
 
 	for (i = 0; i < num_traces; ++i)
 	{

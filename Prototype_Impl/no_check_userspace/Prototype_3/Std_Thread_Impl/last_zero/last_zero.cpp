@@ -37,7 +37,7 @@ void ZeroThreadFunction(thread_id_t id) {
 			break;
 		}
 		if(i==0) {
-			i=THREAD_COUNT-1;;
+			break;
 		}
 		else {i--;}
 	}
