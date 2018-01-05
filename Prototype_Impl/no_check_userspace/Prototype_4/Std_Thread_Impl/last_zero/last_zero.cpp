@@ -80,60 +80,86 @@ int main()
 
     double pgm_exec_time;
 
-	char trace[] = "{(2,[0:1:1:0:0:0:0:0:0:0:0:0:0:0:0:0]),(3,[0:0:1:1:0:0:0:0:0:0:0:0:0:0:0:0]),(4,[0:0:0:1:1:0:0:0:0:0:0:0:0:0:0:0]),(5,[0:0:0:0:1:1:0:0:0:0:0:0:0:0:0:0]),(7,[0:0:0:0:0:2:0:0:0:0:0:0:0:0:0:0]),(7,[0:0:0:0:0:2:1:1:0:0:0:0:0:0:0:0]),(8,[0:0:0:0:0:0:0:1:1:0:0:0:0:0:0:0]),(9,[0:0:0:0:0:0:0:0:1:1:0:0:0:0:0:0]),(10,[0:0:0:0:0:0:0:0:0:1:1:0:0:0:0:0]),(11,[0:0:0:0:0:0:0:0:0:0:1:1:0:0:0:0]),(13,[0:0:0:0:0:0:0:0:0:0:0:2:0:0:0:0]),(14,[0:0:0:0:0:0:0:0:0:0:0:2:2:0:0:0]),(14,[0:0:0:0:0:0:0:0:0:0:0:2:2:1:1:0]),(16,[0:0:0:0:0:0:0:0:0:0:0:0:0:0:2:0]),(16,[1:0:0:0:0:0:0:0:0:0:0:0:0:0:2:1])}";
+
+	char trace0[] = "{(2,[0:1:1:0:0:0:0:0:0:0:0:0:0:0:0:0]),(3,[0:0:1:1:0:0:0:0:0:0:0:0:0:0:0:0]),(4,[0:0:0:1:1:0:0:0:0:0:0:0:0:0:0:0]),(5,[0:0:0:0:1:1:0:0:0:0:0:0:0:0:0:0]),(7,[0:0:0:0:0:2:0:0:0:0:0:0:0:0:0:0]),(7,[0:0:0:0:0:2:1:1:0:0:0:0:0:0:0:0]),(8,[0:0:0:0:0:0:0:1:1:0:0:0:0:0:0:0]),(9,[0:0:0:0:0:0:0:0:1:1:0:0:0:0:0:0]),(10,[0:0:0:0:0:0:0:0:0:1:1:0:0:0:0:0]),(11,[0:0:0:0:0:0:0:0:0:0:1:1:0:0:0:0]),(13,[0:0:0:0:0:0:0:0:0:0:0:2:0:0:0:0]),(14,[0:0:0:0:0:0:0:0:0:0:0:2:2:0:0:0]),(14,[0:0:0:0:0:0:0:0:0:0:0:2:2:1:1:0]),(16,[0:0:0:0:0:0:0:0:0:0:0:0:0:0:2:0]),(16,[1:0:0:0:0:0:0:0:0:0:0:0:0:0:2:1])}";
+	char trace1[] = "{(9,[0:0:0:0:0:0:0:0:1:1:0:0:0:0:0:0]),(10,[0:0:0:0:0:0:0:0:0:1:1:0:0:0:0:0]),(11,[0:0:0:0:0:0:0:0:0:0:1:1:0:0:0:0]),(12,[0:0:0:0:0:0:0:0:0:0:0:1:1:0:0:0]),(13,[0:0:0:0:0:0:0:0:0:0:0:0:1:1:0:0]),(14,[0:0:0:0:0:0:0:0:0:0:0:0:0:1:1:0]),(16,[0:0:0:0:0:0:0:0:0:0:0:0:0:0:2:0]),(16,[1:0:0:0:0:0:0:0:0:0:0:0:0:0:2:1])}";
+	char trace2[] = "{(12,[0:0:0:0:0:0:0:0:0:0:0:1:1:0:0:0]),(13,[0:0:0:0:0:0:0:0:0:0:0:0:1:1:0:0]),(14,[0:0:0:0:0:0:0:0:0:0:0:0:0:1:1:0]),(16,[0:0:0:0:0:0:0:0:0:0:0:0:0:0:2:0]),(16,[1:0:0:0:0:0:0:0:0:0:0:0:0:0:2:1])}";
+	char trace3[] = "{(16,[1:0:0:0:0:0:0:0:0:0:0:0:0:0:2:1])}";
+	int i, j;
+
+	char *trace;
  
-	thread tin[THREAD_COUNT];
+	for (j = 0; j < 4; ++j) {
+		char filename[50];
+		switch(j) {
+			case 0: trace = trace0;
+					strcpy(filename,"last_zero_trace_0_proto_4.dat");
+					break;
+			case 1: trace = trace1;
+					strcpy(filename,"last_zero_trace_1_proto_4.dat");
+					break;
+			case 2: trace = trace2;
+					strcpy(filename,"last_zero_trace_2_proto_4.dat");
+					break;
+			case 3: trace = trace3;
+					strcpy(filename,"last_zero_trace_3_proto_4.dat");
+					break;
+		}		
 
-	int i = 0;
+		i=0;
 
- 	initialize_trace(trace);
- 	init_array();
- 	#ifdef USE_CLOCK
- 	begin = clock();
-	#else
-	clock_gettime(CLOCK_MONOTONIC_RAW,&ts);
- 	double v1 = ts.tv_nsec ;
-   	double v2 = ts.tv_sec ;
-	#endif
-	tin[i] = thread(ZeroThreadFunction, (i+1));
- 	for (i = 1; i < THREAD_COUNT; ++i)
- 	{
- 		tin[i] = thread(OtherThreadsFunction, (i+1));  
-		#ifdef DEBUG
-    	cout << "Thread "<<(i+1)<<" is last_zero Worker\n";
-    	#endif
- 	}
-		
-	 
+		thread tin[THREAD_COUNT];
 
- 	for (i = 0; i < THREAD_COUNT; ++i)
- 	{
-		tin[i].join();  
- 	}
 
- 	#ifdef USE_CLOCK
- 	end = clock();
- 	#else
- 	clock_gettime(CLOCK_MONOTONIC_RAW,&ts2);
- 	#endif
-    reset_clock();
-    FILE *exec_time_file_ptr = fopen("last_zero_proto_4.dat", "a");
-    #ifdef USE_CLOCK
-    pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
-	fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
-    #else
-    v1 = ts2.tv_nsec - v1;
-	v2 = ts2.tv_sec - v2;
-    
-	long long totaltime = ((ts2.tv_sec*SEC2NANO + ts2.tv_nsec) - (ts.tv_sec*SEC2NANO + ts.tv_nsec));
-	fprintf(exec_time_file_ptr, "%lld\n", totaltime);
-	#endif
+	 	initialize_trace(trace);
+	 	init_array();
+	 	#ifdef USE_CLOCK
+	 	begin = clock();
+		#else
+		clock_gettime(CLOCK_MONOTONIC_RAW,&ts);
+	 	double v1 = ts.tv_nsec ;
+	   	double v2 = ts.tv_sec ;
+		#endif
+		tin[i] = thread(ZeroThreadFunction, (i+1));
+	 	for (i = 1; i < THREAD_COUNT; ++i)
+	 	{
+	 		tin[i] = thread(OtherThreadsFunction, (i+1));  
+			#ifdef DEBUG
+	    	cout << "Thread "<<(i+1)<<" is last_zero Worker\n";
+	    	#endif
+	 	}
+			
+		 
 
-			//fprintf(exec_time_file_ptr, "%lf\n", execution_time());		
+	 	for (i = 0; i < THREAD_COUNT; ++i)
+	 	{
+			tin[i].join();  
+	 	}
 
-	fclose(exec_time_file_ptr);
-    #ifdef DEBUG
-    printf("Execution time for the program: %lf\n", pgm_exec_time);
-    #endif
+	 	#ifdef USE_CLOCK
+	 	end = clock();
+	 	#else
+	 	clock_gettime(CLOCK_MONOTONIC_RAW,&ts2);
+	 	#endif
+	    reset_clock();
+	    FILE *exec_time_file_ptr = fopen(filename, "a");
+	    #ifdef USE_CLOCK
+	    pgm_exec_time = (double)(end - begin) / CLOCKS_PER_SEC;
+		fprintf(exec_time_file_ptr, "%lf\n", pgm_exec_time);
+	    #else
+	    v1 = ts2.tv_nsec - v1;
+		v2 = ts2.tv_sec - v2;
+	    
+		long long totaltime = ((ts2.tv_sec*SEC2NANO + ts2.tv_nsec) - (ts.tv_sec*SEC2NANO + ts.tv_nsec));
+		fprintf(exec_time_file_ptr, "%lld\n", totaltime);
+		#endif
+
+				//fprintf(exec_time_file_ptr, "%lf\n", execution_time());		
+
+		fclose(exec_time_file_ptr);
+	    #ifdef DEBUG
+	    printf("Execution time for the program: %lf\n", pgm_exec_time);
+	    #endif
+	}
     return 0;
 }

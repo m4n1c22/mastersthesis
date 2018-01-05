@@ -19,7 +19,7 @@ def avg_exec_time_traces(num_traces=4, num_protos=6):
 		for j in range(num_protos):
 			num_runs = 0
 			sum = 0.0
-			filename = proto_locs[j] + "last_zero_" + proto_postfix[j] + ".dat"		
+			filename = proto_locs[j] + "last_zero"+ trace_prefix[i] + proto_postfix[j] + ".dat"		
 			f = open(filename, "r")
 			for line in f:
 				num_runs += 1
@@ -39,6 +39,12 @@ def avg_exec_time_traces(num_traces=4, num_protos=6):
 			f.close()
 
 if __name__ == '__main__':
-	avg_exec_time_traces(1,6)
-	print "Exec Time(micro seconds) for each prototype:"
+	avg_exec_time_traces(4,6)
+	print "Trace 0 Exec Time(micro seconds) for each prototype:"
 	print str(trace0_avg)
+	print "Trace 1 Exec Time(micro seconds) for each prototype:"
+	print str(trace1_avg)
+	print "Trace 2 Exec Time(micro seconds) for each prototype:"
+	print str(trace2_avg)
+	print "Trace 3 Exec Time(micro seconds) for each prototype:"
+	print str(trace3_avg)

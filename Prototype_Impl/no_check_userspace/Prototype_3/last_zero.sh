@@ -24,10 +24,23 @@ exitfn () {
 
 trap "exitfn" INT            # Set up SIGINT trap to call function.
 
+
 #check if the log file exists or not.
-if [ -f last_zero_proto_3.dat ]
+if [ -f last_zero_trace_0_proto_3.dat ]
 then
-	sudo rm last_zero_proto_3.dat
+	sudo rm last_zero_trace_0_proto_3.dat
+fi
+if [ -f last_zero_trace_1_proto_3.dat ]
+then
+	sudo rm last_zero_trace_1_proto_3.dat
+fi
+if [ -f last_zero_trace_2_proto_3.dat ]
+then
+	sudo rm last_zero_trace_2_proto_3.dat
+fi
+if [ -f last_zero_trace_3_proto_3.dat ]
+then
+	sudo rm last_zero_trace_3_proto_3.dat
 fi
 sudo make test_last_zero
 #Execute the prog binary file for test runs times. And write the output in the overall log file.
