@@ -25,10 +25,31 @@ exitfn () {
 trap "exitfn" INT            # Set up SIGINT trap to call function.
 
 #check if the log file exists or not.
-if [ -f indexer_t15_proto_5.dat ]
+if [ -f indexer_t15_trace_0_proto_5.dat ]
 then
-	sudo rm indexer_t15_proto_5.dat
+	sudo rm indexer_t15_trace_0_proto_5.dat
 fi
+if [ -f indexer_t15_trace_1_proto_5.dat ]
+then
+	sudo rm indexer_t15_trace_1_proto_5.dat
+fi
+if [ -f indexer_t15_trace_2_proto_5.dat ]
+then
+	sudo rm indexer_t15_trace_2_proto_5.dat
+fi
+if [ -f indexer_t15_trace_3_proto_5.dat ]
+then
+	sudo rm indexer_t15_trace_3_proto_5.dat
+fi
+if [ -f indexer_t15_trace_4_proto_5.dat ]
+then
+	sudo rm indexer_t15_trace_4_proto_5.dat
+fi
+if [ -f indexer_t15_trace_5_proto_5.dat ]
+then
+	sudo rm indexer_t15_trace_5_proto_5.dat
+fi
+
 sudo make test_indexer_t15
 #Execute the prog binary file for test runs times. And write the output in the overall log file.
 while [ "$count" -lt "$test_runs" ]

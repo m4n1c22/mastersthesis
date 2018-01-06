@@ -1,0 +1,3 @@
+python eval_indexer_t15.py
+Exec Time(micro seconds) for each prototype:
+[2632.419, 2522.953, 2686.118, 2526.831, 2477.737, 2315.213]

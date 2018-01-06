@@ -1,0 +1,9 @@
+python eval_last_zero.py
+Trace 0 Exec Time(micro seconds) for each prototype:
+[2716.0, 3958.141509, 2818.549689, 3973.526, 3275.249, 3336.465]
+Trace 1 Exec Time(micro seconds) for each prototype:
+[1634.0, 2098.066038, 1577.906832, 2089.938, 1836.905, 1910.762]
+Trace 2 Exec Time(micro seconds) for each prototype:
+[1346.38961, 2055.753369, 1442.906542, 2094.394, 1722.416, 1796.231]
+Trace 3 Exec Time(micro seconds) for each prototype:
+[1416.675325, 2442.619946, 1414.70405, 2464.09, 1721.966, 1731.272]
