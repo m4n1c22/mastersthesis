@@ -42,7 +42,7 @@ eval_indexer:
 
 #indexer t15 test and evaluation
 
-test_and_eval_indexer_t15: test_all_protos_indexer_t15 eval_indexer_t15
+test_and_eval_indexer_t15: test_all_protos_indexer_t15 test_indexer_t15_userspace eval_indexer_t15
 
 test_all_protos_indexer_t15: test_proto_1_indexer_t15 test_proto_2_indexer_t15 test_proto_3_indexer_t15 test_proto_4_indexer_t15 test_proto_5_indexer_t15 test_proto_6_indexer_t15
 
@@ -64,12 +64,15 @@ test_proto_5_indexer_t15:
 test_proto_6_indexer_t15: 
 	cd $(PROTO_6_LOC) && sh indexer_t15.sh	
 
+test_indexer_t15_userspace:
+	sh test_indexer_t15_userspace.sh
+
 eval_indexer_t15:
 	$(PY_INT) $(EVAL_INDEXER_T15)
 
 #last zero test and evaluation
 
-test_and_eval_last_zero: test_all_protos_last_zero eval_last_zero
+test_and_eval_last_zero: test_all_protos_last_zero test_last_zero_userspace eval_last_zero
 
 test_all_protos_last_zero: test_proto_1_last_zero test_proto_2_last_zero test_proto_3_last_zero test_proto_4_last_zero test_proto_5_last_zero test_proto_6_last_zero
 
@@ -90,6 +93,9 @@ test_proto_5_last_zero:
 
 test_proto_6_last_zero: 
 	cd $(PROTO_6_LOC) && sh last_zero.sh	
+
+test_last_zero_userspace:
+	sh test_last_zero_userspace.sh
 
 eval_last_zero:
 	$(PY_INT) $(EVAL_LAST_ZERO)
