@@ -1,6 +1,7 @@
 	#!\bin\sh
 
 sed -i 's/THREAD_COUNT\ 12/THREAD_COUNT\ 15/g' include/common.h
+sed -i 's/THREAD_COUNT\ 16/THREAD_COUNT\ 15/g' include/common.h
 #check if the log file exists or not.
 if [ -f scheduler/scheduler.ko ]
 then
