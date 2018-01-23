@@ -291,17 +291,17 @@
 	\cleardoublepage
 	%\graphicspath{ {./gfx/} }
 	\pagenumbering{arabic}
-	\chapter{Background}
+	\chapter{Background \label{bkgd}}
 	\input{background}
 	
-	\chapter{Related Work}
-	\input{relatedwork}
+	%\chapter{Related Work \label{rel_work}}
+	%\input{relatedwork}
 	
-	\chapter{Design Challenges}
-	\input{challenges}	
+	%\chapter{Design Challenges}
+	%\input{challenges}	
 	
-	\chapter{Designs}
-	\input{design}
+	%\chapter{Designs}
+	%\input{design}
 	%\input{content2}
 	
 	%======================================================
@@ -310,8 +310,8 @@
 	%\cleardoublepage
 	\refstepcounter{dummy}
 	\addcontentsline{toc}{chapter}{\bibname}
-	%\bibliographystyle{plainnat} % <--- layout of the bib
-	%\bibliography{bibliography2} % file name of your bib
+	\bibliographystyle{plainnat} % <--- layout of the bib
+	\bibliography{bibl_2} % file name of your bib
 
 \end{document}
 %======================================================

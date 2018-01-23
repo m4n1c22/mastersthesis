@@ -1,12 +1,11 @@
----background information related to thesis comes here---
 \section{Software Verification}
 
 Software programs are becoming increasingly complex. 
 With the rise in complexity and technological advancements, components within a software have become susceptible to various erroneous conditions. 
 Software verification have been perceived as a solution for the problems arising in the software development cycle. 
-Software verification is primarily verifying if the specifications are met by the software. 
+Software verification is primarily verifying if the specifications are met by the software\cite{ghezzi2002fundamentals}.
 
-There are two fundamental approaches used in software verification - dynamic and static software verification. 
+There are two fundamental approaches used in software verification - dynamic and static software verification\cite{ghezzi2002fundamentals}. 
 Dynamic software verification is performed in conjunction with the execution of the software. 
 In this approach, the behavior of the execution program is checked- commonly known as Test phase. 
 Verification is succeeding phase also known as Review phase. 
@@ -21,10 +20,38 @@ In manual verification, a reviewer manually verifies the software.
 Whereas in the latter approach, a script or a framework performs  verification. 
 
 Software verification is a very broad area of research. 
-This thesis work is focussed on automated software verification for concurrent programming models. 
+This thesis work is focussed on automated software verification for multithreaded programming. 
 
-\subsection{Automated Software Verification for Concurrent Programs}
+\section{Multithreaded Programming}
 
+Computing power has grown over the years. 
+Advancements are made in the domain of computer architecture by moving the computing power from single-core to multi-core architecture. 
+With such advancement, there were needs to adapt the programming designs from a serialized execution to more parallelizable execution. 
+Various parallel programming models were perceived to accommodate the perceived progression. 
+Multithreaded programming model was one of the designs considered for the performance boost in computing. 
+
+Threads are a small tasks executed by a scheduler on an operating system, where the resources such as the processor, TLB (Translation Lookaside Buffer), cache, etc., are shared between them. 
+Threads share the same address space and resources. 
+Multithreading addresses the concept of using multiple threads for having concurrent execution of a program on a single or multi-core architectures. 
+Inter-thread communication is achieved by shared memory. 
+Mapping the threads to the processor core is done by the operating system scheduler. 
+Multithreading is only supported in operating systems which has multitasking feature. 
+
+Advantages of using multithreading include: 
+\begin{itemize}
+\item	Fast Execution
+\item	Better system utilization
+\item	Simplified sharing  and communication
+\item 	Improved responsiveness
+\item	Parallelization
+\end{itemize}
+
+Disadvantages:
+\begin{itemize}
+\item	Race conditions
+\item	Deadlocks with improper use of locks/synchronization
+\item	Cache misses when sharing memory
+\end{itemize}
 
 
 \subsubsection{Partial Order Reduction}
