@@ -1,11 +1,8 @@
 \contentsline {chapter}{\numberline {1}Background }{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Software Verification}{1}{section.1.1}
 \contentsline {section}{\numberline {1.2}Multithreaded Programming}{1}{section.1.2}
-\contentsline {subsubsection}{Partial Order Reduction}{2}{subsubsection*.16}
-\contentsline {subsubsection}{Lipton}{2}{subsubsection*.17}
-\contentsline {subsubsection}{Dynamic POR}{2}{subsubsection*.18}
-\contentsline {section}{\numberline {1.3}Model Checking}{2}{section.1.3}
-\contentsline {section}{\numberline {1.4}Symbolic Execution}{2}{section.1.4}
-\contentsline {section}{\numberline {1.5}Iterative Relaxed Scheduling}{2}{section.1.5}
-\contentsline {section}{\numberline {1.6}Deterministic Multi-Threading}{2}{section.1.6}
+\contentsline {section}{\numberline {1.3}Concurrency Bugs}{2}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Race Condition}{2}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Deadlock}{2}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}Livelock}{2}{subsection.1.3.3}
 \contentsline {chapter}{Bibliography}{2}{dummy.1}
