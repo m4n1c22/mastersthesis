@@ -92,7 +92,7 @@ Thread 1 & Thread 2 & Thread 3 \\
 
 If the statements (1), (2) and (3) were executed as a sequential program. 
 The value of y would be 2. 
-When the same program is split to three threads as shown in the above example \ref{race_cond}, the output of y becomes unpredictable. 
+When the same program is split to three threads as shown in the above Table~\ref{race_cond}, the output of y becomes unpredictable. 
 The possible values of y = {0,1,2}. 
 The non-deterministic execution of the threads makes the output of y non-deterministic. 
 Table~\ref{poss_exec} depicts possible executions for the above multithreaded execution. 
@@ -113,7 +113,7 @@ Execution Order & Value of y \\
 \label{poss_exec}
 \end{table}
 
-The above showcased problem is classified as race condition. 
+The above showcased problem is classified as race condition bug. 
 Ordered execution of reads and writes can fix the problem. 
 
 \subsection{Lack Of Progress}
@@ -127,7 +127,43 @@ Deadlock is a state in which each thread in thread pool is waiting for some othe
 In terms of multithreaded programming environment, deadlocks occur when one thread waits on a resource locked by another thread, which in turn is waiting for another resource locked by another thread. 
 If a thread is unable to change its state indefinitely because the resource requested by it are being held by another thread, then the entire system is said to be in deadlock. 
 
-----Example Picture depicting deadlock---
+%----Example Picture depicting deadlock---
+\tikzstyle{thread} = [circle, minimum size=.5cm, text centered, draw=black, fill=white!30]
+\tikzstyle{resource} = [rectangle, minimum width=1cm, minimum height=1cm, text centered, draw=black, fill=white!30]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+%Resources
+\node (R1) [resource] {R$_1$};
+\node (R2) [resource,right of=R1,xshift =1cm] {R$_2$};
+\node (R3) [resource,right of=R2,xshift =1cm] {R$_3$};
+
+%Threads
+\node (T1) [thread,below of=R1,xshift =1cm] {T$_1$};
+\node (T2) [thread,below of=R2,xshift =1cm] {T$_2$};
+\node (T3) [thread,below of=R3,xshift =1cm] {T$_3$};
+
+%Arrows
+\draw [->,thick] (R1.south) -- (T1);
+\draw [->,thick] (R2.south) -- (T2);
+\draw [->,thick] (R3.south) -- (T3);
+\draw [->,thick] (T1) -- (R2.west);
+\draw [->,thick] (T2) -- (R3.west);
+\draw [->,thick] (T3.south) to [out=220,in=230] (R1.west);
+
+\end{tikzpicture}
+\caption{Dead Lock Example}
+\label{deadlock_example}
+\end{figure}
+
+In the example depicted in Fig~\ref{deadlock_example}, we have three threads T$_1$, T$_2$,T$_3$ and three resource instances R$_1$, R$_2$, R$_3$. 
+The figure depicts hold and wait by each threads. 
+Thread T$_1$ holds resource R$_1$ and waits for the acquistion of resource R$_2$ from thread T$_2$. 
+T$_2$ cannot relinquish resource R$_2$, unless it acquires resource R$_3$ for its progress. 
+But, resource R$_3$ is acquired by T$_3$ and is waiting for R$_1$ from T$_1$. 
+Thus, making a circular wait of resources. 
+This example clearly explains the dependency of resources for the respective thread progress. 
 
 Deadlock can occur if all the following conditions are met simultaneously.
 
