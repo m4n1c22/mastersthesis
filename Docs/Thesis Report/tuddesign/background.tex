@@ -115,9 +115,36 @@ Execution Order & Value of y \\
 
 The above showcased problem is classified as race condition. 
 Ordered execution of reads and writes can fix the problem. 
-\subsection{Deadlock}
 
-\subsection{Livelock}
+\subsection{Lack Of Progress}
+
+Lack of progress is another bug class observed in multithreaded programs. 
+Some of the bugs under this class include deadlocks and livelocks. 
+
+\subsubsection{Deadlock}
+
+Deadlock is a state in which each thread in thread pool is waiting for some other thread to take action. 
+In terms of multithreaded programming environment, deadlocks occur when one thread waits on a resource locked by another thread, which in turn is waiting for another resource locked by another thread. 
+If a thread is unable to change its state indefinitely because the resource requested by it are being held by another thread, then the entire system is said to be in deadlock. 
+
+----Example Picture depicting deadlock---
+
+Deadlock can occur if all the following conditions are met simultaneously.
+
+\begin{itemize}
+\item	Mutual exclusion
+\item	Hold and wait
+\item	No preemption
+\item	Circular wait
+\end{itemize}
+
+These conditions are known as Coffman conditions.
+
+
+\subsubsection{Livelock}
+
+Livelock is similar to deadlock, except the state of threads change constantly but with none progressing. 
+
 %\subsubsection{Partial Order Reduction}
 %\subsubsection{Lipton}
 %\subsubsection{Dynamic POR}
