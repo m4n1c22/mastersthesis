@@ -1,15 +1,48 @@
-\begin{thebibliography}{3}
+\begin{thebibliography}{9}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
+\bibitem[B{\'e}rard et~al.(2013)B{\'e}rard, Bidoit, Finkel, Laroussinie, Petit,
+  Petrucci, and Schnoebelen]{berard2013systems}
+B{\'e}atrice B{\'e}rard, Michel Bidoit, Alain Finkel, Fran{\c{c}}ois
+  Laroussinie, Antoine Petit, Laure Petrucci, and Philippe Schnoebelen.
+\newblock \emph{Systems and software verification: model-checking techniques
+  and tools}.
+\newblock Springer Science \& Business Media, 2013.
+
 \bibitem[Carver and Tai(2005)]{carver2005modern}
 Richard~H Carver and Kuo-Chung Tai.
 \newblock \emph{Modern multithreading: implementing, testing, and debugging
   multithreaded Java and C++/Pthreads/Win32 programs}.
 \newblock John Wiley \& Sons, 2005.
+
+\bibitem[Chaki et~al.(2005)Chaki, Clarke, Ouaknine, Sharygina, and
+  Sinha]{chaki2005concurrent}
+Sagar Chaki, Edmund Clarke, Jo{\"e}l Ouaknine, Natasha Sharygina, and Nishant
+  Sinha.
+\newblock Concurrent software verification with states, events, and deadlocks.
+\newblock \emph{Formal Aspects of Computing}, 17\penalty0 (4):\penalty0
+  461--483, 2005.
+
+\bibitem[Clarke et~al.(1999)Clarke, Grumberg, and Peled]{model_check}
+Edmund~M Clarke, Orna Grumberg, and Doron Peled.
+\newblock \emph{Model checking}.
+\newblock MIT press, 1999.
+
+\bibitem[Coffman et~al.(1971)Coffman, Elphick, and Shoshani]{coffman_cond}
+Edward~G Coffman, Melanie Elphick, and Arie Shoshani.
+\newblock System deadlocks.
+\newblock \emph{ACM Computing Surveys (CSUR)}, 3\penalty0 (2):\penalty0 67--78,
+  1971.
+
+\bibitem[D'silva et~al.(2008)D'silva, Kroening, and Weissenbacher]{d2008survey}
+Vijay D'silva, Daniel Kroening, and Georg Weissenbacher.
+\newblock A survey of automated techniques for formal software verification.
+\newblock \emph{IEEE Transactions on Computer-Aided Design of Integrated
+  Circuits and Systems}, 27\penalty0 (7):\penalty0 1165--1178, 2008.
 
 \bibitem[Ghezzi et~al.(2002)Ghezzi, Jazayeri, and
   Mandrioli]{ghezzi2002fundamentals}
@@ -24,5 +57,10 @@ Carmen~Torres Lopez, Stefan Marr, Hanspeter M{\"o}ssenb{\"o}ck, and
 \newblock A study of concurrency bugs and advanced development support for
   actor-based programs.
 \newblock \emph{arXiv preprint arXiv:1706.07372}, 2017.
+
+\bibitem[Peled(1998)]{por10yrs}
+Doron Peled.
+\newblock Ten years of partial order reduction.
+\newblock In \emph{Computer Aided Verification}, pages 17--28. Springer, 1998.
 
 \end{thebibliography}

@@ -20,7 +20,7 @@ In manual verification, a reviewer manually verifies the software.
 Whereas in the latter approach, a script or a framework performs  verification. 
 
 Software verification is a very broad area of research. 
-This thesis work is focussed on automated software verification for multithreaded programming. 
+This thesis work is focused on automated software verification for multithreaded programming. 
 
 \section{Multithreaded Programming}
 
@@ -30,7 +30,7 @@ With such advancement, there were needs to adapt the programming designs from a 
 Various parallel programming models were perceived to accommodate the perceived progression. 
 Multithreaded programming model was one of the designs considered for the performance boost in computing\cite{carver2005modern}. 
 
-Threads are a small tasks executed by a scheduler on an operating system, where the resources such as the processor, TLB (Translation Lookaside Buffer), cache, etc., are shared between them. 
+Threads are small tasks executed by a scheduler of an operating system, where the resources such as the processor, TLB (Translation Lookaside Buffer), cache, etc., are shared between them. 
 Threads share the same address space and resources. 
 Multithreading addresses the concept of using multiple threads for having concurrent execution of a program on a single or multi-core architectures. 
 Inter-thread communication is achieved by shared memory. 
@@ -53,7 +53,7 @@ Disadvantages:
 \item	Cache misses when sharing memory
 \end{itemize}
 
-\section{Concurrency Bugs}
+\section{Concurrency Bugs \label{con_bugs}}
 
 Concurrency bugs are one of major concerns in the domain of multithreaded environment. 
 These bugs are very hard to find and reproduce. 
@@ -76,31 +76,31 @@ Race condition is one of the most common concurrency problems.
 The problem arises when there are concurrent reads and writes of a shared memory location. 
 As stated above, the problem occurs with non-deterministic execution behavior of threads. 
 
-Consider the following example, where you have three threads and they share two variables x and y \cite{carver2005modern}. 
-The value of x is initially 0. 
+Consider the following example, where you have three threads and they share two variables \emph{x} and \emph{y} \cite{carver2005modern}. 
+The value of \emph{x} is initially 0. 
 
 \begin{table}[h]
 \centering
 \begin{tabular}{*{3}{c}}
 Thread 1 & Thread 2 & Thread 3 \\
 \hline
- (1) x = 1 & (2) x = 2 & (3) y = x\\
+ (1) \emph{x} = 1 & (2) \emph{x} = 2 & (3) \emph{y} = \emph{x}\\
 \end{tabular}
 \caption{Race condition example}
 \label{race_cond}
 \end{table}
 
 If the statements (1), (2) and (3) were executed as a sequential program. 
-The value of y would be 2. 
-When the same program is split to three threads as shown in the above Table~\ref{race_cond}, the output of y becomes unpredictable. 
-The possible values of y = {0,1,2}. 
-The non-deterministic execution of the threads makes the output of y non-deterministic. 
+The value of \emph{y} would be 2. 
+When the same program is split to three threads as shown in the above Table~\ref{race_cond}, the output of \emph{y} becomes unpredictable. 
+The possible values of \emph{y} = \{0,1,2\}. 
+The non-deterministic execution of the threads makes the output of \emph{y} non-deterministic. 
 Table~\ref{poss_exec} depicts possible executions for the above multithreaded execution. 
 
 \begin{table}[h]
 \centering
 \begin{tabular}{*{2}{c}}
-Execution Order & Value of y \\
+Execution Order & Value of \emph{y} \\
 \hline
  (3),(1),(2)& 0\\
  (3),(2),(1)& 0\\
@@ -125,7 +125,7 @@ Some of the bugs under this class include deadlocks and livelocks.
 
 Deadlock is a state in which each thread in thread pool is waiting for some other thread to take action. 
 In terms of multithreaded programming environment, deadlocks occur when one thread waits on a resource locked by another thread, which in turn is waiting for another resource locked by another thread. 
-If a thread is unable to change its state indefinitely because the resource requested by it are being held by another thread, then the entire system is said to be in deadlock. 
+If a thread is unable to change its state indefinitely because the resource requested by it are being held by another thread, then the entire system is said to be in deadlock\cite{chaki2005concurrent}. 
 
 %----Example Picture depicting deadlock---
 \tikzstyle{thread} = [circle, minimum size=.5cm, text centered, draw=black, fill=white!30]
@@ -157,9 +157,9 @@ If a thread is unable to change its state indefinitely because the resource requ
 \label{deadlock_example}
 \end{figure}
 
-In the example depicted in Fig~\ref{deadlock_example}, we have three threads T$_1$, T$_2$,T$_3$ and three resource instances R$_1$, R$_2$, R$_3$. 
+In the example depicted in Fig~\ref{deadlock_example}, we have three threads T$_1$, T$_2$, T$_3$ and three resource instances R$_1$, R$_2$, R$_3$. 
 The figure depicts hold and wait by each threads. 
-Thread T$_1$ holds resource R$_1$ and waits for the acquistion of resource R$_2$ from thread T$_2$. 
+Thread T$_1$ holds resource R$_1$ and waits for the acquisition of resource R$_2$ from thread T$_2$. 
 T$_2$ cannot relinquish resource R$_2$, unless it acquires resource R$_3$ for its progress. 
 But, resource R$_3$ is acquired by T$_3$ and is waiting for R$_1$ from T$_1$. 
 Thus, making a circular wait of resources. 
@@ -174,19 +174,42 @@ Deadlock can occur if all the following conditions are met simultaneously.
 \item	Circular wait
 \end{itemize}
 
-These conditions are known as Coffman conditions.
+These conditions are known as Coffman conditions\cite{coffman_cond}.
 
+Deadlock conditions can be avoided by having scheduling of threads in a way to avoid the resource contention issue.
 
 \subsubsection{Livelock}
 
-Livelock is similar to deadlock, except the state of threads change constantly but with none progressing. 
+Livelock is similar to deadlock, except the state of threads change constantly but, with none progressing. 
+Livelock is special case of resource starvation of threads/processes. 
+Some deadlock detection algorithms are susceptible to livelock conditions when, more than one process/thread tries to take action\cite{lopez2017study}\cite{chaki2005concurrent}. 
+The above mentioned situation can be avoided by having one priority process/thread taking up the action. 
 
-%\subsubsection{Partial Order Reduction}
-%\subsubsection{Lipton}
-%\subsubsection{Dynamic POR}
+\section{Model Checking}
 
-%\section{Model Checking}
-%\section{Symbolic Execution}
+From section~\ref{con_bugs}, it is very clear that there needs to be verification for multithreaded programs. 
+The verification solutions range from detecting causality violations to correctness of execution\cite{d2008survey}. 
+Model checking is an example of such a technique. 
+It is used for automatically verifying correctness properties of finite-state concurrent systems\cite{model_check}\cite{berard2013systems}. 
+This technique has a number of advantages over traditional approaches that are based on simulation, testing and deductive reasoning. 
+When solving a problem algorithmically, both the model of the system and the specification are forumulated in a precise mathematical language. 
+Finally, the problem is formulated as a task in logic, namely to verify whether a given structure adheres to a given logical formula.  
+The technique has been successfully used in practice to verify complex sequential designs and communication protocols\cite{model_check}. 
+The main challenge in the technique was dealing with the \emph{state explosion} problem.
 
-%\section{Iterative Relaxed Scheduling}
-%\section{Deterministic Multi-Threading}
+
+
+\subsection{Explicit-state Model Checking}
+\subsection{Symbolic Model Checking}
+
+\subsection{Techniques}
+\section{Partial Order Reduction}
+
+Partial Order Reduction(POR) is a technique used for reducing the size of state space to be searched by a model checking algorithm\cite{por10yrs}. 
+
+
+\section{Dynamic POR}
+
+\section{Deterministic Multi-Threading}
+
+%
