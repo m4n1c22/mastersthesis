@@ -195,14 +195,32 @@ This technique has a number of advantages over traditional approaches that are b
 When solving a problem algorithmically, both the model of the system and the specification are forumulated in a precise mathematical language. 
 Finally, the problem is formulated as a task in logic, namely to verify whether a given structure adheres to a given logical formula.  
 The technique has been successfully used in practice to verify complex sequential designs and communication protocols\cite{model_check}. 
-The main challenge in the technique was dealing with the \emph{state explosion} problem.
+Model checker tries to verify all possible states of a system in a brute force manner\cite{model_checking_principles}. 
+Thus, making \emph{state explosion} as one of the major challenges which is discussed in detail in section~\ref{state_exp_prob}.  
+Model checking tools usually verify partial specification for liveness and safety properties\cite{d2008survey}. 
+Some of these techniques are discussed in section~\ref{model_check_techniques}. 
+Model checking algorithms generate set of states from the instructions program which are later analyzed. 
+There is a need to store these states for asserting the number of visits made them are atmost once. 
+There are two methods commonly used to represent states:
+\begin{itemize}
+\item	Explicit-state model checking
+\item	Symbolic model checking
+\end{itemize}
 
+\subsection{State explosion problem \label{state_exp_prob}}
 
-
+The state space of a program is exponential in nature when it comes to number of variables, inputs, width of the data types ,.etc. 
+Presence of function calls and dynamic memory allocation makes it infinite\cite{d2008survey}. 
+Concurrency makes the situation worse by having interleaving of threads during execution. 
+Interleaving generates exponential number of ways to execute a set of statements/instructions. 
+There are various techniques used to avoid the \emph{state explosion problem}. 
+ 
 \subsection{Explicit-state Model Checking}
+
+
 \subsection{Symbolic Model Checking}
 
-\subsection{Techniques}
+\subsection{Techniques \label{model_check_techniques}}
 \section{Partial Order Reduction}
 
 Partial Order Reduction(POR) is a technique used for reducing the size of state space to be searched by a model checking algorithm\cite{por10yrs}. 
