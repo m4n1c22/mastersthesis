@@ -207,6 +207,25 @@ There are two methods commonly used to represent states:
 \item	Symbolic model checking
 \end{itemize}
 
+\paragraph{Advantages of using model checking:} 
+\begin{itemize}
+\item	Generic verification approach used across various domains of software engineering.
+\item 	Supports partial verification, more suited for assessment of essential requirements for a software.
+\item 	Not vulnerable to the likelihood that an error is exposed. 
+\item  	Provides diagnostic information thus making suitable for debugging purposes. 
+\item	Based on graph theory, data structures and logic thus, making it `sound and mathematical underpinning'. 
+\item 	Easy to understand and deploy. 
+
+\end{itemize}
+
+\paragraph{Disadvantages of using model checking:}
+\begin{itemize}
+\item	State explosion problem
+\item	Appropriate for control-intensive applications rather than data-intensive applications. 
+\item	Verifies system model and not the actual system. 
+\item	Decidability issues when considering abstract data types or infinite state systems.
+\end{itemize}
+
 \subsection{State explosion problem \label{state_exp_prob}}
 
 The state space of a program is exponential in nature when it comes to number of variables, inputs, width of the data types ,.etc. 
@@ -217,8 +236,16 @@ There are various techniques used to avoid the \emph{state explosion problem}.
  
 \subsection{Explicit-state Model Checking}
 
+Explicit-state model checking methods recursively generate successors of initial states by constructing a state transition graph. 
+Graphs are constructed using depth-first, breadth-first or heusitic algorithms. 
+Erroneous states are determined `on the fly', thus reducing the state space. 
+A property violation on the newly generated states are regarded as erroneous states. 
+Hash tables are used for indexing the explored states. 
+If there is insufficient memory lossy compression algorithms are used to accommodate the storage of hash tables\cite{d2008survey}. 
 
 \subsection{Symbolic Model Checking}
+
+
 
 \subsection{Techniques \label{model_check_techniques}}
 \section{Partial Order Reduction}
