@@ -1,4 +1,4 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{17}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -18,6 +18,19 @@ B{\'e}atrice B{\'e}rard, Michel Bidoit, Alain Finkel, Fran{\c{c}}ois
 \newblock \emph{Systems and software verification: model-checking techniques
   and tools}.
 \newblock Springer Science \& Business Media, 2013.
+
+\bibitem[Bergan et~al.(2010)Bergan, Anderson, Devietti, Ceze, and
+  Grossman]{coredet}
+Tom Bergan, Owen Anderson, Joseph Devietti, Luis Ceze, and Dan Grossman.
+\newblock Coredet: a compiler and runtime system for deterministic
+  multithreaded execution.
+\newblock In \emph{ACM SIGARCH Computer Architecture News}, volume~38, pages
+  53--64. ACM, 2010.
+
+\bibitem[Berger et~al.(2009)Berger, Yang, Liu, and Novark]{grace}
+Emery~D Berger, Ting Yang, Tongping Liu, and Gene Novark.
+\newblock Grace: Safe multithreaded programming for c/c++.
+\newblock In \emph{ACM sigplan notices}, volume~44, pages 81--96. ACM, 2009.
 
 \bibitem[Carver and Tai(2005)]{carver2005modern}
 Richard~H Carver and Kuo-Chung Tai.
@@ -44,17 +57,37 @@ Edward~G Coffman, Melanie Elphick, and Arie Shoshani.
 \newblock \emph{ACM Computing Surveys (CSUR)}, 3\penalty0 (2):\penalty0 67--78,
   1971.
 
+\bibitem[Cui et~al.(2013)Cui, Simsa, Lin, Li, Blum, Xu, Yang, Gibson, and
+  Bryant]{parrot}
+Heming Cui, Jiri Simsa, Yi-Hong Lin, Hao Li, Ben Blum, Xinan Xu, Junfeng Yang,
+  Garth~A Gibson, and Randal~E Bryant.
+\newblock Parrot: a practical runtime for deterministic, stable, and reliable
+  threads.
+\newblock In \emph{Proceedings of the Twenty-Fourth ACM Symposium on Operating
+  Systems Principles}, pages 388--405. ACM, 2013.
+
 \bibitem[D'silva et~al.(2008)D'silva, Kroening, and Weissenbacher]{d2008survey}
 Vijay D'silva, Daniel Kroening, and Georg Weissenbacher.
 \newblock A survey of automated techniques for formal software verification.
 \newblock \emph{IEEE Transactions on Computer-Aided Design of Integrated
   Circuits and Systems}, 27\penalty0 (7):\penalty0 1165--1178, 2008.
 
+\bibitem[Flanagan and Godefroid(2005)]{dynamic_por}
+Cormac Flanagan and Patrice Godefroid.
+\newblock Dynamic partial-order reduction for model checking software.
+\newblock In \emph{ACM Sigplan Notices}, volume~40, pages 110--121. ACM, 2005.
+
 \bibitem[Ghezzi et~al.(2002)Ghezzi, Jazayeri, and
   Mandrioli]{ghezzi2002fundamentals}
 Carlo Ghezzi, Mehdi Jazayeri, and Dino Mandrioli.
 \newblock \emph{Fundamentals of software engineering}.
 \newblock Prentice Hall PTR, 2002.
+
+\bibitem[Liu et~al.(2011)Liu, Curtsinger, and Berger]{dthreads}
+Tongping Liu, Charlie Curtsinger, and Emery~D Berger.
+\newblock Dthreads: efficient deterministic multithreading.
+\newblock In \emph{Proceedings of the Twenty-Third ACM Symposium on Operating
+  Systems Principles}, pages 327--336. ACM, 2011.
 
 \bibitem[Lopez et~al.(2017)Lopez, Marr, M{\"o}ssenb{\"o}ck, and
   Boix]{lopez2017study}
@@ -63,6 +96,17 @@ Carmen~Torres Lopez, Stefan Marr, Hanspeter M{\"o}ssenb{\"o}ck, and
 \newblock A study of concurrency bugs and advanced development support for
   actor-based programs.
 \newblock \emph{arXiv preprint arXiv:1706.07372}, 2017.
+
+\bibitem[Olszewski et~al.(2009)Olszewski, Ansel, and Amarasinghe]{kendo}
+Marek Olszewski, Jason Ansel, and Saman Amarasinghe.
+\newblock Kendo: efficient deterministic multithreading in software.
+\newblock \emph{ACM Sigplan Notices}, 44\penalty0 (3):\penalty0 97--108, 2009.
+
+\bibitem[Peled(1993)]{por_repr}
+Doron Peled.
+\newblock All from one, one for all: on model checking using representatives.
+\newblock In \emph{International Conference on Computer Aided Verification},
+  pages 409--423. Springer, 1993.
 
 \bibitem[Peled(1998)]{por10yrs}
 Doron Peled.

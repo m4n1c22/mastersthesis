@@ -1,46 +1,7 @@
-This is BibTeX, Version 0.99d (TeX Live 2016/Debian)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
-The top-level auxiliary file: main2.aux
+This is BibTeX, Version 0.99dThe top-level auxiliary file: main2.aux
 The style file: plainnat.bst
 Database file #1: bibl_2.bib
-You've used 10 entries,
-            2773 wiz_defined-function locations,
-            649 strings with 6547 characters,
-and the built_in function-call counts, 4782 in all, are:
-= -- 391
-> -- 334
-< -- 3
-+ -- 112
-- -- 102
-* -- 407
-:= -- 757
-add.period$ -- 31
-call.type$ -- 10
-change.case$ -- 59
-chr.to.int$ -- 10
-cite$ -- 20
-duplicate$ -- 217
-empty$ -- 369
-format.name$ -- 114
-if$ -- 981
-int.to.chr$ -- 1
-int.to.str$ -- 1
-missing$ -- 15
-newline$ -- 58
-num.names$ -- 40
-pop$ -- 141
-preamble$ -- 1
-purify$ -- 54
-quote$ -- 0
-skip$ -- 160
-stack$ -- 0
-substring$ -- 119
-swap$ -- 18
-text.length$ -- 1
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 85
-warning$ -- 0
-while$ -- 39
-width$ -- 0
-write$ -- 132
+Warning--can't use both volume and number fields in coredet
+Warning--can't use both volume and number fields in grace
+Warning--can't use both volume and number fields in dynamic_por
+(There were 3 warnings)
