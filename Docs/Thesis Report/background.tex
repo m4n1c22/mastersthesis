@@ -192,7 +192,7 @@ The verification solutions range from detecting causality violations to correctn
 Model checking is an example of such a technique. 
 It is used for automatically verifying correctness properties of finite-state concurrent systems\cite{model_check}\cite{berard2013systems}. 
 This technique has a number of advantages over traditional approaches that are based on simulation, testing and deductive reasoning. 
-When solving a problem algorithmically, both the model of the system and the specification are forumulated in a precise mathematical language. 
+When solving a problem algorithmically, both the model of the system and the specification are formulated in a precise mathematical language. 
 Finally, the problem is formulated as a task in logic, namely to verify whether a given structure adheres to a given logical formula.  
 The technique has been successfully used in practice to verify complex sequential designs and communication protocols\cite{model_check}. 
 Model checker tries to verify all possible states of a system in a brute force manner\cite{model_checking_principles}. 
@@ -369,13 +369,52 @@ A persistent set is calculated at each state in the state graph of a system.
 
 In section \ref{model_check}, we primarily dealt with various ways to verify a program and suggested various techniques, which could be used in a multi-threaded environment. 
 In this section, we discuss about a different approach to deal with the verification of multithreaded programs. 
-In sections \ref{multi_thread} and \ref{con_bugs}, we discussed about the non-determinism offered by multi-threaded programming designs and the bugs associated with them. 
+In sections \ref{multi_thread} and \ref{con_bugs}, we discussed about the non-determinism offered by multithreaded programming designs and the bugs associated with them. 
 One way to detect and avoid bugs is to have a constrained scheduling of threads thus, adhering to deterministic execution. 
 Deterministic multi-threading is an approach used to bring in determinism in the execution of multi-threaded programs. 
 
+%\begin{figure}[h]
+% \centering
+% \begin{tikzpicture}[ele/.style={fill=black,circle,minimum width=.8pt,inner sep=1pt},every fit/.style={ellipse,draw,inner sep=-2pt}]
+%  \node[ele,label=left:$a$] (a1) at (0,4) {};    
+%  \node[ele,label=left:$b$] (a2) at (0,3) {};    
+%  \node[ele,label=left:$c$] (a3) at (0,2) {};
+%  \node[ele,label=left:$d$] (a4) at (0,1) {};
+%  \node[above= of a1,anchor=south] {$Inputs$};	
+%
+%  \node[ele,,label=right:$1$] (b1) at (4,4) {};
+%  \node[ele,,label=right:$2$] (b2) at (4,3) {};
+%  \node[ele,,label=right:$3$] (b3) at (4,2) {};
+%  \node[ele,,label=right:$4$] (b4) at (4,1) {};
+%  \node[above= of b1,anchor=south] {$Schedules$};	
+%
+%  \node[draw,fit= (a1) (a2) (a3) (a4),minimum width=2cm] {} ;
+%  \node[draw,fit= (b1) (b2) (b3) (b4),minimum width=2cm] {} ;  
+%  \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b1);
+%  \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b2);
+%  \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b3);
+%  \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b4);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b1);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b2);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b3);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b4);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b1);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b2);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b3);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b4);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b1);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b2);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b3);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b4);
+% \end{tikzpicture}
+% \caption{Traditional Mapping}
+% \label{trad_map}
+%\end{figure}
+
 \begin{figure}[h]
- \centering
- \begin{tikzpicture}[ele/.style={fill=black,circle,minimum width=.8pt,inner sep=1pt},every fit/.style={ellipse,draw,inner sep=-2pt}]
+\centering
+\subfloat [Traditional Mapping]{
+\begin{tikzpicture}[ele/.style={fill=black,circle,minimum width=.8pt,inner sep=1pt},every fit/.style={ellipse,draw,inner sep=-2pt}]
   \node[ele,label=left:$a$] (a1) at (0,4) {};    
   \node[ele,label=left:$b$] (a2) at (0,3) {};    
   \node[ele,label=left:$c$] (a3) at (0,2) {};
@@ -406,20 +445,8 @@ Deterministic multi-threading is an approach used to bring in determinism in the
   \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b2);
   \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b3);
   \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b4);
- \end{tikzpicture}
- \caption{Traditional Mapping}
- \label{trad_map}
-\end{figure}
-
-Fig~ \ref{trad_map} depicts a mapping of inputs to possible scheduling pattern adopted by the multi-threaded program. 
-By bringing in deterministic mapping as shown in fig~\ref{determinisitic_mapping}, we have direct mapping between inputs and schedules. 
-Having such mapping provides us the opportunity to determine erroneous executions. 
-Such a mapping facilitates to determine concurrency bugs in the program execution. 
-There are many frameworks - CoreDet\cite{coredet}, Parrot\cite{parrot}, Kendo\cite{kendo}, DThreads\cite{dthreads}, Grace\cite{grace}, which adheres to this principle. 
-Some of these frameworks are discussed further in the next chapter.
-
-\begin{figure}[h]
- \centering
+ \end{tikzpicture}\label{trad_map}}
+ \subfloat[Deterministic Mapping]{
  \begin{tikzpicture}[ele/.style={fill=black,circle,minimum width=.8pt,inner sep=1pt},every fit/.style={ellipse,draw,inner sep=-2pt}]
   \node[ele,label=left:$a$] (a1) at (0,4) {};    
   \node[ele,label=left:$b$] (a2) at (0,3) {};    
@@ -439,8 +466,39 @@ Some of these frameworks are discussed further in the next chapter.
   \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b2);
   \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b1);
   \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b3);
- \end{tikzpicture}
- \caption{Deterministic Mapping}
- \label{determinisitic_mapping}
+ \end{tikzpicture}\label{determinisitic_mapping}}
+ \caption{Input to Schedule mappings in multithreaded execution}
 \end{figure}
+Fig~ \ref{trad_map} depicts a mapping of inputs to possible scheduling pattern adopted by the multi-threaded program. 
+By bringing in deterministic mapping as shown in fig~\ref{determinisitic_mapping}, we have direct mapping between inputs and schedules. 
+Having such mapping provides us the opportunity to determine erroneous executions. 
+Such a mapping facilitates to determine concurrency bugs in the program execution. 
+There are many frameworks - CoreDet\cite{coredet}, Parrot\cite{parrot}, Kendo\cite{kendo}, DThreads\cite{dthreads}, Grace\cite{grace}, which adheres to this principle. 
+Some of these frameworks are discussed further in the next chapter.
+
+%\begin{figure}[h]
+% \centering
+% \begin{tikzpicture}[ele/.style={fill=black,circle,minimum width=.8pt,inner sep=1pt},every fit/.style={ellipse,draw,inner sep=-2pt}]
+%  \node[ele,label=left:$a$] (a1) at (0,4) {};    
+%  \node[ele,label=left:$b$] (a2) at (0,3) {};    
+%  \node[ele,label=left:$c$] (a3) at (0,2) {};
+%  \node[ele,label=left:$d$] (a4) at (0,1) {};
+%  \node[above= of a1,anchor=south] {$Inputs$};	
+%
+%  \node[ele,,label=right:$1$] (b1) at (4,4) {};
+%  \node[ele,,label=right:$2$] (b2) at (4,3) {};
+%  \node[ele,,label=right:$3$] (b3) at (4,2) {};
+%  \node[ele,,label=right:$4$] (b4) at (4,1) {};
+%  \node[above= of b1,anchor=south] {$Schedules$};	
+%
+%  \node[draw,fit= (a1) (a2) (a3) (a4),minimum width=2cm] {} ;
+%  \node[draw,fit= (b1) (b2) (b3) (b4),minimum width=2cm] {} ;  
+%  \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b4);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b2);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b1);
+%  \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b3);
+% \end{tikzpicture}
+% \caption{Deterministic Mapping}
+% \label{determinisitic_mapping}
+%\end{figure}
 %
