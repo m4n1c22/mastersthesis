@@ -138,7 +138,14 @@
 % CUSTOM SETUP STUFF
 %=====================================================
 \usepackage{tikz}
+
+
+\usepackage{subfig} 
 \usetikzlibrary{shadows,arrows}
+\usetikzlibrary{shapes.geometric,fit,calc,positioning}
+%\tikzstyle{line}=[draw]
+
+
 %\usepackage{program}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
@@ -148,7 +155,7 @@
 \pgfsetlayers{background,main,foreground}
  
 % Define block styles  
-\tikzstyle{materia}=[draw, fill=blue!20, text width=7.0em, text centered,
+\tikzstyle{materia}=[draw, fill=white!20, text width=7.0em, text centered,
   minimum height=1.5em,drop shadow]
 \tikzstyle{practica} = [materia, text width=8em, minimum width=10em,
   minimum height=3em, rounded corners, drop shadow]
@@ -177,7 +184,7 @@
     % Right-bottom corner of the background rectanle
     \path (#3.east |- #4.south)+(+0.5,-0.25) node (a2) {};
     % Draw the background
-    \path[fill=yellow!20,rounded corners, draw=black!50, dashed]
+    \path[fill=gray!10,rounded corners, draw=black!50, dashed]
       (a1) rectangle (a2);
     \path (a1.east |- a1.south)+(0.8,-0.3) node (u1)[texto]
       {\scriptsize\textit{#5}};
@@ -244,9 +251,9 @@
   language=C,
   showstringspaces=false,
   basicstyle=\footnotesize\ttfamily,
-  keywordstyle=\bfseries\color{green!40!black},
-  commentstyle=\itshape\color{purple!40!black},
-  identifierstyle=\color{blue},
+  keywordstyle=\bfseries\color{red!40!black},
+  commentstyle=\itshape\color{gray!40!black},
+  identifierstyle=\color{black},
   stringstyle=\color{orange},
   morekeywords={thread, thread_init, thread_exec, join, main},
 }
@@ -276,32 +283,41 @@
 	
 	\noindent Darmstadt, den \deedsSubmissionDate\hfill \deedsName
 	
-	\tableofcontents
-	\listoffigures
-	\listoftables
+	%\tableofcontents
+	%\listoffigures
+	%\listoftables
 
-	\begin{abstract}
-	Abstract comes here...
-	\end{abstract}		
+	%\begin{abstract}
+	%---Abstract comes here---
+	%\end{abstract}		
 	
 	
 	%======================================================
 	% The main matter (insert your contents here)
 	%======================================================
-	\cleardoublepage
+	%\cleardoublepage
 	%\graphicspath{ {./gfx/} }
 	\pagenumbering{arabic}
-	\chapter{Background}
+	\chapter{Background \label{bkgd}}
 	\input{background}
 	
-	\chapter{Related Work}
-	\input{relatedwork}
+	%\chapter{Related Work \label{rel_work}}
+	%\input{relatedwork}
 	
-	\chapter{Design Challenges}
-	\input{challenges}	
+	%\chapter{Iterative Relaxed Scheduling}	
+	%\input{irs}	
 	
-	\chapter{Designs}
-	\input{design}
+	%\chapter{Design Challenges}
+	%\input{challenges}	
+	
+	%\chapter{Designs}
+	%\input{design}
+
+	%\chapter{Evaluation}	
+	%\input{evaluation}
+	
+	%\chapter{Conclusion}
+	%\input{conclusion}
 	%\input{content2}
 	
 	%======================================================
@@ -310,8 +326,8 @@
 	%\cleardoublepage
 	\refstepcounter{dummy}
 	\addcontentsline{toc}{chapter}{\bibname}
-	%\bibliographystyle{plainnat} % <--- layout of the bib
-	%\bibliography{bibliography2} % file name of your bib
+	\bibliographystyle{plainnat} % <--- layout of the bib
+	\bibliography{bibl_2} % file name of your bib
 
 \end{document}
 %======================================================
