@@ -1,7 +1,10 @@
 %This chapter addresses various design variants and challenges embedded with the proposed solution of moving a fine-grained scheduler to kernel space. 
 
-\section{Design Challenges}
+In this chapter, we address the approach used for realizing IRS in kernel space. 
+Initially, we discuss about the challenges pertaining to such a realization. 
+Later, we discuss about the different designs used for realizing the solution.
 
+\section{Design Challenges}
 
 \section*{Note}
 In the progression of this document, we would be using certain acronyms to indicate certain meanings. 
@@ -12,14 +15,22 @@ Some of them are:
 \item \textbf{TaskID} - All threads are internally realized as tasks in kernel space and are allocated with an identifier which is task ID.
 \end{itemize}
 
-\subsection{Mapping UTID to RTID}
+\subsection{Mapping UTID to TaskID}
 
-The user defined thread ID is mapped to the real thread ID created in the user space. 
+There are two ways to realize the mapping. 
+
+\subsubsection{Method 1}
+
+The UTID is mapped to the RTID created in the user space. 
 The presence of the RTID can be realized by accessing the corresponding RTID folder location inside the proc file system. 
 There are system call defined in Linux operating systems for obtaining the thread ID of any given thread. 
 \emph{getttid()} is one such function. 
 Based on the thread library used, suitable functional implementation for thread ID extraction can be used. 
 For POSIX (Portable Operating System Interface) based thread library (PThread) we can use the \emph{pthread.self()}.
+
+
+\subsubsection{Method 2}
+
 
 \subsection{Registration of UTID to scheduler}
 
@@ -271,18 +282,6 @@ enum  mem_access{
 	e_ma_restricted = 0,
 	e_ma_allowed 	= 1
 } 
-struct vec_clk {
-	int clocks[THREAD_COUNT],
-}
-struct trace_node {
-	thread_id_t tid;
-	vec_clk clk;
-	int valid;
-}
-
-struct trace {
-	trace_nodes trace_obj_arr[TRACE_LIMIT];
-}
 \end{lstlisting}
 
 \begin{lstlisting}[title=Check Permission for memory access, style=customc]
@@ -424,16 +423,7 @@ ctxt_switch_thread(thread_id_t tid) {
 
 signal_all_other_threads(thread_id_t tid) {
 	//critical section for wait queue
-	for i in(0,THREAD_COUNT) {
-		if(i!=(tid-1)) {
-			if(check_mem_access_with_trace(i+1) == e_ma_allowed) {
-				/**Performs up operation on the respective thread semaphore.*/
-				up(threads_sem[i]);
-				wait_queue[i]=0;			
-			}		
-		}
-	}	
-	
+	up(threads_sem[i])$\forall$	
 	//critical section ends.
 }
 
