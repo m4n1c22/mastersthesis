@@ -1,6 +1,6 @@
 /**
-	\file		:		prod_cons.cpp
-	\brief		:		Benchmark program for Producer consumer adaptation
+	\file		:		dining_phil_problem.cpp
+	\brief		:		Benchmark program for dining philospher's problem adaptation
 	\author 	:		Sreeram Sadasivam
 */
 
@@ -18,49 +18,48 @@
 
 #define USE_CLOCK			1
 
-#define NUM_ITERATIONS		4
+#define NUM_ITERATIONS		100
 
-int g_arr[THREAD_COUNT];
-int g_idx=0;
+typedef int chopstick;
+
+chopstick g_chopsticks[THREAD_COUNT];
 
 
-void producer(thread_id_t id) {
+void philospher_thread(thread_id_t id) {
 
 	int i;
 	thread_reg(id);
 
 	for(i=0; i < NUM_ITERATIONS; i++) {
     	BeforeMA(id);
-    	g_arr[g_idx] = 1;
-		g_idx++;
+    	/**Acquiring the chopsticks*/
+    	g_chopsticks[((id-1)%THREAD_COUNT)] = 1;
 		#ifdef DEBUG
-		cout << "Thread " << id << " : writing data "<<val<<std::endl;
+		cout << "Thread " << id << " : setting left chopstick "<<val<<std::endl;
+		#endif
+		g_chopsticks[((id)%THREAD_COUNT)] = 1;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : setting right chopstick "<<val<<std::endl;
+		#endif
+		/**Releasing the chopsticks*/
+		g_chopsticks[((id-1)%THREAD_COUNT)] = 0;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : unsetting left chopstick "<<val<<std::endl;
+		#endif
+		g_chopsticks[((id)%THREAD_COUNT)] = 0;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : unsetting right chopstick "<<val<<std::endl;
 		#endif
 		AfterMA(id);
 	}	
 
 }
 
-
-void consumer(thread_id_t id) {
-
-	int i;
-	thread_reg(id);
-	for(i=0; i < NUM_ITERATIONS; i++) {
-		BeforeMA(id);
-		#ifdef DEBUG
-		cout << "Thread " << id << " : read data "<<val<<std::endl;
-		#endif
-		g_idx--;
-		AfterMA(id);
-	}
-}
-
 void init_array() {
 
 	int i;
 	for (i = 0; i < THREAD_COUNT; i++) {
-        g_arr[i] = 0;
+        g_chopsticks[i] = 0;
     }
 }
 
@@ -91,16 +90,16 @@ int main()
 		char filename[50];
 		switch(j) {
 			case 0: trace = trace0;
-					strcpy(filename,"prod_cons_trace_0_proto_1.dat");
+					strcpy(filename,"dining_phil_trace_0_proto_1.dat");
 					break;
 			case 1: trace = trace1;
-					strcpy(filename,"prod_cons_trace_1_proto_1.dat");
+					strcpy(filename,"dining_phil_trace_1_proto_1.dat");
 					break;
 			case 2: trace = trace2;
-					strcpy(filename,"prod_cons_trace_2_proto_1.dat");
+					strcpy(filename,"dining_phil_trace_2_proto_1.dat");
 					break;
 			case 3: trace = trace3;
-					strcpy(filename,"prod_cons_trace_3_proto_1.dat");
+					strcpy(filename,"dining_phil_trace_3_proto_1.dat");
 					break;
 		}		
 
@@ -120,18 +119,10 @@ int main()
 		#endif
 	 	for (i = 0; i < THREAD_COUNT; ++i)
 	 	{
-	 		if(i>=THREAD_COUNT/2) {
-	 			tin[i] = thread(producer, (i+1));  
-				#ifdef DEBUG
-	    		cout << "Thread "<<(i+1)<<" is producer\n";
-	    		#endif
-	    	}
-	    	else {
-	    		tin[i] = thread(consumer, (i+1));  
-				#ifdef DEBUG
-	    		cout << "Thread "<<(i+1)<<" is consumer\n";
-	    		#endif	
-	    	}
+	 		tin[i] = thread(philospher_thread, (i+1));  
+			#ifdef DEBUG
+	    	cout << "Thread "<<(i+1)<<" is philospher\n";
+	    	#endif
 	 	}
 			
 		 

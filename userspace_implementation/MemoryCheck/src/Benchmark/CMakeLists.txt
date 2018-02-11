@@ -12,7 +12,7 @@ set(LLVM_PASS "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libMemoryInstrumentationPass.so
 set(SCHEDULER_LIBRARY "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/libscheduler.a")
 set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../include")
 
-foreach(BENCHMARK last_zero readers_writers shared_pointer indexer file_system peterson dekker fibonacci bigshot lamport blackscholes dining_phil_prob)
+foreach(BENCHMARK last_zero readers_writers shared_pointer indexer file_system peterson dekker fibonacci bigshot lamport blackscholes dining_phil_prob prod_cons)
 
         set(BENCHMARK_SRC ${CMAKE_CURRENT_SOURCE_DIR}/${BENCHMARK}.cpp)
         set(BENCHMARK_SRC_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/${BENCHMARK}_main.cpp)

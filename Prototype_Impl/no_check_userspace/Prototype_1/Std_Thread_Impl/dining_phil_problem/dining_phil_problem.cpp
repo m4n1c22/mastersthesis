@@ -18,7 +18,7 @@
 
 #define USE_CLOCK			1
 
-#define NUM_ITERATIONS		100
+#define NUM_ITERATIONS		10
 
 typedef int chopstick;
 
@@ -28,27 +28,67 @@ chopstick g_chopsticks[THREAD_COUNT];
 void philospher_thread(thread_id_t id) {
 
 	int i;
+	int val1,val2;
 	thread_reg(id);
 
+
 	for(i=0; i < NUM_ITERATIONS; i++) {
-    	BeforeMA(id);
+    	
     	/**Acquiring the chopsticks*/
-    	g_chopsticks[((id-1)%THREAD_COUNT)] = 1;
-		#ifdef DEBUG
-		cout << "Thread " << id << " : setting left chopstick "<<val<<std::endl;
-		#endif
-		g_chopsticks[((id)%THREAD_COUNT)] = 1;
-		#ifdef DEBUG
-		cout << "Thread " << id << " : setting right chopstick "<<val<<std::endl;
-		#endif
+    	do {
+    	BeforeMA(id);
+    	val1 = g_chopsticks[((id-1)%THREAD_COUNT)];
+    	AfterMA(id);
+
+    	BeforeMA(id);
+    	val2 = g_chopsticks[((id)%THREAD_COUNT)];
+    	AfterMA(id);
+    	}while((val1 != 0)&&(val2 != 0));
+    	
+
+    	BeforeMA(id);
+    	if(id%2==0) {
+    		g_chopsticks[((id-1)%THREAD_COUNT)] = 1;
+			#ifdef DEBUG
+			cout << "Thread " << id << " : setting left chopstick "<<val1<<std::endl;
+			#endif
+		}
+		else {
+			g_chopsticks[((id)%THREAD_COUNT)] = 1;
+			#ifdef DEBUG
+			cout << "Thread " << id << " : setting right chopstick "<<val2<<std::endl;
+			#endif
+		}
+
+		AfterMA(id);
+
+		BeforeMA(id);
+		if(id%2!=0) {
+    		g_chopsticks[((id-1)%THREAD_COUNT)] = 1;
+			#ifdef DEBUG
+			cout << "Thread " << id << " : setting left chopstick "<<val1<<std::endl;
+			#endif
+		}
+		else {
+			g_chopsticks[((id)%THREAD_COUNT)] = 1;
+			#ifdef DEBUG
+			cout << "Thread " << id << " : setting right chopstick "<<val2<<std::endl;
+			#endif
+		}
+		AfterMA(id);
+
 		/**Releasing the chopsticks*/
+		BeforeMA(id);
 		g_chopsticks[((id-1)%THREAD_COUNT)] = 0;
 		#ifdef DEBUG
-		cout << "Thread " << id << " : unsetting left chopstick "<<val<<std::endl;
+		cout << "Thread " << id << " : unsetting left chopstick "<<val1<<std::endl;
 		#endif
+		AfterMA(id);
+
+		BeforeMA(id);
 		g_chopsticks[((id)%THREAD_COUNT)] = 0;
 		#ifdef DEBUG
-		cout << "Thread " << id << " : unsetting right chopstick "<<val<<std::endl;
+		cout << "Thread " << id << " : unsetting right chopstick "<<val2<<std::endl;
 		#endif
 		AfterMA(id);
 	}	

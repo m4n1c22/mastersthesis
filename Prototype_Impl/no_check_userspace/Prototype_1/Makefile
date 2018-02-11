@@ -21,6 +21,15 @@ INDEXER_T15_EXE_CPP := $(STD_THREAD_IMPL_LOC)/indexer_t15/indexer.out
 LAST_ZERO_SRC_CPP := $(STD_THREAD_IMPL_LOC)/last_zero/last_zero.cpp
 LAST_ZERO_EXE_CPP := $(STD_THREAD_IMPL_LOC)/last_zero/last_zero.out
 
+DINING_PHIL_SRC_CPP := $(STD_THREAD_IMPL_LOC)/dining_phil_problem/dining_phil_problem.cpp
+DINING_PHIL_EXE_CPP := $(STD_THREAD_IMPL_LOC)/dining_phil_problem/dining_phil_problem.out
+
+PROD_CONS_SRC_CPP := $(STD_THREAD_IMPL_LOC)/producer_consumer/prod_cons.cpp
+PROD_CONS_EXE_CPP := $(STD_THREAD_IMPL_LOC)/producer_consumer/prod_cons.out
+
+FIBONACCI_SRC_CPP := $(STD_THREAD_IMPL_LOC)/fibonacci/fibonacci.cpp
+FIBONACCI_EXE_CPP := $(STD_THREAD_IMPL_LOC)/fibonacci/fibonacci.out
+
 
 default: comp_rw_no_sync_cpp
 
@@ -61,6 +70,33 @@ test_last_zero: comp_last_zero_cpp
 run_last_zero: 
 	./$(LAST_ZERO_EXE_CPP)
 
+#Target option for compiling the dining philosophers problem program.
+comp_dining_phil_cpp:
+	$(CPP_COMP) $(DINING_PHIL_SRC_CPP) -o $(DINING_PHIL_EXE_CPP) $(CPP_V11) $(PTHREAD_LIB_ALT)
+#Target option for running the last zero program.
+test_dining_phil: comp_dining_phil_cpp
+	./$(DINING_PHIL_EXE_CPP)
+run_dining_phil: 
+	./$(DINING_PHIL_EXE_CPP)
+
+#Target option for compiling the producer consumer program.
+comp_prod_cons_cpp:
+	$(CPP_COMP) $(PROD_CONS_SRC_CPP) -o $(PROD_CONS_EXE_CPP) $(CPP_V11) $(PTHREAD_LIB_ALT)
+#Target option for running the last zero program.
+test_prod_cons: comp_prod_cons_cpp
+	./$(PROD_CONS_EXE_CPP)
+run_prod_cons: 
+	./$(PROD_CONS_EXE_CPP)
+
+#Target option for compiling the last zero program.
+comp_fibonacci_cpp:
+	$(CPP_COMP) $(FIBONACCI_SRC_CPP) -o $(FIBONACCI_EXE_CPP) $(CPP_V11) $(PTHREAD_LIB_ALT)
+#Target option for running the last zero program.
+test_fibonacci: comp_fibonacci_cpp
+	./$(FIBONACCI_EXE_CPP)
+run_fibonacci: 
+	./$(FIBONACCI_EXE_CPP)
+
 
 
 #Target option for compiling the test reader writer program without synchronization implemented using std thread.
@@ -88,6 +124,15 @@ clean_indexer_t15:
 clean_last_zero:
 	rm -f $(LAST_ZERO_EXE_CPP)
 
-clean_exec: clean_indexer clean_indexer_t15 clean_last_zero
+clean_dining_phil:
+	rm -f $(DINING_PHIL_EXE_CPP)
+
+clean_prod_cons:
+	rm -f $(PROD_CONS_EXE_CPP)
+
+clean_fibonacci:
+	rm -f $(FIBONACCI_EXE_CPP)
+
+clean_exec: clean_indexer clean_indexer_t15 clean_last_zero clean_dining_phil clean_prod_cons clean_fibonacci
 #Target option for cleaning the test reader writer program and the generated kernel modules
 cleanall:clean_exec clean_modules #clean_rw clean_rw_no_sync clean_rw_cpp 

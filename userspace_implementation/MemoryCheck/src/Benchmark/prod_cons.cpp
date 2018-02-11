@@ -1,6 +1,6 @@
 #include <Benchmark/IrsThread.h>
 #include <Benchmark/benchmark.h>
-#include <Benchmark/dining_phil_prob.h>
+#include <Benchmark/prod_cons.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,7 +8,7 @@
 #include <cassert>
 #include <thread>
 
-namespace dining_phil_prob {
+namespace prod_cons {
 
 const int THREAD_COUNT = 16;
 const int num_iterations = 10;
