@@ -18,51 +18,74 @@
 
 #define USE_CLOCK			1
 
-#define NUM_ITERATIONS		100
+int val1=1, val2=1;
+const int iter = 5;
 
-typedef int chopstick;
+void thread0(thread_id_t id) {
 
-chopstick g_chopsticks[THREAD_COUNT];
+    int i = 0;
 
-
-void philospher_thread(thread_id_t id) {
-
-	int i;
+    int tmp1, tmp2;
 	thread_reg(id);
 
-	for(i=0; i < NUM_ITERATIONS; i++) {
+    for (i = 0; i < iter; i++) {
+
     	BeforeMA(id);
-    	/**Acquiring the chopsticks*/
-    	g_chopsticks[((id-1)%THREAD_COUNT)] = 1;
+    	tmp1 = val1;
 		#ifdef DEBUG
-		cout << "Thread " << id << " : setting left chopstick "<<val<<std::endl;
+		cout << "Thread " << id << " : reading val1"<<std::endl;
 		#endif
-		g_chopsticks[((id)%THREAD_COUNT)] = 1;
+		AfterMA(id);
+
+		BeforeMA(id);
+    	tmp2 = val2;
 		#ifdef DEBUG
-		cout << "Thread " << id << " : setting right chopstick "<<val<<std::endl;
+		cout << "Thread " << id << " : reading val2"<<std::endl;
 		#endif
-		/**Releasing the chopsticks*/
-		g_chopsticks[((id-1)%THREAD_COUNT)] = 0;
+		AfterMA(id);
+
+		BeforeMA(id);
+    	val1 = tmp1 + tmp2;
 		#ifdef DEBUG
-		cout << "Thread " << id << " : unsetting left chopstick "<<val<<std::endl;
-		#endif
-		g_chopsticks[((id)%THREAD_COUNT)] = 0;
-		#ifdef DEBUG
-		cout << "Thread " << id << " : unsetting right chopstick "<<val<<std::endl;
+		cout << "Thread " << id << " : writing val1"<<std::endl;
 		#endif
 		AfterMA(id);
 	}	
 
 }
 
-void init_array() {
+void thread1(thread_id_t id) {
 
-	int i;
-	for (i = 0; i < THREAD_COUNT; i++) {
-        g_chopsticks[i] = 0;
-    }
+    int i = 0;
+
+    int tmp1, tmp2;
+	thread_reg(id);
+
+    for (i = 0; i < iter; i++) {
+
+    	BeforeMA(id);
+    	tmp2 = val2;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : reading val2"<<std::endl;
+		#endif
+		AfterMA(id);
+
+		BeforeMA(id);
+    	tmp1 = val1;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : reading val1"<<std::endl;
+		#endif
+		AfterMA(id);
+
+		BeforeMA(id);
+    	val2 = tmp2 + tmp1;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : writing val2"<<std::endl;
+		#endif
+		AfterMA(id);
+	}	
+
 }
-
 
 
 int main()
@@ -90,16 +113,16 @@ int main()
 		char filename[50];
 		switch(j) {
 			case 0: trace = trace0;
-					strcpy(filename,"dining_phil_trace_0_proto_1.dat");
+					strcpy(filename,"fibonacci_trace_0_proto_1.dat");
 					break;
 			case 1: trace = trace1;
-					strcpy(filename,"dining_phil_trace_1_proto_1.dat");
+					strcpy(filename,"fibonacci_trace_1_proto_1.dat");
 					break;
 			case 2: trace = trace2;
-					strcpy(filename,"dining_phil_trace_2_proto_1.dat");
+					strcpy(filename,"fibonacci_trace_2_proto_1.dat");
 					break;
 			case 3: trace = trace3;
-					strcpy(filename,"dining_phil_trace_3_proto_1.dat");
+					strcpy(filename,"fibonacci_trace_3_proto_1.dat");
 					break;
 		}		
 
@@ -109,7 +132,6 @@ int main()
 
 
 	 	initialize_trace(trace);
-	 	init_array();
 	 	#ifdef USE_CLOCK
 	 	begin = clock();
 		#else
@@ -117,20 +139,19 @@ int main()
 	 	double v1 = ts.tv_nsec ;
 	   	double v2 = ts.tv_sec ;
 		#endif
-	 	for (i = 0; i < THREAD_COUNT; ++i)
-	 	{
-	 		tin[i] = thread(philospher_thread, (i+1));  
-			#ifdef DEBUG
-	    	cout << "Thread "<<(i+1)<<" is philospher\n";
-	    	#endif
-	 	}
-			
-		 
+	 	
+	 	tin[0] = thread(thread0, 1);  
+		#ifdef DEBUG
+	    cout << "Thread "<<(i+1)<<" is first thread\n";
+	    #endif
+	 	
+	 	tin[1] = thread(thread1, 2);  
+		#ifdef DEBUG
+	    cout << "Thread "<<(i+1)<<" is first thread\n";
+	    #endif
 
-	 	for (i = 0; i < THREAD_COUNT; ++i)
-	 	{
-			tin[i].join();  
-	 	}
+		tin[0].join();  
+		tin[1].join();  
 
 	 	#ifdef USE_CLOCK
 	 	end = clock();

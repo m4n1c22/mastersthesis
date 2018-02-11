@@ -20,23 +20,71 @@
 
 #define NUM_ITERATIONS		4
 
-int g_arr[THREAD_COUNT];
-int g_idx=0;
-
+int buff[THREAD_COUNT];
+int in=0;
+int out=0;
+int ctr=0;
 
 void producer(thread_id_t id) {
 
 	int i;
+	int item;
+	int val_in, val_ctr;
 	thread_reg(id);
 
 	for(i=0; i < NUM_ITERATIONS; i++) {
+		item =100;
+		do {
+			BeforeMA(id);
+			val_ctr = ctr;
+			#ifdef DEBUG
+			cout << "Thread " << id << " : reading data "<<std::endl;
+			#endif
+			AfterMA(id);
+		}while(val_ctr == THREAD_COUNT);	
+
     	BeforeMA(id);
-    	g_arr[g_idx] = 1;
-		g_idx++;
+    	val_in = in;
 		#ifdef DEBUG
-		cout << "Thread " << id << " : writing data "<<val<<std::endl;
+		cout << "Thread " << id << " : reading data "<<std::endl;
+		#endif
+    	AfterMA(id);
+
+    	BeforeMA(id);
+    	buff[val_in] = item;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : writing data "<<std::endl;
 		#endif
 		AfterMA(id);
+
+		BeforeMA(id);
+    	val_in = in;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : reading data "<<std::endl;
+		#endif
+    	AfterMA(id);
+
+    	BeforeMA(id);
+    	in = (val_in + 1)%THREAD_COUNT;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : writing data "<<std::endl;
+		#endif
+    	AfterMA(id);
+
+		BeforeMA(id);
+    	val_ctr = ctr;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : reading data "<<std::endl;
+		#endif
+    	AfterMA(id);
+
+    	BeforeMA(id);
+    	ctr = val_ctr + 1;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : writing data "<<std::endl;
+		#endif
+    	AfterMA(id);
+
 	}	
 
 }
@@ -45,22 +93,70 @@ void producer(thread_id_t id) {
 void consumer(thread_id_t id) {
 
 	int i;
+	int item;
+	int val_out, val_ctr;
 	thread_reg(id);
+
 	for(i=0; i < NUM_ITERATIONS; i++) {
-		BeforeMA(id);
+		do {
+			BeforeMA(id);
+			val_ctr = ctr;
+			#ifdef DEBUG
+			cout << "Thread " << id << " : reading data "<<std::endl;
+			#endif
+			AfterMA(id);
+		}while(val_ctr == 0);	
+
+    	BeforeMA(id);
+    	val_out = out;
 		#ifdef DEBUG
-		cout << "Thread " << id << " : read data "<<val<<std::endl;
+		cout << "Thread " << id << " : reading data "<<std::endl;
 		#endif
-		g_idx--;
+    	AfterMA(id);
+
+    	BeforeMA(id);
+    	item = buff[val_out];
+		#ifdef DEBUG
+		cout << "Thread " << id << " : reading data "<<std::endl;
+		#endif
 		AfterMA(id);
-	}
+
+		BeforeMA(id);
+    	val_out = out;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : reading data "<<std::endl;
+		#endif
+    	AfterMA(id);
+
+    	BeforeMA(id);
+    	out = (val_out + 1)%THREAD_COUNT;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : writing data "<<std::endl;
+		#endif
+    	AfterMA(id);
+
+		BeforeMA(id);
+    	val_ctr = ctr;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : reading data "<<std::endl;
+		#endif
+    	AfterMA(id);
+
+    	BeforeMA(id);
+    	ctr = val_ctr - 1;
+		#ifdef DEBUG
+		cout << "Thread " << id << " : writing data "<<std::endl;
+		#endif
+    	AfterMA(id);
+
+	}	
 }
 
 void init_array() {
 
 	int i;
 	for (i = 0; i < THREAD_COUNT; i++) {
-        g_arr[i] = 0;
+        buff[i] = 0;
     }
 }
 
@@ -120,7 +216,7 @@ int main()
 		#endif
 	 	for (i = 0; i < THREAD_COUNT; ++i)
 	 	{
-	 		if(i>=THREAD_COUNT/2) {
+	 		if(i%2==0) {
 	 			tin[i] = thread(producer, (i+1));  
 				#ifdef DEBUG
 	    		cout << "Thread "<<(i+1)<<" is producer\n";
