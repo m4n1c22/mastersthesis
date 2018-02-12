@@ -27,13 +27,12 @@ MODULE_LICENSE("GPL");
 
 /** PROC FS RELATED MACROS */
 #define PROC_CONFIG_FILE_NAME	"trace_reg"
-
+#define PROCFS_MAX_SIZE	4096
 /** Proc FS Dir Object */
 static struct proc_dir_entry *trace_reg_file_entry;
 
 /**Statically defined variables*/
 static int num_traces = 0;
-
 
 /** Structure for trace node*/
 static trace_node arr[TRACE_LIMIT];
@@ -200,16 +199,25 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 */
 static ssize_t trace_reg_module_write(struct file *file, const char *buf, size_t count, loff_t *ppos)
 {
+	char proc_buff[PROCFS_MAX_SIZE];
+	int procfs_buffer_size
+	procfs_buffer_size = count;
+	if (procfs_buffer_size > PROCFS_MAX_SIZE) {
+		procfs_buffer_size = PROCFS_MAX_SIZE;
+	}
+  
+	if (copy_from_user(proc_buff, buffer, procfs_buffer_size)) {
+		return -EFAULT;
+	}
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module write.\n");
 
-	printk(KERN_INFO "Trace Registration Module: %s %d\n", buf, count);
+	printk(KERN_INFO "Trace Registration Module: %s %d\n", proc_buff, count);
 	#endif
-
-	trace_string_parse(buf, count);
+	trace_string_parse(proc_buff, count);
 
 	/** Successful execution of write call back.*/
-	return count;
+	return procfs_buffer_size;
 }
 
 /**
