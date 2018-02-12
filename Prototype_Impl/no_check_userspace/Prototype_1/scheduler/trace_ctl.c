@@ -206,7 +206,7 @@ static ssize_t trace_reg_module_write(struct file *file, const char *buf, size_t
 		procfs_buffer_size = PROCFS_MAX_SIZE;
 	}
   
-	if (copy_from_user(proc_buff, buffer, procfs_buffer_size)) {
+	if (copy_from_user(proc_buff, buf, procfs_buffer_size)) {
 		return -EFAULT;
 	}
 	#ifdef DEBUG
