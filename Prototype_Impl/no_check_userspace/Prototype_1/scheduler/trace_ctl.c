@@ -200,7 +200,7 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 static ssize_t trace_reg_module_write(struct file *file, const char *buf, size_t count, loff_t *ppos)
 {
 	char proc_buff[PROCFS_MAX_SIZE];
-	int procfs_buffer_size
+	int procfs_buffer_size;
 	procfs_buffer_size = count;
 	if (procfs_buffer_size > PROCFS_MAX_SIZE) {
 		procfs_buffer_size = PROCFS_MAX_SIZE;
