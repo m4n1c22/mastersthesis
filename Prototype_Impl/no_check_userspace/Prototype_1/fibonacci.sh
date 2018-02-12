@@ -39,10 +39,7 @@ if [ -f fibonacci_trace_2_proto_1.dat ]
 then
 	sudo rm fibonacci_trace_2_proto_1.dat
 fi
-if [ -f fibonacci_trace_3_proto_1.dat ]
-then
-	sudo rm fibonacci_trace_3_proto_1.dat
-fi
+
 sudo make test_fibonacci
 #Execute the prog binary file for test runs times. And write the output in the overall log file.
 while [ "$count" -lt "$test_runs" ]
