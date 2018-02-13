@@ -37,6 +37,10 @@ static int num_traces = 0;
 /** Structure for trace node*/
 static trace_node arr[TRACE_LIMIT];
 
+char proc_buff[PROCFS_MAX_SIZE];
+
+int flag=0;
+int prev_count=0;
 int number_trace_nodes(char *str, size_t len);
 int string_to_int(char *str);
 void trace_string_parse(char *str, size_t len);
@@ -199,23 +203,32 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 */
 static ssize_t trace_reg_module_write(struct file *file, const char *buf, size_t count, loff_t *ppos)
 {
-	char proc_buff[PROCFS_MAX_SIZE];
+	char tmp_buff[PROCFS_MAX_SIZE];
 	int procfs_buffer_size;
 	procfs_buffer_size = count;
 	if (procfs_buffer_size > PROCFS_MAX_SIZE) {
 		procfs_buffer_size = PROCFS_MAX_SIZE;
 	}
   
-	if (copy_from_user(proc_buff, buf, procfs_buffer_size)) {
+	if (copy_from_user(tmp_buff, buf, procfs_buffer_size)) {
 		return -EFAULT;
 	}
-	proc_buff[count]='\0';
+	tmp_buff[count]='\0';
+	if(flag==1) {
+		strcpy(proc_buff, tmp_buff);
+		prev_count = count;
+	}
+	else {
+		strcat(proc_buff, tmp_buff);
+		prev_count += count;
+	}	
+	proc_buff[prev_count]='\0';
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module write.\n");
 
 	printk(KERN_INFO "Trace Registration Module: %s %d\n", proc_buff, count);
 	#endif
-	trace_string_parse(proc_buff, count);
+	
 
 	/** Successful execution of write call back.*/
 	return procfs_buffer_size;
@@ -236,7 +249,7 @@ static int trace_reg_module_open(struct inode * inode, struct file * file)
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module open.\n");
 	#endif
-
+	flag = 1;
 	/** Successful execution of open call back.*/
 	return 0;
 }
@@ -256,6 +269,9 @@ static int trace_reg_module_release(struct inode * inode, struct file * file)
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module released.\n");
 	#endif
+	flag = 0;
+	trace_string_parse(proc_buff, prev_count);
+	prev_count = 0;
 	/** Successful execution of release callback.*/
 	return 0;
 }
