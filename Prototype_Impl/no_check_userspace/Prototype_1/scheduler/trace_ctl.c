@@ -209,12 +209,13 @@ static ssize_t trace_reg_module_write(struct file *file, const char *buf, size_t
 	if (copy_from_user(proc_buff, buf, procfs_buffer_size)) {
 		return -EFAULT;
 	}
-	#ifdef DEBUG
+	proc_buff[count]='\0';
+	//#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module write.\n");
 
 	printk(KERN_INFO "Trace Registration Module: %s %d\n", proc_buff, count);
-	#endif
-	trace_string_parse(proc_buff, count);
+	//#endif
+//	trace_string_parse(proc_buff, count);
 
 	/** Successful execution of write call back.*/
 	return procfs_buffer_size;
