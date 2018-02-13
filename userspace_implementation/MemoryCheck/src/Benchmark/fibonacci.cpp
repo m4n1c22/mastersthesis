@@ -12,7 +12,7 @@ const int THREAD_COUNT = 2;
 int i IRS_GLOBAL_VARIABLE = 1;
 int j IRS_GLOBAL_VARIABLE = 1;
 
-const int iter = 5;
+const int iter = 25;
 
 class Thread0 {
   public:

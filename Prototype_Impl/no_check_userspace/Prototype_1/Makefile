@@ -133,6 +133,6 @@ clean_prod_cons:
 clean_fibonacci:
 	rm -f $(FIBONACCI_EXE_CPP)
 
-clean_exec: clean_indexer clean_indexer_t15 clean_last_zero clean_dining_phil clean_prod_cons clean_fibonacci
+clean_exec: clean_indexer clean_indexer_t15 clean_last_zero clean_dining_phil clean_fibonacci #clean_prod_cons
 #Target option for cleaning the test reader writer program and the generated kernel modules
 cleanall:clean_exec clean_modules #clean_rw clean_rw_no_sync clean_rw_cpp 

@@ -60,6 +60,14 @@ void print_curr_clk(void) {
 }
 
 /***/
+void print_first_thr_inst(vec_clk *first_thr_inst) {
+	int i;
+    for(i = 0; i < THREAD_COUNT; i++) {
+    	printk(KERN_INFO "CLK[%d] - %d", i, first_thr_inst->clocks[i]);
+    }
+}
+
+/***/
 mem_access check_mem_access_with_trace(thread_id_t tid) {
 
 	vec_clk *first_thr_inst;
@@ -71,7 +79,7 @@ mem_access check_mem_access_with_trace(thread_id_t tid) {
 	if(first_thr_inst != NULL) {
 		/**Check permissions first if not allowed then context switch*/
 		mem_check = check_mem_acc_perm(&curr_clk_time, first_thr_inst, tid);
-		if(mem_check == e_ma_restricted) {			
+		if(mem_check == e_ma_restricted) {	
 			return e_ma_restricted;
 		}
 		else if(mem_check == e_ma_allowed_inst_rem) {
@@ -88,6 +96,7 @@ void req_ctxt_switch(thread_id_t tid) {
 		#ifdef DEBUG
 		printk(KERN_INFO "thread restricted... %d", tid);
 		print_curr_clk();
+
 		#endif
 		signal_all_other_threads(tid);
 		if(down_interruptible(&mutex_wait_queue)){

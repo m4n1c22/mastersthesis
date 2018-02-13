@@ -3,6 +3,7 @@
 
 #include "Scheduler/Scheduler.h"
 #include "Scheduler/SharedScheduler.h"
+#include "Scheduler/OptimizingScheduler.h"
 #include "Scheduler/Trace.h"
 
 // +----------------+                               +----------------------+
