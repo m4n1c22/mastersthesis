@@ -16,12 +16,9 @@
 #include <linux/cdev.h>
 #include <linux/device.h>
 #include <asm/uaccess.h>
-#include <linux/workqueue.h>
-#include <linux/sched.h>
 
 
 #include "../include/common.h"
-
 
 
 MODULE_AUTHOR("Sreeram Sadasivam");
@@ -30,24 +27,27 @@ MODULE_LICENSE("GPL");
 
 /** PROC FS RELATED MACROS */
 #define PROC_CONFIG_FILE_NAME	"trace_reg"
-
+#define PROCFS_MAX_SIZE	4096
 /** Proc FS Dir Object */
 static struct proc_dir_entry *trace_reg_file_entry;
-
-/** Structure for trace node*/
-static trace_node arr[TRACE_LIMIT];
 
 /**Statically defined variables*/
 static int num_traces = 0;
 
+/** Structure for trace node*/
+static trace_node arr[TRACE_LIMIT];
 
+char proc_buff[PROCFS_MAX_SIZE];
 
-/** Function Prototypes*/
+int flag=0;
+int prev_count=0;
 int number_trace_nodes(char *str, size_t len);
 int string_to_int(char *str);
 void trace_string_parse(char *str, size_t len);
 vec_clk* thread_inst_in_trace(thread_id_t tid);
 void unset_valid_thread_inst_in_trace(thread_id_t tid);
+
+
 /**
 	Function Name : number_trace_nodes 
 	Function Type : Parse Method
@@ -127,7 +127,6 @@ void trace_string_parse(char *str, size_t len) {
 }
 
 
-
 /***/
 vec_clk* thread_inst_in_trace(thread_id_t tid) {
 
@@ -173,6 +172,9 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module read.\n");
 
+	int d= THREAD_COUNT;
+
+	printk(KERN_INFO "Thread count %d\n", d);
 
 	for (i = 0; i < num_traces; ++i)
 	{
@@ -201,15 +203,35 @@ static ssize_t trace_reg_module_read(struct file *file, char *buf, size_t count,
 */
 static ssize_t trace_reg_module_write(struct file *file, const char *buf, size_t count, loff_t *ppos)
 {
+	char tmp_buff[PROCFS_MAX_SIZE];
+	int procfs_buffer_size;
+	procfs_buffer_size = count;
+	if (procfs_buffer_size > PROCFS_MAX_SIZE) {
+		procfs_buffer_size = PROCFS_MAX_SIZE;
+	}
+  
+	if (copy_from_user(tmp_buff, buf, procfs_buffer_size)) {
+		return -EFAULT;
+	}
+	tmp_buff[count]='\0';
+	if(flag==1) {
+		strcpy(proc_buff, tmp_buff);
+		prev_count = count;
+	}
+	else {
+		strcat(proc_buff, tmp_buff);
+		prev_count += count;
+	}	
+	proc_buff[prev_count]='\0';
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module write.\n");
 
-	printk(KERN_INFO "Trace Registration Module: %s %d\n", buf, count);
+	printk(KERN_INFO "Trace Registration Module: %s %d\n", proc_buff, count);
 	#endif
-	trace_string_parse(buf, count);
+	
 
 	/** Successful execution of write call back.*/
-	return count;
+	return procfs_buffer_size;
 }
 
 /**
@@ -227,6 +249,7 @@ static int trace_reg_module_open(struct inode * inode, struct file * file)
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module open.\n");
 	#endif
+	flag = 1;
 	/** Successful execution of open call back.*/
 	return 0;
 }
@@ -246,6 +269,9 @@ static int trace_reg_module_release(struct inode * inode, struct file * file)
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Registration Module released.\n");
 	#endif
+	flag = 0;
+	trace_string_parse(proc_buff, prev_count);
+	prev_count = 0;
 	/** Successful execution of release callback.*/
 	return 0;
 }
@@ -260,9 +286,6 @@ static struct file_operations trace_reg_module_fops = {
 };
 
 
-
-
-
 /**
 	Function Name : trace_ctl_module_init
 	Function Type : Module INIT
@@ -274,7 +297,7 @@ static int __init trace_ctl_module_init(void)
 {
 	#ifdef DEBUG
 	printk(KERN_INFO "Trace Control module is being loaded.\n");
-	#endif	
+	#endif
 	/**Proc FS is created with RD&WR permissions with name process_sched_add*/
 	trace_reg_file_entry = proc_create(PROC_CONFIG_FILE_NAME,0777,NULL,&trace_reg_module_fops);
 	/** Condition to verify if process_sched_add creation was successful*/
@@ -304,7 +327,6 @@ static void __exit trace_ctl_module_cleanup(void)
 	#endif
 	/** Proc FS object removed.*/
 	proc_remove(trace_reg_file_entry);
-
 }
 /** Initializing the kernel module init with custom init method */
 module_init(trace_ctl_module_init);
