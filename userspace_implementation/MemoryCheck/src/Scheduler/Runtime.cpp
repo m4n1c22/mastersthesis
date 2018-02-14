@@ -204,6 +204,7 @@ void _initSchedulerWithOptimization(std::vector<Trace> traces) {
     SCH_LOG_DEBUG("using optimizing scheduler");
     permissionManager.reset(new PermissionManagerTraceOptimizing(traces, threadCount));
     scheduler.reset(new SharedScheduler(threadCount, traces));
+    //scheduler.reset(new OptimizingScheduler(threadCount, *permissionManager));
 }
 }
 

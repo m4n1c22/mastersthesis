@@ -1,0 +1,40 @@
+python eval_dining_phil_prob.py	
+-----------------------------------------------------------------------------
+Exec Time(micro seconds) plain:
+476.367
+-----------------------------------------------------------------------------
+Exec Time(micro seconds) IRS for each trace:
+[170514.219, 71789.361, 13577.463]
+Overhead(%) IRS for each trace:
+[35694.717, 14970.179, 2750.211]
+-----------------------------------------------------------------------------
+Prototype 1 Exec Time(micro seconds) for each trace:
+[9790.721, 11252.017, 10085.584]
+Overhead(%) Prototype 1 for each trace:
+[1955.29, 2262.048, 2017.188]
+-----------------------------------------------------------------------------
+Prototype 2 Exec Time(micro seconds) for each trace:
+[5794.981, 5233.472, 4784.091]
+Overhead(%) Prototype 2 for each trace:
+[1116.495, 998.622, 904.287]
+-----------------------------------------------------------------------------
+Prototype 3 Exec Time(micro seconds) for each trace:
+[9474.539, 10829.671, 9748.997]
+Overhead(%) Prototype 3 for each trace:
+[1888.916, 2173.388, 1946.531]
+-----------------------------------------------------------------------------
+Prototype 4 Exec Time(micro seconds) for each trace:
+[6413.942, 5912.24, 5400.456]
+Overhead(%) Prototype 4 for each trace:
+[1246.429, 1141.11, 1033.676]
+-----------------------------------------------------------------------------
+Prototype 5 Exec Time(micro seconds) for each trace:
+[4904.524, 3023.27, 3123.245]
+Overhead(%) Prototype 5 for each trace:
+[929.568, 534.651, 555.638]
+-----------------------------------------------------------------------------
+Prototype 6 Exec Time(micro seconds) for each trace:
+[5264.22, 3040.506, 3089.55]
+Overhead(%) Prototype 6 for each trace:
+[1005.077, 538.27, 548.565]
+-----------------------------------------------------------------------------

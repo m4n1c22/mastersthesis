@@ -1,0 +1,40 @@
+python eval_fibonacci.py		
+-----------------------------------------------------------------------------
+Exec Time(micro seconds) plain:
+151.921
+-----------------------------------------------------------------------------
+Exec Time(micro seconds) IRS for each trace:
+[4189.631, 2681.595, 800.585]
+Overhead(%) IRS for each trace:
+[2657.769, 1665.125, 426.975]
+-----------------------------------------------------------------------------
+Prototype 1 Exec Time(micro seconds) for each trace:
+[316.913, 277.72, 239.231]
+Overhead(%) Prototype 1 for each trace:
+[108.604, 82.806, 57.471]
+-----------------------------------------------------------------------------
+Prototype 2 Exec Time(micro seconds) for each trace:
+[346.397, 366.703, 414.993]
+Overhead(%) Prototype 2 for each trace:
+[128.011, 141.377, 173.164]
+-----------------------------------------------------------------------------
+Prototype 3 Exec Time(micro seconds) for each trace:
+[302.202, 275.941, 237.454]
+Overhead(%) Prototype 3 for each trace:
+[98.92, 81.635, 56.301]
+-----------------------------------------------------------------------------
+Prototype 4 Exec Time(micro seconds) for each trace:
+[353.818, 362.519, 414.696]
+Overhead(%) Prototype 4 for each trace:
+[132.896, 138.623, 172.968]
+-----------------------------------------------------------------------------
+Prototype 5 Exec Time(micro seconds) for each trace:
+[309.13, 188.665, 173.411]
+Overhead(%) Prototype 5 for each trace:
+[103.481, 24.186, 14.146]
+-----------------------------------------------------------------------------
+Prototype 6 Exec Time(micro seconds) for each trace:
+[280.939, 182.617, 168.081]
+Overhead(%) Prototype 6 for each trace:
+[84.924, 20.205, 10.637]
+-----------------------------------------------------------------------------

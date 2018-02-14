@@ -58,7 +58,7 @@ void run_benchmark() {
     }
     ON_WORK_BEGIN
     std::vector<Philosopher *> thj;
-    for (int i = 1; i <= THREAD_COUNT; i++) {
+    for (int i = 0; i < THREAD_COUNT; i++) {
         thj.emplace_back(new Philosopher(i));
     }
 
