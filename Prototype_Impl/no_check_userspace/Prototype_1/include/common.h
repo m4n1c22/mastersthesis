@@ -7,7 +7,7 @@
 
 
 /**Constantly defined macros*/
-#define THREAD_COUNT 12 
+#define THREAD_COUNT 16 
 #define TRACE_LIMIT	100
 
 /**Custom data types*/
