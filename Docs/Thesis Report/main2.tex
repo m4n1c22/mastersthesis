@@ -288,7 +288,7 @@
 	\listoftables
 
 	\begin{abstract}
-	%\input{abstract}
+	\input{abstract}
 	\end{abstract}		
 	
 	
@@ -298,24 +298,21 @@
 	\cleardoublepage
 	%\graphicspath{ {./gfx/} }
 	\pagenumbering{arabic}
+
+	
+	\chapter{Introduction \label{intro}}	
+	\input{introduction}		
+	
 	\chapter{Background \label{bkgd}}
 	\input{background}
 	
 	\chapter{Related Work \label{rel_work}}
 	\input{relatedwork}
 	
-	%\chapter{Iterative Relaxed Scheduling}	
-	%\input{irs}	
-	
-	\chapter{Approach}
+	\chapter{Approach \label{approach_ch}}
 	\input{approach}
-	%\chapter{Design Challenges}
-	%\input{challenges}	
 	
-	%\chapter{Designs}
-	%\input{design}
-
-	\chapter{Evaluation}	
+	\chapter{Evaluation \label{eval_ch}}	
 	\input{evaluation}
 	
 	\chapter{Conclusion}
@@ -328,7 +325,7 @@
 	%\cleardoublepage
 	\refstepcounter{dummy}
 	\addcontentsline{toc}{chapter}{\bibname}
-	\bibliographystyle{plainnat} % <--- layout of the bib
+	\bibliographystyle{alpha} % <--- layout of the bib
 	\bibliography{bibl_2} % file name of your bib
 
 \end{document}
