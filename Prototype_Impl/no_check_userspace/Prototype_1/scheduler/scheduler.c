@@ -1,7 +1,7 @@
 /**
-	\file	:	trace_ctl.c
+	\file	:	scheduler.c
 	\author	: 	Sreeram Sadasivam
-	\brief	: 	Module which deals with the trace control implementation
+	\brief	: 	Module which deals with the scheduler implementation
 */
 #include <linux/module.h>
 #include <linux/init.h>
@@ -31,6 +31,7 @@ MODULE_LICENSE("GPL");
 extern vec_clk* thread_inst_in_trace(thread_id_t tid);
 extern void unset_valid_thread_inst_in_trace(thread_id_t tid);
 
+static int num_synch = 0;
 
 /***/
 void ctxt_switch_thread(thread_id_t tid) {
@@ -107,6 +108,7 @@ void req_ctxt_switch(thread_id_t tid) {
 			return -ERESTARTSYS;
 		}
 		wait_queue[tid-1] = 1;
+		num_synch++;
 		up(&mutex_wait_queue);
 		ctxt_switch_thread(tid);
 		//unset_valid_thread_inst_in_trace(tid);
@@ -132,7 +134,7 @@ void signal_all_other_threads(thread_id_t tid) {
 			//checkperm(i) signal accordingly...
 			if(check_mem_access_with_trace(i+1)!=e_ma_restricted) {
 				up(&threads_sem[i]);
-				wait_queue[i] = 0;				
+				wait_queue[i] = 0;	
 			}
 			#ifdef DEBUG
 			else {
@@ -141,7 +143,7 @@ void signal_all_other_threads(thread_id_t tid) {
 			#endif
 		}
 	}
-	
+	num_synch++;
 	up(&mutex_wait_queue);
 }
 
@@ -242,6 +244,8 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
         	for(i = 0; i < THREAD_COUNT; i++) {
             	curr_clk_time.clocks[i] = 0;
             }
+			printk(KERN_INFO "Num of synchs:%d\n", num_synch);
+			num_synch = 0;
             break;
                /**IOCTL CMD for setting the thread clock*/    
         case SET_CLK:    
@@ -349,7 +353,6 @@ static void __exit scheduler_module_cleanup(void)
 	#ifdef DEBUG
 	printk(KERN_INFO "Scheduler module is being unloaded.\n");
 	#endif
-
     device_destroy(cl, dev);
     class_destroy(cl);
     cdev_del(&c_dev);
