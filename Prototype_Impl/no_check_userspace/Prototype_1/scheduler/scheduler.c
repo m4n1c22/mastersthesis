@@ -225,7 +225,7 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
         	curr_clk_time.clocks[tid-1] += 1; 
         	signal_all_other_threads(tid);
             break;
-		/**IOCTL CMD for Context switcing the given thread*/                
+		/**IOCTL CMD for Context switching the given thread*/                
         case CTXT_SWITCH:
             if (copy_from_user(&tid, (thread_id_t *)arg, sizeof(thread_id_t)))
             {

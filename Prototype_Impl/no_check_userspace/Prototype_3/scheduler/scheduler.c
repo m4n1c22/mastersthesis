@@ -1,7 +1,7 @@
 /**
-	\file	:	trace_ctl.c
+	\file	:	scheduler.c
 	\author	: 	Sreeram Sadasivam
-	\brief	: 	Module which deals with the trace control implementation
+	\brief	: 	Module which deals with the scheduler implementation
 */
 #include <linux/module.h>
 #include <linux/init.h>
@@ -31,6 +31,7 @@ MODULE_LICENSE("GPL");
 extern vec_clk* thread_inst_in_trace(thread_id_t tid);
 extern void unset_valid_thread_inst_in_trace(thread_id_t tid);
 
+static int num_synch = 0;
 
 /***/
 void ctxt_switch_thread(thread_id_t tid) {
@@ -48,6 +49,7 @@ void ctxt_switch_thread(thread_id_t tid) {
 	wait_queue[tid-1].is_waiting = 1;
 	wait_queue[tid-1].my_task = current;
 	set_current_state(TASK_INTERRUPTIBLE);
+	num_synch++;
 	up(&mutex_wait_queue);
 	schedule();
 }
@@ -111,7 +113,7 @@ void signal_all_other_threads(thread_id_t tid) {
 			}
 		}
 	}
-	
+	num_synch++;
 	up(&mutex_wait_queue);
 }
 
@@ -212,6 +214,8 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
         	for(i = 0; i < THREAD_COUNT; i++) {
             	curr_clk_time.clocks[i] = 0;
             }
+			printk(KERN_INFO "Num of synchs:%d\n", num_synch);
+			num_synch = 0;
             break;
         /**IOCTL CMD for setting the thread clock*/    
         case SET_CLK:
