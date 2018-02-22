@@ -94,7 +94,6 @@ void req_ctxt_switch(thread_id_t tid) {
 			return -ERESTARTSYS;
 		}
 		wait_queue[tid-1] = 1;
-		num_synch++;
 		up(&mutex_wait_queue);
 		ctxt_switch_thread(tid);
 		//unset_valid_thread_inst_in_trace(tid);
@@ -126,7 +125,6 @@ void signal_valid_threads(void) {
 			}
 		}
 	}
-	num_synch++;
 	up(&mutex_wait_queue);
 	
 }
@@ -210,6 +208,7 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             break;
         /**IOCTL CMD for signaling other threads*/    
         case SIGNAL_OTHER_THREADS:
+			num_synch++;
     		#ifdef DEBUG
         	printk(KERN_INFO "IOCTL: Signalling other threads...\n");        	
         	#endif
@@ -223,6 +222,7 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             {
                 return -EACCES;
             }
+			num_synch++;
             #ifdef DEBUG
         	printk(KERN_INFO "IOCTL: Setting clock on thread %d...\n", tid);        	
         	#endif
@@ -234,6 +234,7 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             {
                 return -EACCES;
             }
+			num_synch++;
             #ifdef DEBUG
             printk(KERN_INFO "IOCTL: Received thread id %d...\n", tid);           
             #endif
