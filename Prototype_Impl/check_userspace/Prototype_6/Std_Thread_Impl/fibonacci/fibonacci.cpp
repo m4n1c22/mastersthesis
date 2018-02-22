@@ -19,7 +19,7 @@
 #define USE_CLOCK			1
 
 int val1=1, val2=1;
-const int iter = 5;
+const int iter = 25;
 
 void thread0(thread_id_t id) {
 
