@@ -1,13 +1,86 @@
 Fibonacci with 25 iterations with 3 memory events per thread for each iteration. total memory events 300.
 
-Proto 1-4
+Proto-1
 
-Num of synchs:299
+Trace-1
+Num of synchs:300
+Num of ctxt calls:150
+
+Trace-2
+Num of synchs:300
+Num of ctxt calls:150
+
+Trace-3
+Num of synchs:300
+Num of ctxt calls:150
+------------------------------------------------------------------------
+Proto-2
+
+Trace-1
 Num of synchs:298
+Num of ctxt calls:149
+
+Trace-2
+Num of synchs:300
+Num of ctxt calls:150
+
+Trace-3
+Num of synchs:300
+Num of ctxt calls:150
+-----------------------------------------------------------------------
+Proto -3
+
+Trace-1
+Num of synchs:300
+Num of ctxt calls:150
+
+Trace-2
+Num of synchs:300
+Num of ctxt calls:150
+
+Trace-3
 Num of synchs:299
+Num of ctxt calls:149
+-----------------------------------------------------------------------
+Proto-4
 
-Proto 5-6
+Trace-1
+Num of synchs:300
+Num of ctxt calls:150
 
-Num of synchs:172
+Trace-2
+Num of synchs:300
+Num of ctxt calls:150
+
+Trace-3
+Num of synchs:300
+Num of ctxt calls:150
+------------------------------------------------------------------------
+Proto-5
+
+Trace-1
+Num of synchs:170
+Num of ctxt calls:27
+
+Trace-2
+Num of synchs:149
+Num of ctxt calls:0
+
+Trace-3
 Num of synchs:150
-Num of synchs:150
+Num of ctxt calls:0
+-------------------------------------------------------------------------
+Proto-6
+
+Trace-1
+Num of synchs:175
+Num of ctxt calls:27
+
+Trace-2
+Num of synchs:149
+Num of ctxt calls:0
+
+Trace-3
+Num of synchs:149
+Num of ctxt calls:0
+--------------------------------------------------------------------------
