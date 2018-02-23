@@ -34,7 +34,7 @@ extern vec_clk* thread_inst_in_trace(thread_id_t tid);
 extern void unset_valid_thread_inst_in_trace(thread_id_t tid);
 
 static int num_synch = 0;
-
+static int num_ctxt_calls =0;
 
 /***/
 void ctxt_switch_thread(thread_id_t tid) {
@@ -232,6 +232,7 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
                 return -EACCES;
             }
 			num_synch++;
+			num_ctxt_calls++;
             #ifdef DEBUG
             printk(KERN_INFO "IOCTL: Received thread id %d...\n", tid);           
             #endif
@@ -246,7 +247,10 @@ static long ioctl_access(struct file *f, unsigned int cmd, unsigned long arg)
             	curr_clk_time.clocks[i] = 0;
             }
 			printk(KERN_INFO "Num of synchs:%d\n", num_synch);
+			printk(KERN_INFO "Num of ctxt calls:%d\n", num_ctxt_calls);
 			num_synch = 0;
+			num_ctxt_calls =0;
+
             break;
         default:
             return -EINVAL;
