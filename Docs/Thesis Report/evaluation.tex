@@ -7,7 +7,7 @@ The evaluation is performed on a virtual machine running on cluster with a maxim
 The virtual machine can use from two to eight processor cores which is used for the scaled up evaluation. 
 The virtual machine is based on Intel Xeon Family of processors configured with Ubuntu 16.10 as the operating system. 
 It is configured with 4GB RAM and 80GB hard disk. 
-The virtual machine is configured with the LLVM-CLANG 3.9.
+The virtual machine is configured with the LLVM-CLANG 3.9, GCC 4.9 and Boost 1.6.2.
 
 
 \section{Evaluation Metrics}
@@ -22,10 +22,10 @@ It is primarily the number of IOCTL calls under the command - context\_switch, s
 
 \section{Benchmarks}
 
-We use four different benchmarking programs for the evaluation of this thesis. 
-The benchmarking programs include:
+We use four different bench-marking programs for the evaluation of this thesis. 
+The bench-marking programs include:
 \begin{itemize}
-\item{Fibonacci} - Program runs with two threads computing fibonacci numbers for 25 iterations per thread.
+\item{Fibonacci} - Program runs with two threads computing Fibonacci numbers for 25 iterations per thread.
 \item{Last Zero} - Program runs with 16 threads~\citep{abdulla2014optimal}.
 \item{Indexer}- Program runs with 15 threads~\citep{dynamic_por}.
 \item{Dining Philosophers Problem} - Program runs with 16 threads. These threads are classified as odd and even philosophers thread. 
@@ -37,9 +37,73 @@ This benchmark is motivated from the solution presented in \citet{silberschatz20
 
 We evaluate the number of voluntary calls made to kernel space for synchronization. 
 The evaluation is done across all six prototypes. 
-The benchmark used for the evaluation is Fibonacci.
+The benchmark used for the evaluation is Fibonacci. 
+The Fibonacci benchmark presents different levels of memory constraints via its traces. 
+It has three traces providing 98 constraints, 44 constraints and 24 constraints respectively.
 
+\begin{table}
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Prototype 1-4 & Prototype 5-6\\ %[0.5ex] 
+ \hline
+ Trace-1 & 300 & 175\\ 
+ Trace-2 & 300 & 150\\
+ Trace-3 & 300 & 150\\
+ \hline
+\end{tabular}
+\end{center}
+\caption{Number of IOCTL calls}
+\label{num_ioctls}
+\end{table}
+\begin{table}
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Prototype 1-4 & Prototype 5-6\\ %[0.5ex] 
+ \hline
+ Trace-1 & 150 & 27\\ 
+ Trace-2 & 150 & 0\\
+ Trace-3 & 150 & 0\\
+ \hline
+\end{tabular}
+\end{center}
+\caption{Number of context switch calls}
+\label{num_ctxts}
+\end{table}
+
+From the tables~\ref{num_ioctls} and \ref{num_ctxts}, it is really evident that prototypes 5 and 6 reduce the number of calls made to kernel space. 
+Prototypes 5 \& 6 are expected to provide better performance compared other prototypes when there are less dependencies between threads even with high number of memory events. 
+Let us consider the Fibonacci benchmark, it has two threads with a total of 75 shared-memory events per thread. 
+Thus, making a total of 150 memory events. 
+For every memory event, prototypes 1-4 trigger IOCTL calls to kernel space for context\_switch, signal\_all\_other\_threads or set\_clock. 
+Therefore, having number of IOCTL calls as 300. 
+In case of prototype 5-6, we have a proxy checking in user space which drastically reduces the calls to kernel space for additional synchronization. 
+The set\_clock ioctl command is the only call made consistently for every memory access when using prototypes 5-6.
+
+\begin{table}[!h]
+\begin{center}
+ \begin{tabular}{|c c c c c c c|} 
+ \hline
+ & Proto-1 & Proto-2 & Proto-3 & Proto-4 & Proto-5 & Proto-6\\ %[0.5ex] 
+ \hline
+ Trace-1 & 406.833 & 454.785 & 385.416 & 455.745 & 277.793 & 275.343 \\ 
+ Trace-2 & 367.199 & 520.352 & 352.506 & 509.843 & 160.266 & 160.307 \\
+ Trace-3 & 351.029 & 416.653 & 333.704 & 412.206 & 152.425 & 153.06\\
+ \hline
+\end{tabular}
+\end{center}
+\caption{Execution overhead(\%) when compared with plain execution of Fibonacci}
+\label{fib_exec_over}
+\end{table}
+
+Table~\ref{fib_exec_over} presents the reasoning of using prototypes 5-6. 
+It shows the execution overhead is drastically reduced for the above mentioned prototypes. 
+Reduction in the number of IOCTL calls makes a huge difference in the execution overhead. 
+Prototypes 5-6 performs the best, when the following condition holds:
+$num\_memory\_constraints << total\_memory\_events$.
 \section{Scaled-up Evaluation}
 
-In this evaluation, we understand the merits and demerits in the performance of the realized prototypes and the two user space IRS implementation. 
-For this evaluation, we use 3 benchmarking programs -last zero, indexer and dining philosphers problem. 
+In this evaluation, we understand the merits and demerits in the performance of the realized prototypes and the two user space IRS implementations. 
+For this evaluation, we use three bench-marking programs - last zero, indexer and dining philosophers problem. 
+We scale the core count from two to eight processor cores and monitor the changes the performance overhead across the three benchmarks for various implementations. 

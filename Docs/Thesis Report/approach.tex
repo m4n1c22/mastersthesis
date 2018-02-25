@@ -14,6 +14,19 @@ Each node denotes a shared memory event for a thread which can be a read or a wr
 
 \subsection{Vector Clock}
 
+Vector clock is an algorithmic design motivated from Lamport logical clocks~\citep{fidge1991logical}. 
+It is used to detect causality violations and generating a partial ordering of events in a distributed system. 
+A vector clock is an array of N logical clocks corresponding to N processes/threads. 
+Vector clocks allow for the partial causal ordering of events.
+The following definition holds:
+\begin{itemize}
+\item $VC(x)$ denotes the vector clock of event $x$, and $VC(x)_a$ denotes the component of that clock for process $a$. 
+\item $VC(x) < VC(y) \iff \forall a[VC(x)_a \lneq VC(y)_a] \wedge \exists b[VC(x)_b < VC(y)_b]$
+\item $x \to y$ indicates event $x$ happened before event $y$. It is defined as : if $x \to y$, then $VC(x) < VC(y)$
+\end{itemize}
+
+
+
 \section{Design Challenges}
 
 \section*{Note}
@@ -275,10 +288,6 @@ enum IOCTL CMDS  {
   	RESET_CLK = 4,
   	SET_MY_CLK = 5
 }
-enum  mem_access{
-	e_ma_restricted = 0,
-	e_ma_allowed 	= 1
-} 
 \end{lstlisting}
 
 \begin{lstlisting}[title=Check Permission for memory access, style=customc]
@@ -357,31 +366,7 @@ main() {
 
 
 \end{lstlisting}
-\begin{lstlisting}[title=Kernel Space - General module definitions, style=customc]
-semaphore threads_sems[THREAD_COUNT];
-int wait_queue[THREAD_COUNT];
-trace trace_obj;
-vec_clk curr_clk;
-int thread_count = 0;
 
-module_init() {
-	for i in range(0,THREAD_COUNT) {
-		init(threads_sem[i] = 0;
-		wait_queue[i] = 0;
-		curr_clk[i] = 0;
-	}
-	alloc_ioctl_device();//method used to allocate ioctl device.
-}
-
-trace_reg_callback() {
-	//The method parses the trace which is passed as string and stores in trace_obj
-}
-
-reg_thread_callback() {
-	thread_count++;
-}
-
-\end{lstlisting}
 \newpage
 \begin{lstlisting}[title=Kernel Space - IOCTL, style=customc]
 /* This method is triggered whenever ioctl commands are issued from the user space */
@@ -673,27 +658,6 @@ It would be pushed to run queue and executed in future by the operating system s
  
 \subsubsection*{Variant Pseudo Code for Design \ref{no_check_no_add}}
 
-\begin{lstlisting}[title=Kernel Space - General module definitions, style=customc]
-//code remains the same.
-typedef struct {
-	int is_waiting;
-	struct task_struct *my_task;
-}wait_queue_threads_t;
-
-
-static wait_queue_threads_t wait_queue[THREAD_COUNT];
-
-module_init() {
-	for i in range(0,THREAD_COUNT) {
-		wait_queue[i].is_waiting = 0; 
-		wait_queue[i].my_task = NULL;
-		curr_clk[i] = 0;
-	}
-	alloc_ioctl_device();//method used to allocate ioctl device.
-}
-
-//code remains the same
-\end{lstlisting}
 
 \begin{lstlisting}[title=Kernel Space - IOCTL, style=customc]
 //code remains the same
@@ -725,28 +689,6 @@ signal_all_other_threads(thread_id_t tid) {
 \end{lstlisting}
 
 \subsubsection*{Variant Pseudo Code for Design \ref{sec_add_thread}}
-
-\begin{lstlisting}[title=Kernel Space - General module definitions, style=customc]
-//code remains the same.
-typedef struct {
-	int is_waiting;
-	struct task_struct *my_task;
-}wait_queue_threads_t;
-
-
-static wait_queue_threads_t wait_queue[THREAD_COUNT];
-
-module_init() {
-	for i in range(0,THREAD_COUNT) {
-		wait_queue[i].is_waiting = 0; 
-		wait_queue[i].my_task = NULL;
-		curr_clk[i] = 0;
-	}
-	alloc_ioctl_device();//method used to allocate ioctl device.
-}
-
-//code remains the same
-\end{lstlisting}
 
 \begin{lstlisting}[title=Kernel Space - General module definitions, style=customc]
 //code remains the same

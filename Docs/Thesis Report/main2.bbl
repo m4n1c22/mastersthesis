@@ -1,4 +1,4 @@
-\begin{thebibliography}{20}
+\begin{thebibliography}{21}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -77,6 +77,11 @@ Vijay D'silva, Daniel Kroening, and Georg Weissenbacher.
 \newblock A survey of automated techniques for formal software verification.
 \newblock \emph{IEEE Transactions on Computer-Aided Design of Integrated
   Circuits and Systems}, 27\penalty0 (7):\penalty0 1165--1178, 2008.
+
+\bibitem[Fidge(1991)]{fidge1991logical}
+Colin Fidge.
+\newblock Logical time in distributed computing systems.
+\newblock \emph{Computer}, 24\penalty0 (8):\penalty0 28--33, 1991.
 
 \bibitem[Flanagan and Godefroid(2005)]{dynamic_por}
 Cormac Flanagan and Patrice Godefroid.
