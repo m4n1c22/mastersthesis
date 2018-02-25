@@ -1,7 +1,8 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: main2.aux
-The style file: alpha.bst
+The style file: plainnat.bst
 Database file #1: bibl_2.bib
 Warning--can't use both volume and number fields in coredet
 Warning--can't use both volume and number fields in grace
 Warning--can't use both volume and number fields in dynamic_por
-(There were 3 warnings)
+Warning--empty year in commkernelanduser
+(There were 4 warnings)

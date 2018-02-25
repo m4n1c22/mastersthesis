@@ -1,8 +1,18 @@
 %This chapter addresses various design variants and challenges embedded with the proposed solution of moving a fine-grained scheduler to kernel space. 
 
 In this chapter, we address the approach used for realizing IRS in kernel space. 
-Initially, we discuss about the challenges pertaining to such a realization. 
-Later, we discuss about the different designs used for realizing the solution.
+In the first section, we discuss a theoretical design. 
+In the later sections, we address the potential challenges related to its implementation and the perceived prototypes.
+
+\section{Theoretical Design}
+
+The key component of this thesis is the scheduler. 
+Scheduler handles the scheduling of various user level threads based on their memory access permissions. 
+Memory access permissions are perceived by traces. 
+The traces are realized simple graphs with nodes. 
+Each node denotes a shared memory event for a thread which can be a read or a write event. 
+
+\subsection{Vector Clock}
 
 \section{Design Challenges}
 
@@ -13,108 +23,95 @@ Some of them are:
 \item \textbf{UTID} - User defined thread ID which is relative inside the user program. 
 \item \textbf{RTID} - Real Thread ID which is assigned within the proc file system for any thread created within the user land. 
 \item \textbf{TaskID} - All threads are internally realized as tasks in kernel space and are allocated with an identifier which is task ID.
+\item \textbf{API} -Application Programming Interface.
 \end{itemize}
 
-\subsection{Mapping UTID to TaskID}
+\subsection{Mapping UTID to Task Object}
 
-There are two ways to realize the mapping. 
-
-\subsubsection{Method 1}
-
-The UTID is mapped to the RTID created in the user space. 
-The presence of the RTID can be realized by accessing the corresponding RTID folder location inside the proc file system. 
-There are system call defined in Linux operating systems for obtaining the thread ID of any given thread. 
-\emph{getttid()} is one such function. 
-Based on the thread library used, suitable functional implementation for thread ID extraction can be used. 
-For POSIX (Portable Operating System Interface) based thread library (PThread) we can use the \emph{pthread.self()}.
-
-
-\subsubsection{Method 2}
-
-
-\subsection{Registration of UTID to scheduler}
-
+UTID  is passed to kernel space via a custom proc file and invoking scheduler API - $get\_current\_task()$. 
+This function returns a task struct object. 
+In kernel space, we can have a mapping of UTID to the obtained task struct object. 
 User defined thread ID (UTID) is required to be communicated to the scheduler. 
-And the mapping of task ID to UTID needs to be realized, inorder for the scheduling to be done right. 
-The custom registration proc file communicates the UTID-RTID mapping to the kernel space. 
-The user defined thread writes the mapping of UTID - RTID in the above proc file, which would trigger a callback to the write function in the kernel space module. 
-The invocation to the registration module can be done two ways.
-
-\subsubsection{Method 1}
-
-Single thread can collect the information about mapping of UTID - RTID of all the threads running the user program context. 
-And this thread can invoke the registration module in kernel space. 
-This would require all the threads to communicate their mapping of UTID - RTID individually to the collector thread. 
-The concept is similar to Gather function in MPI. 
-The collector thread would be blocked until all threads have communicated their mapping information. 
-
-\subsubsection{Method 2}
-
+And the mapping of task struct to UTID needs to be realized, in order for the scheduling to be done right. 
+The custom registration proc file communicates the UTID to the kernel space. 
+The user defined thread writes the UTID in the above proc file, which would trigger a callback to the write function in the kernel space module. 
 Threads will be created based on the user's choice. 
 On thread creation, the threads would invoke the registration module individually. 
 This method would require a definition of synchronization block inside the kernel space since, multiple write function calls are invoked. 
 Multiple threads are accessing the registration module. 
-The synchronization is also required between the context\_switch module and registration module.
+The synchronization is also required between the scheduler module and registration module.
 
 
-\subsection{Data Structure for mapping UTID to task ID}
+\subsection{Data Structure for mapping UTID to Task Object}
 
-The mapping of UTID - task ID is realized, when the registration of a UTID to the scheduler is done. 
-In the registration, the user thread is required to pass the UTID and RTID. 
-The task ID is obtained by passing the RTID to \emph{pid\_task()} function. 
-The data structure is created to store the mapping of UTID to task ID. 
+The mapping of UTID - task object is realized, when the registration of a UTID to the scheduler is done. 
+In the registration, the user thread is required to pass the UTID. 
+The task object is obtained by invoking $get\_current\_task()$ function during registration call. 
+The data structure is created to store the mapping of UTID to task object. 
 An item in the data structure is created whenever a registration of UTID takes place. 
-An item is otherwise accessed during the invocation of \emph{context\_switch()} function. 
+An item is otherwise accessed during the invocation of $context\_switch()$ function. 
 In a user space environment, there are solutions such as dictionary mapper or even hash table designs. 
-Since the mapping is coherent in the kernel space, there is only one design choice - linked list. 
+Since the mapping is coherent in the kernel space, possible design choices include - linked list, arrays. 
 There is a complexity associated in accessing a node in the linked list, which is O(n).
 
 \subsection{Communication between user thread and kernel space scheduler during context switch} 
 
 With the transition of scheduler to kernel space, there is a need of having a communication design to interact between the user program and kernel space scheduler. 
-The communication can be dealt with many ways. 
+The communication can be dealt in many ways\cite{commkernelanduser}. 
 Some of them are:
 
 \begin{itemize}
-\item ProcFs - Virtual file system for handling process and thread information base.
-\item Netlink - Special IPC scheme between kernel space and user space which uses sockets.
-\item Syscall - Functional implementation mainly meant to communicate some data or perform a specific service in kernel space. 
+\item ProcFS - Virtual file system for handling process and thread information base. Useful for small and short communications. 
+\item Netlink - Special IPC scheme between kernel space and user space which uses sockets. Portable design and 
+\item System call - Functional implementation mainly meant to communicate some data or perform a specific service in kernel space. 
 \item CharacterDevice - Special buffering interface provided for communicating with character device driver setups.
-\item Mmap - Fastest way of copying data between kernel space and user space without explicit copying.
+\item Mmap - Fastest way of copying data between kernel space and user space without explicit copying. Useful for large transactions of data.
 \item Signals - Unidirectional communication. Communicated from kernel space to user space. 
 \item Upcall - Execute a certain function defined in the user space from kernel space.
+\item IOCTL - Used primarily for input and output operations in between user space and kernel space. It is an extension of character device implementation. It uses simple read and write system calls for communication purposes. It can be realized as an alternative for system call.
 
 \end{itemize}
 
+
+Assessing the requirements for the implementation, IOCTL seems to be a perfect fit for all the interactions required for a scheduler module. 
+System call implementation requires the building of the entire kernel source tree and they are very difficult to debug and develop. 
+IOCTL provides the possibility for a plug and play design.
+
 \subsection{Mapping the trace object to kernel space}
 
-Trace object inside the framework is needed to be mapped on to the kernel space with the same memory mapping. 
-Currently, the trace object implemented in the framework is realized as a class with many member variables and functions. 
-For realizing the same in the kernel space, the object needs to be remapped in the kernel space when it is received as an object. 
-Since, there are no classes in C but only structures.
+The proposed design uses vector clocks as an outline for trace implementation. 
+The traces generated as graphs are mapped to kernel space a struct object. 
+Graphs are realized as graphviz files. 
+Parsing of graph is required in order to be mapped to the kernel space. 
+The parsed graph is passed to the kernel space as a long string via a custom proc file. 
+Currently, there is no automated method existent in this thesis to generate a graph string from a graphviz file. 
+We generate the trace string manually and pass it as an input to the custom proc file when the user program starts.
 
 \subsection{Trace verification inside user program vs kernel space scheduler}
 
-On occurrence of an event (in this case a memory access of a global variable), the respective callbacks from the user program would trigger a system call to the kernel module. 
+On occurrence of a shared memory event, the respective callbacks (BeforeMA() \& AfterMA() - Before memory access and After memory access) from the user program would trigger a system call to the kernel module. 
 Such a design would facilitate towards a non-preemptive scheduler. 
-By overcoming the additional synchronization overhead existent in the user space design, we encounter the problem of invoking system calls for accessing the kernel module. 
-In a monolithic kernel architecture, most of the system calls are blocking synchronous calls to the kernel space. 
-Having too many system calls would increase the scheduler overhead on the program execution. 
-One solution is to make system calls when there is an imminent context switch (expected thread switch in the provided safe schedule). 
-The user space threads would assess the safe schedules or traces based on which the system calls for the kernel space scheduler would be made. 
+By overcoming the additional synchronization overhead existent in the user space design, we encounter the problem of invoking IOCTL calls  for accessing the kernel module. 
+In a monolithic kernel architecture, most of the IOCTL calls are blocking synchronous calls to the kernel space. 
+Having too many IOCTL calls would increase the scheduler overhead on the program execution. 
+One solution is to make IOCTL calls when there is an actual need of a  context switch. 
+The user space threads would assess the trace based on which the IOCTL calls for the kernel space scheduler would be made. 
+We discuss about such a solution in two prototypes used in the implementation section.
 
-\subsection{Yield to scheduler vs Pre-emptive scheduler}
+Note - Non-preemptiveness indicated in this section and the rest of the document is in regard to the scheduler implemented in this thesis and not the OS Scheduler.
+
+\subsection{Yield to scheduler vs Preemptive scheduler}
 
 The current implementation uses a non-preemptive design for the scheduler. 
 The design uses the verification of memory access event and performs yield to scheduler when the access to memory is not permitted. 
-A pre-emptive design would reduce the communication between user space and kernel space during context switch but, would increase the same for every memory access events. 
+A preemptive design would reduce the communication between user space and kernel space during context switch but, would increase the same for every memory access events. 
 With such an implementation, it would require the kernel space to be able to detect the memory access events of the global memory used by the user space threads. 
 Considering the complexity of its implementation and lack of existing solutions such a design would be not feasible to implement. 
 
 
 \subsection{Vector clock design for finding the event in the trace}
 
-Before a memory access (events triggered on accessing a global memory) is made, the user thread triggers a callback - \emph{BeforeMA()} (in short before memory access). 
+Before a shared memory access is made, the user thread triggers a callback - \emph{BeforeMA()} (in short before memory access). 
 The callback internally triggers a yield to scheduler if the memory access is not permitted. 
 The memory access permission is determined by checking the trace object. 
 The timeline of the event is required to be addressed during the checking with the trace. 

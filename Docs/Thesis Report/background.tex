@@ -199,7 +199,7 @@ Model checker tries to verify all possible states of a system in a brute force m
 Thus, making \emph{state explosion} as one of the major challenges, which is discussed in detail in section~\ref{state_exp_prob}.  
 Model checking tools usually verify partial specification for liveness and safety properties\cite{d2008survey}. 
 Model checking algorithms generate set of states from the instructions of a program, which are later analyzed. 
-There is a need to store these states for asserting the number of visits made them are atmost once. 
+There is a need to store these states for asserting the number of visits made them are at-most once. 
 There are two methods commonly used to represent states:
 \begin{itemize}
 \item	Explicit-state model checking
@@ -307,9 +307,6 @@ Thus, showing us that commutativity of transitions $\alpha_1$, $\alpha_2$ on the
 \label{commutativity_example}
 \end{figure}
 
-$B_r \subset B_f$
-
-$B_f$ represents the behaviors of full state graph and $B_r$ represents set of behaviors of reduced graph. 
 Partial order reduction derives its motivation from the early versions of algorithms used for partial order modeling of program execution. 
 POR is described as model checking using representatives\cite{por_repr}. 
 Verification is performed using representatives from equivalence classes of behaviors. 
@@ -476,29 +473,4 @@ Such a mapping facilitates to determine concurrency bugs in the program executio
 There are many frameworks - CoreDet\cite{coredet}, Parrot\cite{parrot}, Kendo\cite{kendo}, DThreads\cite{dthreads}, Grace\cite{grace}, which adheres to this principle. 
 Some of these frameworks are discussed further in the next chapter.
 
-%\begin{figure}[h]
-% \centering
-% \begin{tikzpicture}[ele/.style={fill=black,circle,minimum width=.8pt,inner sep=1pt},every fit/.style={ellipse,draw,inner sep=-2pt}]
-%  \node[ele,label=left:$a$] (a1) at (0,4) {};    
-%  \node[ele,label=left:$b$] (a2) at (0,3) {};    
-%  \node[ele,label=left:$c$] (a3) at (0,2) {};
-%  \node[ele,label=left:$d$] (a4) at (0,1) {};
-%  \node[above= of a1,anchor=south] {$Inputs$};	
-%
-%  \node[ele,,label=right:$1$] (b1) at (4,4) {};
-%  \node[ele,,label=right:$2$] (b2) at (4,3) {};
-%  \node[ele,,label=right:$3$] (b3) at (4,2) {};
-%  \node[ele,,label=right:$4$] (b4) at (4,1) {};
-%  \node[above= of b1,anchor=south] {$Schedules$};	
-%
-%  \node[draw,fit= (a1) (a2) (a3) (a4),minimum width=2cm] {} ;
-%  \node[draw,fit= (b1) (b2) (b3) (b4),minimum width=2cm] {} ;  
-%  \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b4);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b2);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b1);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b3);
-% \end{tikzpicture}
-% \caption{Deterministic Mapping}
-% \label{determinisitic_mapping}
-%\end{figure}
-%
+\section{Iterative Relaxed Scheduling}

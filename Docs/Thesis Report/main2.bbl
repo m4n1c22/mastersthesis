@@ -1,103 +1,133 @@
-\newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{LMMB17}
+\begin{thebibliography}{20}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[BAD{\etalchar{+}}10]{coredet}
+\bibitem[Abdulla et~al.(2014)Abdulla, Aronis, Jonsson, and
+  Sagonas]{abdulla2014optimal}
+Parosh Abdulla, Stavros Aronis, Bengt Jonsson, and Konstantinos Sagonas.
+\newblock Optimal dynamic partial order reduction.
+\newblock \emph{ACM SIGPLAN Notices}, 49\penalty0 (1):\penalty0 373--384, 2014.
+
+\bibitem[Baier et~al.(2008)Baier, Katoen, and
+  Larsen]{model_checking_principles}
+Christel Baier, Joost-Pieter Katoen, and Kim~Guldstrand Larsen.
+\newblock \emph{Principles of model checking}.
+\newblock MIT press, 2008.
+
+\bibitem[B{\'e}rard et~al.(2013)B{\'e}rard, Bidoit, Finkel, Laroussinie, Petit,
+  Petrucci, and Schnoebelen]{berard2013systems}
+B{\'e}atrice B{\'e}rard, Michel Bidoit, Alain Finkel, Fran{\c{c}}ois
+  Laroussinie, Antoine Petit, Laure Petrucci, and Philippe Schnoebelen.
+\newblock \emph{Systems and software verification: model-checking techniques
+  and tools}.
+\newblock Springer Science \& Business Media, 2013.
+
+\bibitem[Bergan et~al.(2010)Bergan, Anderson, Devietti, Ceze, and
+  Grossman]{coredet}
 Tom Bergan, Owen Anderson, Joseph Devietti, Luis Ceze, and Dan Grossman.
 \newblock Coredet: a compiler and runtime system for deterministic
   multithreaded execution.
-\newblock In {\em ACM SIGARCH Computer Architecture News}, volume~38, pages
+\newblock In \emph{ACM SIGARCH Computer Architecture News}, volume~38, pages
   53--64. ACM, 2010.
 
-\bibitem[BBF{\etalchar{+}}13]{berard2013systems}
-B{\'e}atrice B{\'e}rard, Michel Bidoit, Alain Finkel, Fran{\c{c}}ois
-  Laroussinie, Antoine Petit, Laure Petrucci, and Philippe Schnoebelen.
-\newblock {\em Systems and software verification: model-checking techniques and
-  tools}.
-\newblock Springer Science \& Business Media, 2013.
-
-\bibitem[BKL08]{model_checking_principles}
-Christel Baier, Joost-Pieter Katoen, and Kim~Guldstrand Larsen.
-\newblock {\em Principles of model checking}.
-\newblock MIT press, 2008.
-
-\bibitem[BYLN09]{grace}
+\bibitem[Berger et~al.(2009)Berger, Yang, Liu, and Novark]{grace}
 Emery~D Berger, Ting Yang, Tongping Liu, and Gene Novark.
 \newblock Grace: Safe multithreaded programming for c/c++.
-\newblock In {\em ACM sigplan notices}, volume~44, pages 81--96. ACM, 2009.
+\newblock In \emph{ACM sigplan notices}, volume~44, pages 81--96. ACM, 2009.
 
-\bibitem[CCO{\etalchar{+}}05]{chaki2005concurrent}
+\bibitem[Carver and Tai(2005)]{carver2005modern}
+Richard~H Carver and Kuo-Chung Tai.
+\newblock \emph{Modern multithreading: implementing, testing, and debugging
+  multithreaded Java and C++/Pthreads/Win32 programs}.
+\newblock John Wiley \& Sons, 2005.
+
+\bibitem[Chaki et~al.(2005)Chaki, Clarke, Ouaknine, Sharygina, and
+  Sinha]{chaki2005concurrent}
 Sagar Chaki, Edmund Clarke, Jo{\"e}l Ouaknine, Natasha Sharygina, and Nishant
   Sinha.
 \newblock Concurrent software verification with states, events, and deadlocks.
-\newblock {\em Formal Aspects of Computing}, 17(4):461--483, 2005.
+\newblock \emph{Formal Aspects of Computing}, 17\penalty0 (4):\penalty0
+  461--483, 2005.
 
-\bibitem[CES71]{coffman_cond}
-Edward~G Coffman, Melanie Elphick, and Arie Shoshani.
-\newblock System deadlocks.
-\newblock {\em ACM Computing Surveys (CSUR)}, 3(2):67--78, 1971.
-
-\bibitem[CGP99]{model_check}
+\bibitem[Clarke et~al.(1999)Clarke, Grumberg, and Peled]{model_check}
 Edmund~M Clarke, Orna Grumberg, and Doron Peled.
-\newblock {\em Model checking}.
+\newblock \emph{Model checking}.
 \newblock MIT press, 1999.
 
-\bibitem[CSL{\etalchar{+}}13]{parrot}
+\bibitem[Coffman et~al.(1971)Coffman, Elphick, and Shoshani]{coffman_cond}
+Edward~G Coffman, Melanie Elphick, and Arie Shoshani.
+\newblock System deadlocks.
+\newblock \emph{ACM Computing Surveys (CSUR)}, 3\penalty0 (2):\penalty0 67--78,
+  1971.
+
+\bibitem[Cui et~al.(2013)Cui, Simsa, Lin, Li, Blum, Xu, Yang, Gibson, and
+  Bryant]{parrot}
 Heming Cui, Jiri Simsa, Yi-Hong Lin, Hao Li, Ben Blum, Xinan Xu, Junfeng Yang,
   Garth~A Gibson, and Randal~E Bryant.
 \newblock Parrot: a practical runtime for deterministic, stable, and reliable
   threads.
-\newblock In {\em Proceedings of the Twenty-Fourth ACM Symposium on Operating
+\newblock In \emph{Proceedings of the Twenty-Fourth ACM Symposium on Operating
   Systems Principles}, pages 388--405. ACM, 2013.
 
-\bibitem[CT05]{carver2005modern}
-Richard~H Carver and Kuo-Chung Tai.
-\newblock {\em Modern multithreading: implementing, testing, and debugging
-  multithreaded Java and C++/Pthreads/Win32 programs}.
-\newblock John Wiley \& Sons, 2005.
-
-\bibitem[DKW08]{d2008survey}
+\bibitem[D'silva et~al.(2008)D'silva, Kroening, and Weissenbacher]{d2008survey}
 Vijay D'silva, Daniel Kroening, and Georg Weissenbacher.
 \newblock A survey of automated techniques for formal software verification.
-\newblock {\em IEEE Transactions on Computer-Aided Design of Integrated
-  Circuits and Systems}, 27(7):1165--1178, 2008.
+\newblock \emph{IEEE Transactions on Computer-Aided Design of Integrated
+  Circuits and Systems}, 27\penalty0 (7):\penalty0 1165--1178, 2008.
 
-\bibitem[FG05]{dynamic_por}
+\bibitem[Flanagan and Godefroid(2005)]{dynamic_por}
 Cormac Flanagan and Patrice Godefroid.
 \newblock Dynamic partial-order reduction for model checking software.
-\newblock In {\em ACM Sigplan Notices}, volume~40, pages 110--121. ACM, 2005.
+\newblock In \emph{ACM Sigplan Notices}, volume~40, pages 110--121. ACM, 2005.
 
-\bibitem[GJM02]{ghezzi2002fundamentals}
+\bibitem[Ghezzi et~al.(2002)Ghezzi, Jazayeri, and
+  Mandrioli]{ghezzi2002fundamentals}
 Carlo Ghezzi, Mehdi Jazayeri, and Dino Mandrioli.
-\newblock {\em Fundamentals of software engineering}.
+\newblock \emph{Fundamentals of software engineering}.
 \newblock Prentice Hall PTR, 2002.
 
-\bibitem[LCB11]{dthreads}
+\bibitem[Keller()]{commkernelanduser}
+Ariane Keller.
+\newblock Tldp - communication between user space and kernel space.
+\newblock URL \url{http://wiki.tldp.org/kernel_user_space_howto}.
+
+\bibitem[Liu et~al.(2011)Liu, Curtsinger, and Berger]{dthreads}
 Tongping Liu, Charlie Curtsinger, and Emery~D Berger.
 \newblock Dthreads: efficient deterministic multithreading.
-\newblock In {\em Proceedings of the Twenty-Third ACM Symposium on Operating
+\newblock In \emph{Proceedings of the Twenty-Third ACM Symposium on Operating
   Systems Principles}, pages 327--336. ACM, 2011.
 
-\bibitem[LMMB17]{lopez2017study}
+\bibitem[Lopez et~al.(2017)Lopez, Marr, M{\"o}ssenb{\"o}ck, and
+  Boix]{lopez2017study}
 Carmen~Torres Lopez, Stefan Marr, Hanspeter M{\"o}ssenb{\"o}ck, and
   Elisa~Gonzalez Boix.
 \newblock A study of concurrency bugs and advanced development support for
   actor-based programs.
-\newblock {\em arXiv preprint arXiv:1706.07372}, 2017.
+\newblock \emph{arXiv preprint arXiv:1706.07372}, 2017.
 
-\bibitem[OAA09]{kendo}
+\bibitem[Olszewski et~al.(2009)Olszewski, Ansel, and Amarasinghe]{kendo}
 Marek Olszewski, Jason Ansel, and Saman Amarasinghe.
 \newblock Kendo: efficient deterministic multithreading in software.
-\newblock {\em ACM Sigplan Notices}, 44(3):97--108, 2009.
+\newblock \emph{ACM Sigplan Notices}, 44\penalty0 (3):\penalty0 97--108, 2009.
 
-\bibitem[Pel93]{por_repr}
+\bibitem[Peled(1993)]{por_repr}
 Doron Peled.
 \newblock All from one, one for all: on model checking using representatives.
-\newblock In {\em International Conference on Computer Aided Verification},
+\newblock In \emph{International Conference on Computer Aided Verification},
   pages 409--423. Springer, 1993.
 
-\bibitem[Pel98]{por10yrs}
+\bibitem[Peled(1998)]{por10yrs}
 Doron Peled.
 \newblock Ten years of partial order reduction.
-\newblock In {\em Computer Aided Verification}, pages 17--28. Springer, 1998.
+\newblock In \emph{Computer Aided Verification}, pages 17--28. Springer, 1998.
+
+\bibitem[Silberschatz et~al.(2014)Silberschatz, Galvin, and
+  Gagne]{silberschatz2014operating}
+Abraham Silberschatz, Peter~Baer Galvin, and Greg Gagne.
+\newblock \emph{Operating system concepts essentials}.
+\newblock John Wiley \& Sons, Inc., 2014.
 
 \end{thebibliography}
