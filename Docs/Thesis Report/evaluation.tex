@@ -10,19 +10,33 @@ The virtual machine is based on Intel Xeon E5-2650 - 2.00 GHz configured with Ub
 It is configured with 4GB RAM and 80GB hard disk. 
 The virtual machine is configured with the LLVM-CLANG 3.9, GCC 4.9 and Boost 1.6.2.
 
+\section*{Note}
+
+We would be using the following abbreviations in the rest of the evaluations for simplicity of expression.
+\begin{itemize}
+\item {IRS\_Shared} - IRS user space implementation using shared scheduler design
+\item {IRS\_Opt} - IRS user space implementation using additional scheduler with conditional variable design.
+\item {Proto\_1} - Prototype 1 discussed in the previous chapter.
+\item {Proto\_2} - Prototype 2 discussed in the previous chapter.
+\item {Proto\_3} - Prototype 3 discussed in the previous chapter.
+\item {Proto\_4} - Prototype 4 discussed in the previous chapter.
+\item {Proto\_5} - Prototype 5 discussed in the previous chapter.
+\item {Proto\_6} - Prototype 6 discussed in the previous chapter.
+
+\end{itemize}
 
 \section{Evaluation Metrics}
 
 \subsection{Execution Overhead}
 
 Evaluation is done between the IRS user space solution vs kernel space solutions. 
-Execution overhead is calculated for each solution with respect to the plain execution of the benchmarking program. 
-Unconstrainted execution of program is considered as plain execution. 
+Execution overhead is calculated for each solution with respect to the plain execution of the bench-marking program. 
+Unconstrained execution of program is considered as plain execution. 
 
-$Overhead = (T_s - T_p)/T_p * 100$
+$$Overhead = (T_{sol} - T_{plain})/T_{plain} * 100$$
 
-$T_s$ is the execution of the benchmarking program when executed with the scheduling constraints. 
-$T_p$ is the plain execution of the benchmarking program. 
+$T_{sol}$ is the execution of the bench-marking program when executed with the scheduling constraints. 
+$T_{plain}$ is the plain execution of the bench-marking program. 
 
 \subsection{Number of valid synchronization calls} 
 
@@ -118,3 +132,98 @@ $num\_memory\_constraints << total\_memory\_events$.
 In this evaluation, we understand the merits and demerits in the performance of the six prototypes and the two user space IRS implementations. 
 For this evaluation, we use three bench-marking programs - last zero, indexer and dining philosophers problem. 
 We scale the core count from two to eight processor cores and monitor the changes the performance overhead across the three benchmarks for various implementations. 
+
+\subsection{Last Zero}
+
+\citet{abdulla2014optimal} showcases this benchmark for the evaluation of their dynamic POR. 
+The last zero program has 16 threads at its disposal. 
+The pseudo code of this benchmark is depicted in Fig~\ref{code_lastzero}. 
+\begin{figure}[h]
+\begin{lstlisting}[mathescape=true,style=customc]
+Variables: int arr[0...N] := {0,0..,0}, i;
+Thread 0: for (i:=N; array[i]!=0; i--);
+Thread j($j \in 1..N$): arr[j] := arr[j-1] + 1;
+\end{lstlisting}
+\caption{Last Zero Program}
+\label{code_lastzero}
+\end{figure}
+This benchmark is meant to provide memory constraints spread across different threads rather than being in two threads. 
+The number of memory constraints provided in the trace files include: 15,12,5,1 respectively. 
+The maximum number of possible memory events is 46.
+
+\subsubsection{Two Cores}
+
+The benchmark has 16 threads and the memory constraints are spread across threads. 
+Thus, making it expensive in regard to execution time. 
+IRS\_Shared is expected to be the worst of all designs considering the fact that it is a busy waiting design. 
+Busy waiting design makes the waiting thread to constantly poll one of the cores thus, making it performance inefficient. 
+IRS\_Opt is expected to provide a better performance among all the designs because the $num\_memory\_constraints << total\_memory\_events$. 
+Proto\_5 and Proto\_6 are also expected to provide better results with this benchmark, since the above condition holds good for these prototypes.
+
+\subsection{Indexer}
+
+\begin{figure}[h]
+\begin{lstlisting}[style=customc]
+Thread-global (shared) variables:
+const int size = 128;
+const int max = 4;
+int[size] table;
+
+Thread-local variables:
+int m = 0, w, h;
+
+Code For thread tid:
+while (true) {
+	w := getmsg();
+	h := hash(w);
+	while (cas(table[h],0,w) == false) {
+		h := (h+1) % size;
+	}
+}
+int getmsg() {
+	if (m < max ) {
+		return (++m) * 11 + tid;
+	} else {
+		exit(); // terminate
+	}
+}
+int hash(int w) {
+	return (w * 7) % size;
+}
+\end{lstlisting}
+\label{code_indexer}
+\caption{Indexer Program}
+\end{figure}
+
+
+\subsection{Dining Philosopher's Problem}
+
+\begin{figure}[h]
+\begin{lstlisting}[style=customc]
+Thread-global (shared) variables:
+const int size = THREAD_COUNT;
+const int num_iter = N;
+int[size] chopsticks;
+
+Thread-local variables:
+int i;
+
+Code For thread id:
+for(i=0; i<num_iter; i++) {
+	while((chopsticks[id%THREAD_COUNT]!=0) && \\
+	 (chopsticks[(id-1)%THREAD_COUNT]!=0);
+	if(id%2==0) {
+		chopsticks[id%THREAD_COUNT] = 1;
+		chopsticks[(id-1)%THREAD_COUNT] = 1;
+	}
+	else {
+		chopsticks[(id-1)%THREAD_COUNT] = 1;
+		chopsticks[id%THREAD_COUNT] = 1;
+	}
+	chopsticks[id%THREAD_COUNT] = 0;
+	chopsticks[(id-1)%THREAD_COUNT] = 0;
+}
+\end{lstlisting}
+\label{code_dining_phil}
+\caption{Dining Philosopher's Problem Program}
+\end{figure}
