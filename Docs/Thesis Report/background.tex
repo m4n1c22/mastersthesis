@@ -464,7 +464,7 @@ Deterministic multi-threading is an approach used to bring in determinism in the
   \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b1);
   \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b3);
  \end{tikzpicture}\label{determinisitic_mapping}}
- \caption{Input to Schedule mappings in multithreaded execution}
+ \caption{Input to Schedule mappings in multithreaded execution based on the \citet{parrot}}
 \end{figure}
 Fig~ \ref{trad_map} depicts a mapping of inputs to possible scheduling pattern adopted by the multi-threaded program. 
 By bringing in deterministic mapping as shown in fig~\ref{determinisitic_mapping}, we have direct mapping between inputs and schedules. 
@@ -474,3 +474,5 @@ There are many frameworks - CoreDet\cite{coredet}, Parrot\cite{parrot}, Kendo\ci
 Some of these frameworks are discussed further in the next chapter.
 
 \section{Iterative Relaxed Scheduling}
+
+Iterative relaxed scheduling is a program verification technique used for concurrent programs. 

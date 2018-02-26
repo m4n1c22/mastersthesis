@@ -3,9 +3,9 @@ All the evaluations are done in regard with the user space implementation.
 
 \section{Setup}
 
-The evaluation is performed on a virtual machine running on cluster with a maximum of 128 cores. 
+The evaluation is performed with a virtual machine running on a hardware with maximum of 16 cores. 
 The virtual machine can use from two to eight processor cores which is used for the scaled up evaluation. 
-The virtual machine is based on Intel Xeon Family of processors configured with Ubuntu 16.10 as the operating system. 
+The virtual machine is based on Intel Xeon E5-2650 - 2.00 GHz configured with Ubuntu 17.04 as the operating system. 
 It is configured with 4GB RAM and 80GB hard disk. 
 The virtual machine is configured with the LLVM-CLANG 3.9, GCC 4.9 and Boost 1.6.2.
 
@@ -81,7 +81,7 @@ Therefore, having number of IOCTL calls as 300.
 In case of prototype 5-6, we have a proxy checking in user space which drastically reduces the calls to kernel space for additional synchronization. 
 The set\_clock ioctl command is the only call made consistently for every memory access when using prototypes 5-6.
 
-\begin{table}[!h]
+\begin{table}[h]
 \begin{center}
  \begin{tabular}{|c c c c c c c|} 
  \hline

@@ -12,6 +12,26 @@ Memory access permissions are perceived by traces.
 The traces are realized simple graphs with nodes. 
 Each node denotes a shared memory event for a thread which can be a read or a write event. 
 
+\tikzstyle{custblock} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=white!30]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+%Custom blocks
+\node (Tr) [custblock] {Trace};
+\node (IPgm) [custblock,yshift=-2cm] {Instrumented Program};
+\node (Sched) [custblock,yshift=-1cm,xshift =5cm] {Scheduler};
+
+
+%Arrows
+\draw [->,thick] (Tr.east) -- (Sched);
+\draw [->,thick] (IPgm.east) -- (Sched);
+
+\end{tikzpicture}
+\caption{Design Overview}
+\label{design_overview}
+\end{figure}
+
 \subsection{Vector Clock}
 
 Vector clock is an algorithmic design motivated from Lamport logical clocks~\citep{fidge1991logical}. 
@@ -25,7 +45,10 @@ The following definition holds:
 \item $x \to y$ indicates event $x$ happened before event $y$. It is defined as : if $x \to y$, then $VC(x) < VC(y)$
 \end{itemize}
 
+\subsection{Design classes}
 
+We have two different class of approaches used for this thesis. 
+The two approaches can be classified as: design with proxy and design without proxy checking. 
 
 \section{Design Challenges}
 
