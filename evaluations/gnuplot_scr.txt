@@ -1,0 +1,10 @@
+# Scale font and line width (dpi) by changing the size! It will always display stretched.
+set terminal svg size 400,300 enhanced fname 'arial'  fsize 10 butt solid
+set output 'out.svg'
+
+# Key means label...
+set key inside bottom right
+set xlabel 'Number of Memory Constraints'
+set ylabel 'Execution Overhead(%)'
+set title 'Some Data'
+plot  "data.txt" using 1:2 title 'IRS-Sh' with lines, "data.txt" using 1:3 title 'IRS-Opt' with linespoints
