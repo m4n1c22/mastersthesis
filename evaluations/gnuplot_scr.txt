@@ -3,8 +3,112 @@ set terminal svg size 400,300 enhanced fname 'arial'  fsize 10 butt solid
 set output 'out.svg'
 
 # Key means label...
-set key inside bottom right
+# Scale font and line width (dpi) by changing the size! It will always display stretched.
+set terminal svg size 400,300 enhanced fname 'arial'  fsize 10 butt solid
+set output 'out.svg'
+
+# Key means label...
+# Scale font and line width (dpi) by changing the size! It will always display stretched.
+set terminal svg size 400,300 enhanced fname 'arial'  fsize 10 butt solid
+set output 'out.svg'
+
+# Key means label...
+set key outside bottom right
 set xlabel 'Number of Memory Constraints'
 set ylabel 'Execution Overhead(%)'
-set title 'Some Data'
-plot  "data.txt" using 1:2 title 'IRS-Sh' with lines, "data.txt" using 1:3 title 'IRS-Opt' with linespoints
+set title 'Last Zero'
+plot  "cores_2/eval_last_zero.dat" using 1:2 title 'IRS_Sh' with linespoints, "cores_2/eval_last_zero.dat" using 1:3 title 'IRS_Opt' with linespoints, "cores_2/eval_last_zero.dat" using 1:4 title 'Proto_1' with linespoints, "cores_2/eval_last_zero.dat" using 1:5 title 'Proto_2' with linespoints, "cores_2/eval_last_zero.dat" using 1:6 title 'Proto_3' with linespoints, "cores_2/eval_last_zero.dat" using 1:7 title 'Proto_4' with linespoints, "cores_2/eval_last_zero.dat" using 1:8 title 'Proto_5' with linespoints, "cores_2/eval_last_zero.dat" using 1:9 title 'Proto_6' with linespoints
+
+set term png
+set output "cores_2/eval_last_zero_all.png"
+replot
+set term x11
+
+set key outside bottom right
+set xlabel 'Number of Memory Constraints'
+set ylabel 'Execution Overhead(%)'
+set title 'Last Zero'
+plot  "cores_4/eval_last_zero.dat" using 1:2 title 'IRS_Sh' with linespoints, "cores_4/eval_last_zero.dat" using 1:3 title 'IRS_Opt' with linespoints, "cores_4/eval_last_zero.dat" using 1:4 title 'Proto_1' with linespoints, "cores_4/eval_last_zero.dat" using 1:5 title 'Proto_2' with linespoints, "cores_4/eval_last_zero.dat" using 1:6 title 'Proto_3' with linespoints, "cores_4/eval_last_zero.dat" using 1:7 title 'Proto_4' with linespoints, "cores_4/eval_last_zero.dat" using 1:8 title 'Proto_5' with linespoints, "cores_4/eval_last_zero.dat" using 1:9 title 'Proto_6' with linespoints
+
+set term png
+set output "cores_4/eval_last_zero_all.png"
+replot
+set term x11
+
+set key outside bottom right
+set xlabel 'Number of Memory Constraints'
+set ylabel 'Execution Overhead(%)'
+set title 'Last Zero'
+plot  "cores_8/eval_last_zero.dat" using 1:2 title 'IRS_Sh' with linespoints, "cores_8/eval_last_zero.dat" using 1:3 title 'IRS_Opt' with linespoints, "cores_8/eval_last_zero.dat" using 1:4 title 'Proto_1' with linespoints, "cores_8/eval_last_zero.dat" using 1:5 title 'Proto_2' with linespoints, "cores_8/eval_last_zero.dat" using 1:6 title 'Proto_3' with linespoints, "cores_8/eval_last_zero.dat" using 1:7 title 'Proto_4' with linespoints, "cores_8/eval_last_zero.dat" using 1:8 title 'Proto_5' with linespoints, "cores_8/eval_last_zero.dat" using 1:9 title 'Proto_6' with linespoints
+
+set term png
+set output "cores_8/eval_last_zero_all.png"
+replot
+set term x11
+
+set key outside bottom right
+set xlabel 'Number of Memory Constraints'
+set ylabel 'Execution Overhead(%)'
+set title 'Last Zero'
+plot  "cores_2/eval_dining_phil.dat" using 1:2 title 'IRS_Sh' with linespoints, "cores_2/eval_dining_phil.dat" using 1:3 title 'IRS_Opt' with linespoints, "cores_2/eval_dining_phil.dat" using 1:4 title 'Proto_1' with linespoints, "cores_2/eval_dining_phil.dat" using 1:5 title 'Proto_2' with linespoints, "cores_2/eval_dining_phil.dat" using 1:6 title 'Proto_3' with linespoints, "cores_2/eval_dining_phil.dat" using 1:7 title 'Proto_4' with linespoints, "cores_2/eval_dining_phil.dat" using 1:8 title 'Proto_5' with linespoints, "cores_2/eval_dining_phil.dat" using 1:9 title 'Proto_6' with linespoints
+
+set term png
+set output "cores_2/eval_dining_phil_all.png"
+replot
+set term x11
+
+set key outside bottom right
+set xlabel 'Number of Memory Constraints'
+set ylabel 'Execution Overhead(%)'
+set title 'Last Zero'
+plot  "cores_4/eval_dining_phil.dat" using 1:2 title 'IRS_Sh' with linespoints, "cores_4/eval_dining_phil.dat" using 1:3 title 'IRS_Opt' with linespoints, "cores_4/eval_dining_phil.dat" using 1:4 title 'Proto_1' with linespoints, "cores_4/eval_dining_phil.dat" using 1:5 title 'Proto_2' with linespoints, "cores_4/eval_dining_phil.dat" using 1:6 title 'Proto_3' with linespoints, "cores_4/eval_dining_phil.dat" using 1:7 title 'Proto_4' with linespoints, "cores_4/eval_dining_phil.dat" using 1:8 title 'Proto_5' with linespoints, "cores_4/eval_dining_phil.dat" using 1:9 title 'Proto_6' with linespoints
+
+set term png
+set output "cores_4/eval_dining_phil_all.png"
+replot
+set term x11
+
+set key outside bottom right
+set xlabel 'Number of Memory Constraints'
+set ylabel 'Execution Overhead(%)'
+set title 'Last Zero'
+plot  "cores_8/eval_dining_phil.dat" using 1:2 title 'IRS_Sh' with linespoints, "cores_8/eval_dining_phil.dat" using 1:3 title 'IRS_Opt' with linespoints, "cores_8/eval_dining_phil.dat" using 1:4 title 'Proto_1' with linespoints, "cores_8/eval_dining_phil.dat" using 1:5 title 'Proto_2' with linespoints, "cores_8/eval_dining_phil.dat" using 1:6 title 'Proto_3' with linespoints, "cores_8/eval_dining_phil.dat" using 1:7 title 'Proto_4' with linespoints, "cores_8/eval_dining_phil.dat" using 1:8 title 'Proto_5' with linespoints, "cores_8/eval_dining_phil.dat" using 1:9 title 'Proto_6' with linespoints
+
+set term png
+set output "cores_8/eval_dining_phil_all.png"
+replot
+set term x11
+
+
+set key outside bottom right
+set xlabel 'Number of Memory Constraints'
+set ylabel 'Execution Overhead(%)'
+set title 'Last Zero'
+plot  "cores_2/eval_indexer.dat" using 1:2 title 'IRS_Sh' with linespoints, "cores_2/eval_indexer.dat" using 1:3 title 'IRS_Opt' with linespoints, "cores_2/eval_indexer.dat" using 1:4 title 'Proto_1' with linespoints, "cores_2/eval_indexer.dat" using 1:5 title 'Proto_2' with linespoints, "cores_2/eval_indexer.dat" using 1:6 title 'Proto_3' with linespoints, "cores_2/eval_indexer.dat" using 1:7 title 'Proto_4' with linespoints, "cores_2/eval_indexer.dat" using 1:8 title 'Proto_5' with linespoints, "cores_2/eval_indexer.dat" using 1:9 title 'Proto_6' with linespoints
+
+set term png
+set output "cores_2/eval_indexer_all.png"
+replot
+set term x11
+
+set key outside bottom right
+set xlabel 'Number of Memory Constraints'
+set ylabel 'Execution Overhead(%)'
+set title 'Last Zero'
+plot  "cores_4/eval_indexer.dat" using 1:2 title 'IRS_Sh' with linespoints, "cores_4/eval_indexer.dat" using 1:3 title 'IRS_Opt' with linespoints, "cores_4/eval_indexer.dat" using 1:4 title 'Proto_1' with linespoints, "cores_4/eval_indexer.dat" using 1:5 title 'Proto_2' with linespoints, "cores_4/eval_indexer.dat" using 1:6 title 'Proto_3' with linespoints, "cores_4/eval_indexer.dat" using 1:7 title 'Proto_4' with linespoints, "cores_4/eval_indexer.dat" using 1:8 title 'Proto_5' with linespoints, "cores_4/eval_indexer.dat" using 1:9 title 'Proto_6' with linespoints
+
+set term png
+set output "cores_4/eval_indexer_all.png"
+replot
+set term x11
+
+set key outside bottom right
+set xlabel 'Number of Memory Constraints'
+set ylabel 'Execution Overhead(%)'
+set title 'Last Zero'
+plot  "cores_8/eval_indexer.dat" using 1:2 title 'IRS_Sh' with linespoints, "cores_8/eval_indexer.dat" using 1:3 title 'IRS_Opt' with linespoints, "cores_8/eval_indexer.dat" using 1:4 title 'Proto_1' with linespoints, "cores_8/eval_indexer.dat" using 1:5 title 'Proto_2' with linespoints, "cores_8/eval_indexer.dat" using 1:6 title 'Proto_3' with linespoints, "cores_8/eval_indexer.dat" using 1:7 title 'Proto_4' with linespoints, "cores_8/eval_indexer.dat" using 1:8 title 'Proto_5' with linespoints, "cores_8/eval_indexer.dat" using 1:9 title 'Proto_6' with linespoints
+
+set term png
+set output "cores_8/eval_indexer_all.png"
+replot
+set term x11
