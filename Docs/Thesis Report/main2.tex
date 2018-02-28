@@ -137,6 +137,8 @@
 %=====================================================
 % CUSTOM SETUP STUFF
 %=====================================================
+\usepackage[toc,page]{appendix}
+
 \usepackage{tikz}
 
 \usepackage{subfig} 
@@ -330,11 +332,13 @@
 	\bibliography{bibl_2} % file name of your bib
 
 	\newpage
-	\appendix
+	%\appendix
+	\begin{appendices}
 	\chapter{Benchmarks}
 	\input{appendixA}	
 	\chapter{Experimental Results \label{appendixb}}
-	\input{appendixB}	
+	\input{appendixB}
+	\end{appendices}	
 	
 \end{document}
 %======================================================

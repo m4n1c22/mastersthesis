@@ -50,6 +50,36 @@ The following definition holds:
 We have two different class of approaches used for this thesis. 
 The two approaches can be classified as: design with proxy and design without proxy checking. 
 
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Shared Thread & Separate Thread\\ %[0.5ex] 
+ \hline
+Semaphore & Prototype 1 & Prototype 2\\
+Scheduler APIs & Prototype 3 & Prototype 4\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Prototypes without proxy checking}
+\label{protos_without_proxy}
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Shared Thread & Separate Thread\\ %[0.5ex] 
+ \hline
+Semaphore &  & Prototype 5\\
+Scheduler APIs &  & Prototype 6\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Prototypes with proxy checking}
+\label{protos_with_proxy}
+\end{table}
+
 \section{Design Challenges}
 
 \section*{Note}
