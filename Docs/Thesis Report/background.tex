@@ -436,7 +436,16 @@ Such a mapping facilitates to determine concurrency bugs in the program executio
 There are many frameworks - CoreDet\cite{coredet}, Parrot\cite{parrot}, Kendo\cite{kendo}, DThreads\cite{dthreads}, Grace\cite{grace}, which adheres to this principle. 
 Some of these frameworks are discussed further in the next chapter.
 
+\begin{figure}[h]
+     \centering
+     \subfloat[][Conventional Verification]{\includegraphics[scale=0.1]{figs/conventional.png}\label{conv_ver}}
+     \subfloat[][Iterative Relaxed Scheduling]{\includegraphics[scale=0.1]{figs/irs_only.png}\label{irs_only}}
+     \caption{Conventional vs IRS verification adapted from \citet{metzler2017quick}}
+\end{figure}
+
+
 \section{Iterative Relaxed Scheduling}
 
 Iterative relaxed scheduling is a program verification technique used for concurrent programs. 
 \citet{metzler2017quick}
+
