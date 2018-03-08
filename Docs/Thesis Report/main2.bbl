@@ -1,4 +1,4 @@
-\begin{thebibliography}{23}
+\begin{thebibliography}{24}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -148,5 +148,13 @@ Doron Peled.
 Abraham Silberschatz, Peter~Baer Galvin, and Greg Gagne.
 \newblock \emph{Operating system concepts essentials}.
 \newblock John Wiley \& Sons, Inc., 2014.
+
+\bibitem[{\v{S}}im{\v{s}}a et~al.(2011){\v{S}}im{\v{s}}a, Bryant, and
+  Gibson]{dbug}
+Ji{\v{r}}{\'\i} {\v{S}}im{\v{s}}a, Randy Bryant, and Garth Gibson.
+\newblock dbug: systematic testing of unmodified distributed and multi-threaded
+  systems.
+\newblock In \emph{International SPIN Workshop on Model Checking of Software},
+  pages 188--193. Springer, 2011.
 
 \end{thebibliography}

@@ -370,43 +370,6 @@ In sections \ref{multi_thread} and \ref{con_bugs}, we discussed about the non-de
 One way to detect and avoid bugs is to have a constrained scheduling of threads thus, adhering to deterministic execution. 
 Deterministic multi-threading is an approach used to bring in determinism in the execution of multi-threaded programs. 
 
-%\begin{figure}[h]
-% \centering
-% \begin{tikzpicture}[ele/.style={fill=black,circle,minimum width=.8pt,inner sep=1pt},every fit/.style={ellipse,draw,inner sep=-2pt}]
-%  \node[ele,label=left:$a$] (a1) at (0,4) {};    
-%  \node[ele,label=left:$b$] (a2) at (0,3) {};    
-%  \node[ele,label=left:$c$] (a3) at (0,2) {};
-%  \node[ele,label=left:$d$] (a4) at (0,1) {};
-%  \node[above= of a1,anchor=south] {$Inputs$};	
-%
-%  \node[ele,,label=right:$1$] (b1) at (4,4) {};
-%  \node[ele,,label=right:$2$] (b2) at (4,3) {};
-%  \node[ele,,label=right:$3$] (b3) at (4,2) {};
-%  \node[ele,,label=right:$4$] (b4) at (4,1) {};
-%  \node[above= of b1,anchor=south] {$Schedules$};	
-%
-%  \node[draw,fit= (a1) (a2) (a3) (a4),minimum width=2cm] {} ;
-%  \node[draw,fit= (b1) (b2) (b3) (b4),minimum width=2cm] {} ;  
-%  \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b1);
-%  \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b2);
-%  \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b3);
-%  \draw[->,thick,shorten <=2pt,shorten >=2pt] (a1) -- (b4);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b1);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b2);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b3);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a2) -- (b4);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b1);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b2);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b3);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a3) -- (b4);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b1);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b2);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b3);
-%  \draw[->,thick,shorten <=2pt,shorten >=2] (a4) -- (b4);
-% \end{tikzpicture}
-% \caption{Traditional Mapping}
-% \label{trad_map}
-%\end{figure}
 
 \begin{figure}[h]
 \centering

@@ -81,8 +81,43 @@ KENDO only focuses on determinism in lock acquisitions and not on all shared mem
 \section{COREDET}
 
 \citet{coredet} came up with a compiler and runtime system enforcing deterministic multithreaded execution in COREDET. 
+It is another runtime implementation based on DMT. 
+COREDET has two phases - parallel and serial phases similar to the Dthreads. 
+It has an instrumentor tool in LLVM for instrumenting memory events similar to PEREGRINE. 
+COREDET is one of the first DMT solution which addressed the shared memory events and provided memory level granularity. 
+COREDET can be executed in two different ways - ownership tracking and store buffering. 
+First approach tracks the ownership of data and serializes the execution whenever threads communicate. Such an approach yields sequentially consistent executions and lower overheads, but lower scalability. 
+Second approach uses memory versioning without any form of speculation and relaxes memory ordering, yielding higher scalability at the cost of higher overheads.  
+It shares a lot of similarities with IRS implementation. 
+Both the solutions use LLVM for instrumenting memory events in the multithreaded program. 
+However, COREDET uses a round-robin scheduling when it enters a serial phase of execution. 
+Whereas in case of IRS on occurrence of a memory event, the scheduler checks for the memory access permission for the given thread with the recorded trace. 
+COREDET does not have any record-replay implementation. 
+It can be conceived as a runtime implementation with emphasis on fine grained memory access with serialized commits.  
 
 
 \section{PARROT}
 
-\citet{parrot}
+PARROT is another runtime solution based on DMT from \citet{parrot}. 
+Compared to other DMT solutions which maps one schedule for one input as depicted in figure~\ref{determinisitic_mapping}, PARROT proposes an approach which uses stable multithreading(StableMT). 
+In StableMT, we reuse each schedule on a wide range of inputs, mapping all inputs to a dramatically reduced set of schedules. 
+PARROT is a pthread compactible implementation. 
+PARROT provides weak determinism similar to KENDO but offers stability. 
+PARROT can be integrated with DBUG\citep{dbug} - open source model checker in Linux for determining bugs in the schedules. 
+\citet{parrot} shows us that PARROT-DBUG ecosystem is more effective than either system alone. 
+DBUG checks the schedules that matter to PARROT and the developers. 
+Whereas, PARROT reduces the number of schedules to be checked by DBUG thus, increasing the coverage of DBUG. 
+Compared to IRS, PARROT does not have any static code analysis done inside the multithreaded programs. 
+The determinism provided by PARROT is relative to three factors: external input, performance critical sections, data races with respect to the enforced synchronization schedules. 
+IRS focuses on memory level granularity whereas, PARROT is focused on weak determinism similar to KENDO. 
+PARROT-DBUG focuses on StableMT with exhaustive testing of all schedules whereas in IRS, the execution of a multithreaded program can be initiated with a single execution trace from the verifier. 
+IRS generates a new trace for every iteration whereas in case of PARROT-DBUG, the execution is blocked until the DBUG checks all the schedules.
+
+\section*{Inference}
+
+From the above sections, it is abundantly clear that there not any solutions which come close to the IRS. 
+COREDET is the only implementation which seems to provide memory level granularity similar to IRS. 
+PEREGRINE is another implementation which depicts a record-replay paradigm similar to IRS. 
+PARROT-DBUG presents a StableMT focused on checking a set of reduced schedules for all the provided inputs in the multithreaded program. 
+Other solutions presented in this chapter focus on solutions aimed at synchronization operations rather than memory level accesses.
+
