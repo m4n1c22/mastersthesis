@@ -362,7 +362,7 @@ Dynamic POR algorthm by \citet{dynamic_por}, explores single transitions and per
 A persistent set is calculated at each state in the state graph of a system.
 
 
-\section{Deterministic Multi-Threading}
+\section{Deterministic Multi-Threading \label{sec_dmt}}
 
 In section \ref{model_check}, we primarily dealt with various ways to verify a program and suggested various techniques, which could be used in a multi-threaded environment. 
 In this section, we discuss about a different approach to deal with the verification of multithreaded programs. 
@@ -438,14 +438,24 @@ Some of these frameworks are discussed further in the next chapter.
 
 \begin{figure}[h]
      \centering
-     \subfloat[][Conventional Verification]{\includegraphics[scale=0.1]{figs/conventional.png}\label{conv_ver}}
-     \subfloat[][Iterative Relaxed Scheduling]{\includegraphics[scale=0.1]{figs/irs_only.png}\label{irs_only}}
+     \subfloat[][Conventional Verification]{\includegraphics[scale=0.08]{figs/conventional.png}\label{conv_ver}}
+     \subfloat[][Iterative Relaxed Scheduling]{\includegraphics[scale=0.08]{figs/irs_only.png}\label{irs_only}}
      \caption{Conventional vs IRS verification adapted from \citet{metzler2017quick}}
 \end{figure}
 
 
 \section{Iterative Relaxed Scheduling}
 
-Iterative relaxed scheduling is a program verification technique used for concurrent programs. 
-\citet{metzler2017quick}
+Iterative relaxed scheduling(IRS) is a program verification technique used for concurrent programs. 
+\citet{metzler2017quick} presents a novel implementation of software verification approach for concurrent programs. 
+Figure~\ref{conv_ver} presents a conventional software verification approach for concurrent programs. 
+The main drawback with such a verification technique is that it presents a huge verification delay. 
+Large verification delay is presented from the non-deterministic nature of multithreaded programs. 
+Software verification for concurrent programs presents large state spaces thus, leading to state-space explosion problem as discussed in section~\ref{state_exp_prob}. 
+POR technique helps to reduce the state space problem by identifying the equivalence classes of program executions such that only one representative of each class needs to be verified. 
+Mazurkiewicz trace\citep{mazurkiewicz1986trace} is one such equivalence class representation. 
+Verification delays would reach higher values for benchmark programs even if state-of-the-art POR is used\citep{abdulla2014optimal}\citep{gueta2007cartesian}. 
+
+
+
 

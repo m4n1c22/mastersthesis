@@ -120,4 +120,5 @@ COREDET is the only implementation which seems to provide memory level granulari
 PEREGRINE is another implementation which depicts a record-replay paradigm similar to IRS. 
 PARROT-DBUG presents a StableMT focused on checking a set of reduced schedules for all the provided inputs in the multithreaded program. 
 Other solutions presented in this chapter focus on DMT solutions aimed at synchronization operations rather than memory level accesses. 
-
+All the DMT approaches listed above support concurrency testing whereas, IRS supports concurrency verification. 
+Adapting the DMT solutions for concurrency verification is difficult as discussed in section~\ref{sec_dmt}.

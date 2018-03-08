@@ -1,4 +1,4 @@
-\begin{thebibliography}{24}
+\begin{thebibliography}{26}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -100,6 +100,13 @@ Carlo Ghezzi, Mehdi Jazayeri, and Dino Mandrioli.
 \newblock \emph{Fundamentals of software engineering}.
 \newblock Prentice Hall PTR, 2002.
 
+\bibitem[Gueta et~al.(2007)Gueta, Flanagan, Yahav, and
+  Sagiv]{gueta2007cartesian}
+Guy Gueta, Cormac Flanagan, Eran Yahav, and Mooly Sagiv.
+\newblock Cartesian partial-order reduction.
+\newblock In \emph{International SPIN Workshop on Model Checking of Software},
+  pages 95--112. Springer, 2007.
+
 \bibitem[Keller()]{commkernelanduser}
 Ariane Keller.
 \newblock Tldp - communication between user space and kernel space.
@@ -118,6 +125,12 @@ Carmen~Torres Lopez, Stefan Marr, Hanspeter M{\"o}ssenb{\"o}ck, and
 \newblock A study of concurrency bugs and advanced development support for
   actor-based programs.
 \newblock \emph{arXiv preprint arXiv:1706.07372}, 2017.
+
+\bibitem[Mazurkiewicz(1986)]{mazurkiewicz1986trace}
+Antoni Mazurkiewicz.
+\newblock Trace theory.
+\newblock In \emph{Advanced course on Petri nets}, pages 278--324. Springer,
+  1986.
 
 \bibitem[Metzler et~al.(2017)Metzler, Saissi, Bokor, and
   Suri]{metzler2017quick}
