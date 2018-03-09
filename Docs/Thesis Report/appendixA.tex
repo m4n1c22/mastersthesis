@@ -1,17 +1,12 @@
 \section{Last Zero}
-\begin{figure}[h]
-\begin{lstlisting}[mathescape=true,style=customc]
+\begin{lstlisting}[mathescape=true,style=customc,caption={Last Zero Program based on \citet{abdulla2014optimal}},label={code_lastzero}]
 Variables: int arr[0...N] := {0,0..,0}, i;
 Thread 0: for (i:=N; array[i]!=0; i--);
 Thread j($j \in 1..N$): arr[j] := arr[j-1] + 1;
 \end{lstlisting}
-\caption{Last Zero Program based on \citet{abdulla2014optimal}}
-\label{code_lastzero}
-\end{figure}
 
 \section{Indexer}
-\begin{figure}[h]
-\begin{lstlisting}[style=customc]
+\begin{lstlisting}[style=customc,caption={Indexer Program based on \citet{dynamic_por}},label={code_indexer}]
 Thread-global (shared) variables:
 const int size = 128;
 const int max = 4;
@@ -39,14 +34,10 @@ int hash(int w) {
 	return (w * 7) % size;
 }
 \end{lstlisting}
-\caption{Indexer Program based on \citet{dynamic_por}}
-\label{code_indexer}
-\end{figure}
 \newpage
 \section{Dining Philosopher's Problem}
 
-\begin{figure}[h]
-\begin{lstlisting}[style=customc]
+\begin{lstlisting}[style=customc,caption={Dining Philosopher's Problem Program},label={code_dining_phil}]
 Thread-global (shared) variables:
 const int size = THREAD_COUNT;
 const int num_iter = N;
@@ -71,6 +62,3 @@ for(i=0; i<num_iter; i++) {
 	chopsticks[(id-1)%THREAD_COUNT] = 0;
 }
 \end{lstlisting}
-\caption{Dining Philosopher's Problem Program}
-\label{code_dining_phil}
-\end{figure}

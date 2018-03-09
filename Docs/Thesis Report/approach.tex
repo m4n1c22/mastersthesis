@@ -48,17 +48,16 @@ The traces are realized as simple graph with nodes.
 Each node denotes a shared memory event for a thread which can be a read or a write event. 
 \\
 \noindent\begin{minipage}{.45\textwidth}
-\begin{lstlisting}[mathescape=true,style=customc,caption=Uninstrumented User Program,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,style=customc,caption={Uninstrumented User Program},frame=tlrb,label={lst:uninstr_usr_pgm}]
 Shared Variable: x;
 Thread j($j \in 1..N$): 
 ......
 x=0;	//shared memory access
 ....
 \end{lstlisting}
-\label{uninstr_usr_pgm}
 \end{minipage}\hfill
 \begin{minipage}{.45\textwidth}
-\begin{lstlisting}[mathescape=true,style=customc,caption=Instrumented User Program,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,style=customc,caption={Instrumented User Program},frame=tlrb,label={lst:instr_usr_pgm}]
 Shared Variable: x;
 Thread j($j \in 1..N$): 
 ......
@@ -67,11 +66,32 @@ x=0;	//shared memory access
 AfterMA();
 ....
 \end{lstlisting}
-\label{instr_usr_pgm}
 \end{minipage}
 
 LLVM is another component part of the IRS framework. 
-It primarily annotates the user program for shared memory events as shown in listing 4.1 and 4.2. 
+It primarily annotates the user program for shared memory events as shown in listing~\ref{lst:uninstr_usr_pgm} and \ref{lst:instr_usr_pgm}. 
+
+\subsection{Motivation \label{mot}}
+
+The scheduler implemented in the existing IRS framework addresses a user space implementation. 
+The user space adaptation of the scheduler focuses on two implementation variants. 
+First user space implementation focuses on a busy waiting design and the second user space implementation uses a conditional variable setup. 
+Let us call the first implementation as IRS\_Sh and second one as IRS\_Opt for the sake of simplicity. 
+IRS\_Sh uses the pool of user threads created during the multithreaded program to block and signal other threads. 
+It uses the busy waiting design to block a certain thread and use other threads in the pool to signal from the wait. 
+IRS\_Opt uses an additional scheduler thread which takes care of requests for blocking or unblocking certain thread. 
+It uses condition variables to address the blocking or unblocking functionality of a given thread. 
+IRS\_Sh provides poor performance when the number of threads are more than the number of cores. 
+Busy waiting designs performs poorly when the number of cores is less than the number of threads. 
+Whereas in case of IRS\_Opt, it uses conditional variables which is a synchronization abstraction provided by the pthread library. 
+In this thesis, we argue that such an implementation is expected to have high execution overhead when the amount of communication using the conditional variables increases. 
+The additional overhead in IRS\_Opt is expected to occur due to the library overheads from pthread library. 
+The term ``amount of communication'' is relative to the number of shared-memory events encountered in the multithreaded program. 
+
+Since both the userspace solutions for the scheduler is expected to suffer from poor performance, we present a new approach of moving the scheduler logic to kernel space. 
+We expect to provide low execution overhead compared to the userspace solutions. 
+In rest of this chapter, we realize various ways to move the scheduler module to kernel space. 
+We expect to achieve a good performance with the solutions presented in the rest of this chapter.
 
 \subsection{Vector Clock \label{vec_clk}}
 
@@ -98,7 +118,7 @@ We have two different classes of approach used for this thesis.
 The two approaches can be classified as: design with proxy and design without proxy checking. 
 Proxy checking referred above is the checking for memory  access permission for the thread based on the constraints set in the trace. 
 
-\begin{lstlisting}[mathescape=true,style=customc,caption=Yield functionality and thread revival,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,style=customc,caption={Yield functionality and thread revival},frame=tlrb,label={lst:yield_func}]
 yield(threadid j) {
 	if(memory_access_permission(j)==restricted) {
 		block_thread(j);
@@ -112,21 +132,20 @@ reviveotherthreads() {
 	}
 }
 \end{lstlisting}
-\label{yield_func}
 From figure~\ref{design_overview}, it is evident that we require scheduling constraints/traces and the instrumented program for executing with the scheduler. 
 The IRS implementation which this thesis is based upon, uses an LLVM implementation for instrumenting the user program. 
-When instrumenting the user program, LLVM inserts function calls to two methods namely $BeforeMA()$ and $AfterMA()$ which are inserted in places before and after every shared memory access in the program as shown in Listing~4.1 \& 4.2. 
+When instrumenting the user program, LLVM inserts function calls to two methods namely $BeforeMA()$ and $AfterMA()$ which are inserted in places before and after every shared memory access in the program as shown in Listing~\ref{lst:uninstr_usr_pgm} and \ref{lst:instr_usr_pgm}. 
 The instrumented program is later, run with the scheduling constraints on the scheduler. 
 The decision to block the thread is handled by the thread itself by invoking the yield functionality. 
 A thread would block itself when it has no permission to access the shared memory. 
 The decision making of the thread and the yield functionality are the only concepts discussed with the prototypes in this thesis. 
 
-In this thesis, we propagate the decision making logic and yield functionality to kernel space as shown in Listing 4.3. 
+In this thesis, we propagate the decision making logic and yield functionality to kernel space as shown in Listing~\ref{lst:yield_func}. 
 However, in case of the second approach used in this thesis we have an additional proxy checking for memory permissions in user space. 
 We expect these propogations to yield a good performance compared to the user space solutions. 
 
 \noindent\begin{minipage}{.45\textwidth}
-\begin{lstlisting}[mathescape=true,style=customc,caption=First Approach,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,style=customc,caption={First Approach},frame=tlrb,label={lst:first_approach}]
 Thread j($j \in 1..N$): 
 //on activating a BeforeMA call
 BeforeMA() {
@@ -136,10 +155,9 @@ AfterMA() {
 	reviveotherthreads();
 }
 \end{lstlisting}
-\label{first_approach}
 \end{minipage}\hfill
 \begin{minipage}{.45\textwidth}
-\begin{lstlisting}[mathescape=true,style=customc,caption=Second Approach,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,style=customc,caption={Second Approach},frame=tlrb,label={lst:second_approach}]
 Thread j($j \in 1..N$): 
 //on activating a BeforeMA call
 BeforeMA() {
@@ -151,7 +169,6 @@ AfterMA() {
 	reviveotherthreads();
 }
 \end{lstlisting}
-\label{second_approach}
 \end{minipage}
 
 
@@ -160,7 +177,7 @@ AfterMA() {
 This approach has no proxy checking in the user space. 
 When there is an occurrence of a shared memory event, this approach communicates to kernel space from the $BeforeMA()$ and $AfterMA()$ callback functions. 
 These functions aid the logic of implementing yield functionality in the thread and also in reviving other threads. 
-The pseudo implementation of this approach is depicted in listing 4.4.
+The pseudo implementation of this approach is depicted in listing~\ref{lst:first_approach}.
 There are four design prototypes using this approach. 
 Details related to these prototypes are discussed further in section \ref{nocheck}.
 
@@ -170,7 +187,7 @@ This approach has a proxy checking in the user space.
 When there is an occurrence of a shared memory event, this approach initially checks for memory access permission in user space and based on the outcome of the check, it communicates to the kernel space. 
 $BeforeMA()$ and $AfterMA()$ functions are used in the same way as in first approach. 
 However, with the only difference of having a proxy check for memory access permission inside the $BeforeMA()$. 
-The pseudo implementation of this approach is depicted in listing 4.5.
+The pseudo implementation of this approach is depicted in listing~\ref{lst:second_approach}.
 There are two design prototypes using this approach. More details about these prototypes are discussed further in section \ref{proxycheck}.
 With the proxy checking in place, this design is expected to provide good performance when the following condition occurs: $num\_memory\_constraints << total\_memory\_events$. 
 This approach reduces the number of unnecessary yield calls made to kernel space, which reduces drastic overhead generated by communication and waiting in kernel space. 
@@ -405,6 +422,22 @@ The registration happens via a custom proc file system.
 For convenience a $thread\_reg()$ method is invoked in the user space, which internally registers the thread to the kernel space. 
 The thread registration implementation is done entirely in thread registration kernel module. 
 This registration is used to allocate memory space for bookkeeping the thread entry in scheduler. 
+\newpage
+\begin{lstlisting}[mathescape=true,style=customc,caption={Pseudo Code for checking memory access permission},frame=tlrb,label={lst:check_perm}]
+mem_access = {allowed, restricted};
+check_mem_acc_perm(curr_vec_clk, traceobj, thread_id tid) {
+	if(clock[tid] is same in traceobj and curr_vec_clk) {
+		$\forall$thread_id i in {{1...N}-{tid}}:
+		if clock[i] in traceobj is greater to the one in curr_vec_clk) {
+			return restricted;		
+		}	
+	}
+	else if(clock[tid] in traceobj is lower than one curr_vec_clk) {
+		return restricted;	
+	}
+	return allowed;
+}
+\end{lstlisting}
 
 
 \subsection{IOCTL Manager}
@@ -447,28 +480,12 @@ Reset vector clock is invoked at the completion of the user program for resettin
 Get current vector clock is used to obtain the entire vector clock during the time of invocation. 
 This command is primarily used for debugging purposes. 
 
-\begin{lstlisting}[mathescape=true,style=customc,caption=Pseudo Code for checking memory access permission,frame=tlrb]{Name}
-mem_access = {allowed, restricted};
-check_mem_acc_perm(curr_vec_clk, traceobj, thread_id tid) {
-	if(clock[tid] is same in traceobj and curr_vec_clk) {
-		$\forall$thread_id i in {{1...N}-{tid}}:
-		if clock[i] in traceobj is greater to the one in curr_vec_clk) {
-			return restricted;		
-		}	
-	}
-	else if(clock[tid] in traceobj is lower than one curr_vec_clk) {
-		return restricted;	
-	}
-	return allowed;
-}
-\end{lstlisting}
-\label{check_perm}
 
 \subsection{Design with no checking in user space \label{nocheck}}
 
 In the following designs, we address the use of check for memory access  permission method entirely in kernel space. 
-The pseudo implementation for the checking for memory access permission is depicted in Listing 4.6. 
-All the prototypes in this thesis would be using the implementation shown in Listing 4.6 for checking the memory access permission.
+The pseudo implementation for the checking for memory access permission is depicted in listing~\ref{lst:check_perm}. 
+All the prototypes in this thesis would be using the implementation shown in listing~\ref{lst:check_perm} for checking the memory access permission.
 
 \subsubsection{Design with no additional scheduler thread} \label{no_check_no_add}
 
@@ -476,9 +493,9 @@ The design described in this section addresses the use of no additional schedule
 Prior to any global memory access, the given design would invoke IOCTL command with $context\_switch$ and thread id of the thread which addressed the memory event as its parameters. 
 Prototypes 1 and 3 primarily works with a similar implementation. 
 These prototypes defer in place of blocking and unblocking of the threads. 
-Listing 4.7 depicts the pseudo implementation of prototype 1.
+Listing~\ref{lst:proto1} depicts the pseudo implementation of prototype 1.
 
-\begin{lstlisting}[mathescape=true,caption=Pseudo Code for Prototype 1, style=customc,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,caption={Pseudo Code for Prototype 1}, style=customc,frame=tlrb,label={lst:proto1}]
 User Space:
 Thread j($j \in 1..N$):
 BeforeMA() {	
@@ -520,7 +537,7 @@ Inside the $AfterMA()$ call, we invoke the $set\_clk$ command.
 It is used to update the memory event for the thread which encountered the memory event. 
 Prototypes 2 and 4 follow similar implementation. 
 However, they defer in the blocking and unblocking mechanism of the thread. 
-\begin{lstlisting}[mathescape=true,caption=Pseudo Code for Prototype 2, style=customc,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,caption={Pseudo Code for Prototype 2}, style=customc,frame=tlrb,label={lst:proto2}]
 User Space:
 Thread j($j \in 1..N$):
 BeforeMA() {	
@@ -571,11 +588,11 @@ Therefore, such a design is not a wise choice when considering the performance m
 The scheduler implementation is similar to one defined in the section \ref{sec_add_thread} with an additional scheduler thread. 
 Key difference is the additional checking for memory access permissions in the user space. 
 The major changes are in user space code. 
-Prototypes 5 and 6 use a similar setup as shown in Listing 4.9. 
+Prototypes 5 and 6 use a similar setup as shown in listing~\ref{lst:proto5}. 
 However, they differ in their blocking and unblocking mechanism of threads. 
 As explained in the previous sections, this design is expected to perform better under the following condition: $num\_memory\_constraints << total\_memory\_events$. 
 
-\begin{lstlisting}[mathescape=true,caption=Pseudo Code for Prototype 5 and 6, style=customc,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,caption={Pseudo Code for Prototype 5 and 6}, style=customc,frame=tlrb,label={lst:proto5}]
 User Space:
 Thread j($j \in 1..N$):
 BeforeMA() {	
@@ -598,9 +615,9 @@ The task added in wait queue is later resumed, when $wake\_up\_process(sleeping\
 On calling the $wake\_up\_process(sleeping\_task)$, the task status for $sleeping\_task$ is set as $TASK\_RUNNING$. 
 It would be pushed to run queue and executed in future by the operating system scheduler on the basis of scheduler class and priority of tasks in run queue. 
 Prototype 3,4 and 6 utilizes this design.
-Listing 4.10 and 4.11 depicts Prototypes 3 and 4.  
+Listing~\ref{lst:proto3} and \ref{lst:proto4} depicts Prototypes 3 and 4.  
 
-\begin{lstlisting}[mathescape=true,caption=Pseudo Code for Prototype 3, style=customc,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,caption={Pseudo Code for Prototype 3}, style=customc,frame=tlrb,label={lst:proto3}]
 //rest remains the same.
 Kernel Space:
 Queue waitqueue={}
@@ -620,9 +637,10 @@ signal_all_other_threads(thread_id tid) {
 		}
 }
 \end{lstlisting} 
-\begin{lstlisting}[mathescape=true,caption=Pseudo Code for Prototype 4, style=customc,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,caption={Pseudo Code for Prototype 4}, style=customc,frame=tlrb,label={lst:proto4}]
 //rest remains the same.
 Kernel Space:
+Run a kernel level thread every 1ms which invokes signal_permitted_threads function.
 Queue waitqueue={}
 ctxt_switch_thread(thread_id tid) {	
 	if(check_perm(tid)==restricted) {	

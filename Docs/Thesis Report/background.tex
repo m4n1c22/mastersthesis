@@ -136,32 +136,28 @@ If a thread is unable to change its state indefinitely because the resource requ
 \begin{tikzpicture}[node distance=2cm]
 %Resources
 \node (R1) [resource] {R$_1$};
-\node (R2) [resource,right of=R1,xshift =1cm] {R$_2$};
-\node (R3) [resource,right of=R2,xshift =1cm] {R$_3$};
+\node (R2) [resource,below of=R1] {R$_2$};
 
 %Threads
-\node (T1) [thread,below of=R1,xshift =1cm] {T$_1$};
-\node (T2) [thread,below of=R2,xshift =1cm] {T$_2$};
-\node (T3) [thread,below of=R3,xshift =1cm] {T$_3$};
+\node (T1) [thread,below of=R1,xshift =-1.5cm,yshift=1cm] {T$_1$};
+\node (T2) [thread,below of=R1,xshift =1.5cm,yshift=1cm] {T$_2$};
 
 %Arrows
-\draw [->,thick] (R1.south) -- (T1);
-\draw [->,thick] (R2.south) -- (T2);
-\draw [->,thick] (R3.south) -- (T3);
+\draw [->,thick] (R1.west) -- (T1);
+\draw [->,thick] (R2.east) -- (T2);
 \draw [->,thick] (T1) -- (R2.west);
-\draw [->,thick] (T2) -- (R3.west);
-\draw [->,thick] (T3.south) to [out=220,in=230] (R1.west);
+\draw [->,thick] (T2) -- (R1.east);
 
 \end{tikzpicture}
 \caption{Dead Lock Example}
 \label{deadlock_example}
 \end{figure}
 
-In the example depicted in Fig~\ref{deadlock_example}, we have three threads T$_1$, T$_2$, T$_3$ and three resource instances R$_1$, R$_2$, R$_3$. 
+In the example depicted in Fig~\ref{deadlock_example}, we have two threads T$_1$, T$_2$ and two resource instances R$_1$, R$_2$. 
 The figure depicts hold and wait by each threads. 
 Thread T$_1$ holds resource R$_1$ and waits for the acquisition of resource R$_2$ from thread T$_2$. 
-T$_2$ cannot relinquish resource R$_2$, unless it acquires resource R$_3$ for its progress. 
-But, resource R$_3$ is acquired by T$_3$ and is waiting for R$_1$ from T$_1$. 
+T$_2$ cannot relinquish resource R$_2$, unless it acquires resource R$_1$ for its progress. 
+But, resource R$_1$ is acquired by T$_1$ and is waiting for R$_2$ from T$_2$. 
 Thus, making a circular wait of resources. 
 This example clearly explains the dependency of resources for the respective thread progress. 
 
@@ -361,16 +357,6 @@ It is able to adapt the exploration of the program's state graph to the precisio
 Dynamic POR algorthm by \citet{dynamic_por}, explores single transitions and performs recursive calls subsequently. 
 A persistent set is calculated at each state in the state graph of a system.
 
-
-\section{Deterministic Multi-Threading \label{sec_dmt}}
-
-In section \ref{model_check}, we primarily dealt with various ways to verify a program and suggested various techniques, which could be used in a multi-threaded environment. 
-In this section, we discuss about a different approach to deal with the verification of multithreaded programs. 
-In sections \ref{multi_thread} and \ref{con_bugs}, we discussed about the non-determinism offered by multithreaded programming designs and the bugs associated with them. 
-One way to detect and avoid bugs is to have a constrained scheduling of threads thus, adhering to deterministic execution. 
-Deterministic multi-threading is an approach used to bring in determinism in the execution of multi-threaded programs. 
-
-
 \begin{figure}[h]
 \centering
 \subfloat [Traditional Mapping]{
@@ -429,6 +415,17 @@ Deterministic multi-threading is an approach used to bring in determinism in the
  \end{tikzpicture}\label{determinisitic_mapping}}
  \caption{Input to Schedule mappings in multithreaded execution based on the \citet{parrot}}
 \end{figure}
+
+\section{Deterministic Multi-Threading \label{sec_dmt}}
+
+In section \ref{model_check}, we primarily dealt with various ways to verify a program and suggested various techniques, which could be used in a multi-threaded environment. 
+In this section, we discuss about a different approach to deal with the verification of multithreaded programs. 
+In sections \ref{multi_thread} and \ref{con_bugs}, we discussed about the non-determinism offered by multithreaded programming designs and the bugs associated with them. 
+One way to detect and avoid bugs is to have a constrained scheduling of threads thus, adhering to deterministic execution. 
+Deterministic multi-threading is an approach used to bring in determinism in the execution of multi-threaded programs. 
+
+
+
 Fig~ \ref{trad_map} depicts a mapping of inputs to possible scheduling pattern adopted by the multi-threaded program. 
 By bringing in deterministic mapping as shown in fig~\ref{determinisitic_mapping}, we have direct mapping between inputs and schedules. 
 Having such mapping provides us the opportunity to determine erroneous executions. 
@@ -447,7 +444,6 @@ Some of these frameworks are discussed further in the next chapter.
 \section{Iterative Relaxed Scheduling}
 
 Iterative relaxed scheduling(IRS) is a program verification technique used for concurrent programs. 
-\citet{metzler2017quick} presents a novel implementation of software verification approach for concurrent programs. 
 Figure~\ref{conv_ver} presents a conventional software verification approach for concurrent programs. 
 The main drawback with such a verification technique is that it presents a huge verification delay. 
 Large verification delay is presented from the non-deterministic nature of multithreaded programs. 
@@ -455,7 +451,30 @@ Software verification for concurrent programs presents large state spaces thus, 
 POR technique helps to reduce the state space problem by identifying the equivalence classes of program executions such that only one representative of each class needs to be verified. 
 Mazurkiewicz trace\citep{mazurkiewicz1986trace} is one such equivalence class representation. 
 Verification delays would reach higher values for benchmark programs even if state-of-the-art POR is used\citep{abdulla2014optimal}\citep{gueta2007cartesian}. 
+The high complexity of state space exploration for concurrent systems is still a concern for large industrial software deployments. 
+However, individual traces can be verified swiftly as observed when relating verification time to the number of explored traces. 
+From DMT techniques we were able to conjure the reduction in the number of test cases. 
+DMT solutions do not allow to control the schedule that will occur in advance, which makes them unsuitable for automated verification of multithreaded programs. 
+In chapter~\ref{rel_work}, we discuss about the various DMT techniques in more detail and how it compares with the IRS solution. 
 
+\citet{metzler2017quick} presents a novel implementation of software verification approach for concurrent programs through a new technique - iterative relaxed scheduling(IRS). 
+IRS provides a way to adjust the amount of non-determinism thus, providing an adjustable verification delay in the system. 
+In IRS instead of waiting for the entire verification to complete, we can use the intermediate verification results that guarantee program correctness with one or more schedules for the execution of the multithreaded program. 
+Mazurkiewicz traces helps to use POR as a verification technique with intermediate verification results. 
+Figure~\ref{irs_only} depicts the idea of IRS. 
+IRS is in a way ``recorder-replay design''. 
+The verifier in IRS submits intermediate schedules for IRS environment to execute which is similar to the ``recorder'' in ``recorder-replay'' designs. 
+The scheduler in the IRS environment reuse the execution traces submitted by the verifier thus, making it a ``replayer''. 
+In chapter~\ref{rel_work}, we discuss some DMT solutions which use a similar design paradigm.  
+IRS uses LLVM for instrumenting multithreaded programs which use shared memory design. 
+The annotations in the instrumented program are in reference to the shared memory events within the program. 
+Thus, IRS is able to provide fine grained memory level granularity. 
+Mazurkiewicz traces generated by the verifier is obtained in relation with the shared memory events occuring in the mulithreaded program. 
+With the scheduler and the recorded traces, IRS is able to enforce scheduling constraints to the multithreaded program. 
 
+The IRS framework presented by \citet{metzler2017quick} uses two different design variants to realize the scheduler implementation. 
+The IRS scheduler is realized entirely in the userspace. 
+In this thesis, we present an alternative by moving the IRS scheduler to the kernel space. 
+Chapter \ref{approach_ch} highlights the need for such migration and later discusses about the kernel space adaptation. 
 
 

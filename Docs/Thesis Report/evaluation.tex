@@ -141,7 +141,7 @@ For comparing the designs with IRS user space implementations, we have chosen th
 
 \citet{abdulla2014optimal} showcases this benchmark for the evaluation of their dynamic POR. 
 The last zero program has 16 threads at its disposal. 
-The pseudo code of this benchmark is depicted in Fig~\ref{code_lastzero}. 
+The pseudo code of this benchmark is depicted in listing~\ref{code_lastzero}. 
 This benchmark is meant to provide memory constraints spread across different threads rather than being in two threads. 
 The number of memory constraints provided in the trace files include: 15, 12, 5, 1 respectively. 
 The maximum number of possible shared-memory events is 46.
@@ -221,7 +221,7 @@ From the above figures, the validity of improvement in execution overhead with s
 \end{figure}
 
 \citet{dynamic_por} utilizes this benchmark for evaluating their dynamic POR design. 
-The pseudo code for the indexer program is realized in Fig~\ref{code_indexer}.  
+The pseudo code for the indexer program is realized in listing~\ref{code_indexer}.  
 The indexer program revolves around a hash table, where threads read and write hashed messages on it. 
 Each thread calculates four messages and writes them to a shared hash table. 
 Collision are detected and avoided using compare and swap statement. 
@@ -275,7 +275,7 @@ The solution uses two classes of philosophers - odd and even philosopher.
 The classification is based on their thread id. 
 Every odd philosopher checks the chopstick on the left before checking on the right for availability. 
 The opposite in case of even philosopher. 
-The solution for this problem is showcased in Fig~\ref{code_dining_phil}.
+The solution for this problem is showcased in listing~\ref{code_dining_phil}.
 
 In our experiments, we have adapted the solution to have 16 threads and number of iterations as 10. 
 Compared to previous benchmarks which had only few number of constraints. 
