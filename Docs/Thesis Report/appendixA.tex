@@ -62,3 +62,17 @@ for(i=0; i<num_iter; i++) {
 	chopsticks[(id-1)%THREAD_COUNT] = 0;
 }
 \end{lstlisting}
+
+\section{Fibonacci}
+\begin{lstlisting}[mathescape=true,style=customc,caption={Fibonacci Program},label={code_fibonacci}]
+Shared Variables: int i=1,j=1;
+Local Variables: int k, num_iter=N;
+Thread 0: 
+for (k:=0; k<num_iter; k++) {
+	i+=j;
+}		
+Thread 1:
+for (k:=0; k<num_iter; k++) {
+	j+=i;
+}		
+\end{lstlisting}

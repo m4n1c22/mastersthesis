@@ -130,12 +130,24 @@ Reduction in the number of IOCTL calls makes a huge difference in the execution 
 Prototypes 5-6 performs the best, when the following condition holds:
 $num\_memory\_constraints << total\_memory\_events$.
 
-\section{Scaled-up Evaluation}
+\section{Comparison between user space and kernel space IRS solutions}
 
 In this evaluation, we understand the merits and demerits in the performance of the six prototypes and the two user space IRS implementations. 
 For this evaluation, we use three bench-marking programs - last zero, indexer and dining philosophers problem. 
 We scale the core count from two to eight processor cores and monitor the changes in the performance overhead across the three benchmarks for the various IRS implementations. 
 For comparing the designs with IRS user space implementations, we have chosen the best prototype among the six for comparison. 
+
+\subsection{Fibonacci}
+
+\begin{figure}[h]
+     \centering
+     \subfloat[][User space vs Best Prototype]{\includegraphics[scale=0.5]{../../evaluations/cores_2/eval_fibonacci_best.png}\label{fibonacci_best_cores_2}}
+     \subfloat[][Comparison between prototypes]{\includegraphics[scale=0.5]
+{../../evaluations/cores_2/eval_fibonacci_protos.png}
+\label{fibonacci_protos_cores_2}}
+     \caption{Comparison of IRS with Fibonacci on two cores}
+\end{figure}
+
 
 \subsection{Last Zero}
 
