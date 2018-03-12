@@ -1,4 +1,4 @@
-\begin{thebibliography}{26}
+\begin{thebibliography}{29}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -77,6 +77,18 @@ Heming Cui, Jiri Simsa, Yi-Hong Lin, Hao Li, Ben Blum, Xinan Xu, Junfeng Yang,
   threads.
 \newblock In \emph{Proceedings of the Twenty-Fourth ACM Symposium on Operating
   Systems Principles}, pages 388--405. ACM, 2013.
+
+\bibitem[Dijkstra(1968{\natexlab{a}})]{dijkstra1968cooperating}
+Edsger~W Dijkstra.
+\newblock Cooperating sequential processes.
+\newblock In \emph{The origin of concurrent programming}, pages 65--138.
+  Springer, 1968{\natexlab{a}}.
+
+\bibitem[Dijkstra(1968{\natexlab{b}})]{dijkstra1968structure}
+Edsger~W Dijkstra.
+\newblock The structure of the multiprogramming system.
+\newblock In \emph{The origin of concurrent programming}, pages 139--152.
+  Springer, 1968{\natexlab{b}}.
 
 \bibitem[D'silva et~al.(2008)D'silva, Kroening, and Weissenbacher]{d2008survey}
 Vijay D'silva, Daniel Kroening, and Georg Weissenbacher.
@@ -169,5 +181,12 @@ Ji{\v{r}}{\'\i} {\v{S}}im{\v{s}}a, Randy Bryant, and Garth Gibson.
   systems.
 \newblock In \emph{International SPIN Workshop on Model Checking of Software},
   pages 188--193. Springer, 2011.
+
+\bibitem[Torrellas et~al.(1994)Torrellas, Lam, and
+  Hennessy]{torrellas1994false}
+Josep Torrellas, HS~Lam, and John~L. Hennessy.
+\newblock False sharing and spatial locality in multiprocessor caches.
+\newblock \emph{IEEE Transactions on Computers}, 43\penalty0 (6):\penalty0
+  651--663, 1994.
 
 \end{thebibliography}

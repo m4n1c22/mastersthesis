@@ -3,9 +3,9 @@
 Software programs are becoming increasingly complex. 
 With the rise in complexity and technological advancements, components within a software have become susceptible to various erroneous conditions. 
 Software verification have been perceived as a solution for the problems arising in the software development cycle. 
-Software verification is primarily verifying if the specifications are met by the software\cite{ghezzi2002fundamentals}.
+Software verification is primarily verifying if the specifications are met by the software~\citep{ghezzi2002fundamentals}.
 
-There are two fundamental approaches used in software verification - dynamic and static software verification\cite{ghezzi2002fundamentals}. 
+There are two fundamental approaches used in software verification - dynamic and static software verification~\citep{ghezzi2002fundamentals}. 
 Dynamic software verification is performed in conjunction with the execution of the software. 
 In this approach, the behavior of the execution program is checked- commonly known as Test phase. 
 Verification is succeeding phase also known as Review phase. 
@@ -28,7 +28,7 @@ Computing power has grown over the years.
 Advancements are made in the domain of computer architecture by moving the computing power from single-core to multi-core architecture. 
 With such advancement, there were needs to adapt the programming designs from a serialized execution to more parallelizable execution. 
 Various parallel programming models were perceived to accommodate the perceived progression. 
-Multithreaded programming model was one of the designs considered for the performance boost in computing\cite{carver2005modern}. 
+Multithreaded programming model was one of the designs considered for the performance boost in computing~\citep{carver2005modern}. 
 
 Threads are small tasks executed by a scheduler of an operating system, where the resources such as the processor, TLB (Translation Lookaside Buffer), cache, etc., are shared between them. 
 Threads share the same address space and resources. 
@@ -57,7 +57,7 @@ Disadvantages:
 
 Concurrency bugs are one of the major concerns in the domain of multithreaded environment. 
 These bugs are very hard to find and reproduce. 
-Most of these bugs are propagated from the mistakes made by the programmer\cite{lopez2017study}. 
+Most of these bugs are propagated from the mistakes made by the programmer~\citep{lopez2017study}. 
 Some of these concurrency bugs include:
 \begin{itemize}
 \item	Data Race
@@ -66,9 +66,12 @@ Some of these concurrency bugs include:
 \item	Livelock
 \end{itemize}
 
-Non-deterministic behavior of threads is one of the reasons for having the among mentioned bugs. 
-Data race and order violation are classified as race condition bugs. 
-Whereas, deadlock and livelock are classified as lack of progress bugs. 
+Multithreaded programming yields non-deterministic execution order of a multithreaded program. 
+Non-deterministic execution order indicates different executions order for the same multithreaded program. 
+These different execution orders can generate different results. 
+Thus, non-deterministic behavior of threads is one of the reasons for having the among mentioned bugs. 
+Data race and order violation are classified as race condition bugs~\citep{lopez2017study}. 
+Whereas, deadlock and livelock are classified as lack of progress bugs~\citep{lopez2017study}. 
 
 \subsection{Race Condition}
 
@@ -76,7 +79,7 @@ Race condition is one of the most class of common concurrency problems.
 The problem arises, when there are concurrent reads and writes of a shared memory location. 
 As stated above, the problem occurs with non-deterministic execution of threads. 
 
-Consider the following example, you have three threads and they share two variables \emph{x} and \emph{y} \cite{carver2005modern}. 
+Consider the following example, you have three threads and they share two variables \emph{x} and \emph{y}~\citep{carver2005modern}. 
 The value of \emph{x} is initially 0. 
 
 \begin{table}[h]
@@ -113,19 +116,19 @@ Execution Order & Value of \emph{y} \\
 \label{poss_exec}
 \end{table}
 
-The above showcased problem is classified as race condition bug. 
-Ordered execution of reads and writes can fix the problem. 
+The above showcased problem is classified as a race condition bug. 
+An ordered execution of reads and writes can fix the problem. 
 
 \subsection{Lack Of Progress}
 
 Lack of progress is another bug class observed in multithreaded programs. 
 Some of the bugs under this class include deadlocks and livelocks. 
 
-\subsubsection{Deadlock}
+\subsubsection{Deadlocks}
 
-Deadlock is a state in which each thread in thread pool is waiting for some other thread to take action. 
-In terms of multithreaded programming environment, deadlocks occur when one thread waits on a resource locked by another thread, which in turn is waiting for another resource locked by another thread. 
-If a thread is unable to change its state indefinitely because the resource requested by it are being held by another thread, then the entire system is said to be in deadlock\cite{chaki2005concurrent}. 
+A deadlock is a state in which each thread in the thread pool is waiting for some other thread to take action. 
+In terms of the multithreaded programming environment, deadlocks occur when one thread waits on a resource locked by another thread, which in turn is waiting for another resource locked by another thread. 
+If a thread is unable to change its state indefinitely because the resource requested by it are being held by another thread, then the entire system is said to be in deadlock~\citep{chaki2005concurrent}. 
 
 %----Example Picture depicting deadlock---
 \tikzstyle{thread} = [circle, minimum size=.5cm, text centered, draw=black, fill=white!30]
@@ -154,14 +157,13 @@ If a thread is unable to change its state indefinitely because the resource requ
 \end{figure}
 
 In the example depicted in Fig~\ref{deadlock_example}, we have two threads T$_1$, T$_2$ and two resource instances R$_1$, R$_2$. 
-The figure depicts hold and wait by each threads. 
 Thread T$_1$ holds resource R$_1$ and waits for the acquisition of resource R$_2$ from thread T$_2$. 
-T$_2$ cannot relinquish resource R$_2$, unless it acquires resource R$_1$ for its progress. 
-But, resource R$_1$ is acquired by T$_1$ and is waiting for R$_2$ from T$_2$. 
+Whereas T$_2$ cannot relinquish resource R$_2$, unless it acquires resource R$_1$ from T$_1$ for T$_2$'s progress. 
+But resource R$_1$ is locked by T$_1$ which is waiting for R$_2$ from T$_2$. 
 Thus, making a circular wait of resources. 
 This example clearly explains the dependency of resources for the respective thread progress. 
 
-Deadlock can occur if all the following conditions are met simultaneously.
+A deadlock can occur if all the following conditions are met simultaneously.
 
 \begin{itemize}
 \item	Mutual exclusion
@@ -170,61 +172,62 @@ Deadlock can occur if all the following conditions are met simultaneously.
 \item	Circular wait
 \end{itemize}
 
-These conditions are known as Coffman conditions\cite{coffman_cond}.
+These conditions are known as Coffman conditions~\citep{coffman_cond}.
 
-Deadlock conditions can be avoided by having scheduling of threads in a way to avoid the resource contention issue.
+Deadlock conditions can be avoided by scheduling the threads in a way to avoid the resource contention issue.
 
-\subsubsection{Livelock}
+\subsubsection{Livelocks}
 
-Livelock is similar to deadlock, except the state of threads change constantly but, with none progressing. 
-Livelock is special case of resource starvation of threads/processes. 
-Some deadlock detection algorithms are susceptible to livelock conditions when, more than one process/thread tries to take action\cite{lopez2017study}\cite{chaki2005concurrent}. 
+Livelocks are similar to deadlocks, except the state of threads change constantly but with none progressing. 
+Livelocks are a special case of resource starvation of threads/processes. 
+Some deadlock detection algorithms are susceptible to livelock conditions when more than one process/thread tries to take action~\citep{lopez2017study}\citep{chaki2005concurrent}. 
 The above mentioned situation can be avoided by having one priority process/thread taking up the action. 
 
 \section{Model Checking \label{model_check}}
 
 From section~\ref{con_bugs}, it is very clear that there needs to be verification for multithreaded programs. 
-The verification solutions range from detecting causality violations to correctness of execution\cite{d2008survey}. 
+The verification solutions range from detecting causality violations to correctness of execution~\citep{d2008survey}. 
 Model checking is an example of such a technique. 
-It is used for automatically verifying correctness properties of finite-state concurrent systems\cite{model_check}\cite{berard2013systems}. 
-This technique has a number of advantages over traditional approaches that are based on simulation, testing and deductive reasoning. 
+It is used for automatically verifying correctness properties of finite-state concurrent systems~\citep{model_check}\citep{berard2013systems}. 
+This technique has a number of advantages over approaches that are based on simulation, testing and deductive reasoning. 
 When solving a problem algorithmically, both the model of the system and the specification are formulated in a precise mathematical language. 
 Finally, the problem is formulated as a task in logic, namely to verify whether a given structure adheres to a given logical formula.  
-The technique has been successfully used in practice to verify complex sequential designs and communication protocols\cite{model_check}. 
-Model checker tries to verify all possible states of a system in a brute force manner\cite{model_checking_principles}. 
-Thus, making \emph{state explosion} as one of the major challenges, which is discussed in detail in section~\ref{state_exp_prob}.  
-Model checking tools usually verify partial specification for liveness and safety properties\cite{d2008survey}. 
-Model checking algorithms generate set of states from the instructions of a program, which are later analyzed. 
-There is a need to store these states for asserting the number of visits made them are at-most once. 
+The technique has been successfully used in practice to verify complex sequential designs and communication protocols~\citep{model_check}. 
+The model checker tries to verify all possible states of a system in a brute force manner~\citep{model_checking_principles}. 
+Thus, making state space explosion as one of the major challenges.
+In section~\ref{state_exp_prob}, we discuss more about the state explosion problem. 
+Model checking tools usually verify the partial specification for liveness and safety properties~\citep{d2008survey}. 
+Model checking tools generate a set of states from the instructions of a program, which are later analyzed. 
+There is a need to store these states for asserting the number of visits made on them are at-most once. 
 There are two methods commonly used to represent states:
 \begin{itemize}
 \item	Explicit-state model checking
 \item	Symbolic model checking
 \end{itemize}
 
-\paragraph{Advantages of using model checking:} 
-\begin{itemize}
-\item	Generic verification approach used across various domains of software engineering.
-\item 	Supports partial verification, more suited for assessment of essential requirements for a software.
-\item 	Not vulnerable to the likelihood that an error is exposed. 
-\item  	Provides diagnostic information thus, making it suitable for debugging purposes. 
-\item	Based on graph theory, data structures and logic thus, making it `sound and mathematical underpinning'. 
-\item 	Easy to understand and deploy. 
-
-\end{itemize}
-
-\paragraph{Disadvantages of using model checking:}
-\begin{itemize}
-\item	State explosion problem.
-\item	Appropriate for control-intensive applications rather than data-intensive applications. 
-\item	Verifies system model and not the actual system. 
-\item	Decidability issues when considering abstract data types or infinite state systems.
-\end{itemize}
+%\paragraph{Advantages of using model checking:} 
+%\begin{itemize}
+%\item	Generic verification approach used across various domains of software engineering.
+%\item 	Supports partial verification, more suited for assessment of essential requirements for a software.
+%\item 	Not vulnerable to the likelihood that an error is exposed. 
+%\item  	Provides diagnostic information thus, making it suitable for debugging purposes. 
+%\item	Based on graph theory, data structures and logic thus, making it `sound and mathematical underpinning'. 
+%\item 	Easy to understand and deploy. 
+%
+%\end{itemize}
+%
+%\paragraph{Disadvantages of using model checking:}
+%\begin{itemize}
+%\item	State explosion problem.
+%\item	Appropriate for control-intensive applications rather than data-intensive applications. 
+%\item	Verifies system model and not the actual system. 
+%\item	Decidability issues when considering abstract data types or infinite state systems.
+%\end{itemize}
 
 \subsection{State explosion problem \label{state_exp_prob}}
 
 The state space of a program is exponential in nature when it comes to number of variables, inputs, width of the data types, etc,. 
-Presence of function calls and dynamic memory allocation makes it infinite\cite{d2008survey}. 
+Presence of function calls and dynamic memory allocation makes it infinite~\citep{d2008survey}. 
 Concurrency makes the situation worse by having interleaving of threads during execution. 
 Interleaving generates exponential number of ways to execute a set of statements/instructions. 
 Thus, having an explosion in state space. 
@@ -232,12 +235,12 @@ There are various techniques used to avoid the \emph{state explosion problem}.
  
 \subsection{Explicit-state Model Checking}
 
-Explicit-state model checking methods recursively generate successors of initial states by constructing a state transition graph. 
+Explicit-state model checking methods recursively generate successors of initial state by constructing a state transition graph. 
 Graphs are constructed using depth-first, breadth-first or heuristic algorithms. 
 Erroneous states are determined `on the fly' thus, reducing the state space. 
 A property violation on the newly generated states are regarded as erroneous states. 
 Hash tables are used for indexing the explored states. 
-If there is insufficient, memory lossy compression algorithms are used to accommodate the storage of hash tables\cite{d2008survey}. 
+If there is insufficient, memory lossy compression algorithms are used to accommodate the storage of hash tables~\citep{d2008survey}. 
 Explicit-state techniques are more suited for error detection and handling concurrency. 
 
 \subsection{Symbolic Model Checking}
@@ -257,14 +260,14 @@ Symbolic techniques are suitable for proving correctness and handling state-spac
 
 \subsection{Partial Order Reduction}
 
-Partial Order Reduction(POR) is a technique used for reducing the size of state space to be searched by a model checking algorithm\cite{por10yrs}. 
+Partial Order Reduction(POR) is a technique used for reducing the size of state space to be searched by a model checking algorithm~\citep{por10yrs}. 
 This technique exploits the independence of concurrently executed events. 
-Two events are independent of each other when executing them either order results in the same global state\cite{model_check}. 
-A common model for representing concurrent software is to have it depicted as interleaving model. 
-In interleaving model, we have a single linear execution of the program arranged in an interleaved sequence. 
+Two events are independent of each other when executing them either order results in the same global state~\citep{model_check}. 
+A common model for representing concurrent software is to realize it as an interleaving model. 
+In an interleaving model, we have a single linear execution of the program arranged in an interleaved sequence. 
 Concurrently executed events appear to be ordered arbitrarily to each other. 
 Considering all interleaving sequences would lead to extremely large state space. 
-Constructing full state graph would make the fitting into the memory difficult. 
+Constructing the full state graph would make the fitting into the memory difficult. 
 Therefore, a reduced state graph construction is used in this technique. 
  
 POR exploits the commutativity of concurrently executed transitions, which would result in the same state. 
@@ -304,7 +307,7 @@ Thus, showing us that commutativity of transitions $\alpha_1$, $\alpha_2$ on the
 \end{figure}
 
 Partial order reduction derives its motivation from the early versions of algorithms used for partial order modeling of program execution. 
-POR is described as model checking using representatives\cite{por_repr}. 
+POR is described as model checking using representatives~\citep{por_repr}. 
 Verification is performed using representatives from equivalence classes of behaviors. 
 
 The transitions of a system play a major role in the POR. 
@@ -339,7 +342,7 @@ Two main POR techniques which are commonly considered: persistent/stubborn sets 
 Persistent set technique computes a provably-sufficient subset of the set of enabled transitions in each visited state such that unselected enabled transitions are guaranteed not to interfere with the execution of those being selected. 
 The selected set is called a persistent set. 
 Whereas, the most advanced algorithms are based on stubborn sets. 
-These algorithms exploit information about ``which communication objects in a process gets committed to in a given set of operations in future''\cite{dynamic_por}. 
+These algorithms exploit information about ``which communication objects in a process gets committed to in a given set of operations in future''~\citep{dynamic_por}. 
 Such an information is generally obtained from static code analysis. 
 The sleep set technique exploits information on dependencies exclusively among transitions enabled in the current state along with information recorded about the past of the search. 
 Both the techniques can be used simultaneously and are complementary. 
@@ -350,11 +353,11 @@ To overcome the above limitations, we have Dynamic POR, which is discussed furth
 
 \subsection{Dynamic POR}
 
-Dynamic POR is a technique, which dynamically tracks interactions between processes and then exploits this information to identify back tracking points where alternative paths in the state space need to be explored\cite{dynamic_por}. 
+Dynamic POR is a technique, which dynamically tracks interactions between processes and then exploits this information to identify back tracking points where alternative paths in the state space need to be explored~\citep{dynamic_por}. 
 The algorithm works on depth first search in the reduced state space of the system. 
 Dynamic POR helps to calculate dependencies dynamically during the exploration of the state space. 
 It is able to adapt the exploration of the program's state graph to the precision of having another read or write operation accesses on the same memory location in the same execution path. 
-Dynamic POR algorthm by \citet{dynamic_por}, explores single transitions and performs recursive calls subsequently. 
+The dynamic POR algorithm by \citet{dynamic_por} explores single transitions and performs recursive calls subsequently. 
 A persistent set is calculated at each state in the state graph of a system.
 
 \begin{figure}[h]
@@ -431,7 +434,7 @@ Deterministic execution shown figure~\ref{determinisitic_mapping} can be achieve
 Dthreads~\citep{dthreads}, KENDO~\citep{kendo} and GRACE~\citep{grace} presents a deterministic solution using synchronization points in the program as the execution point to enforce determinism. 
 COREDET~\citep{coredet} presents solution based on memory level granularity. 
 In COREDET, a deterministic round-robin scheduler is executed at the occurrence of a shared memory event. 
-There are many frameworks - CoreDet\cite{coredet}, Parrot\cite{parrot}, Kendo\cite{kendo}, DThreads\cite{dthreads}, Grace\cite{grace}, which adheres to this principle. 
+There are many frameworks - CoreDet~\citep{coredet}, Parrot~\citep{parrot}, Kendo~\citep{kendo}, DThreads~\citep{dthreads}, Grace~\citep{grace}, which adheres to this principle. 
 Some of these frameworks are discussed further in the next chapter. 
 
 DMT solutions can be observed as a solution from the area of concurrency testing because they help to reduce the number of necessary test cases in the multithreaded program. 
@@ -439,7 +442,7 @@ These solutions trade potential execution time overhead(overhead in regard with 
 DMT solutions do not control the schedule in advance, thus making them unsuitable for automated verification of concurrent programs. 
 Moreover, it is not possible to adjust the level of non-determinism in these solutions. 
 Migrating these DMT solutions to perform program verification is unrealistic because, their scheduling constraints depend on concrete program inputs which, would require to verify all possible inputs separately. 
-DMT solutions provides fixed scheduling constraints and cannot be relaxed during runtime\citep{metzler2017quick}. 
+DMT solutions provides fixed scheduling constraints and cannot be relaxed during runtime~\citep{metzler2017quick}. 
 They also do not provide any fairness in scheduling or for parts of the program by completely unconstrained scheduling. 
 
 
@@ -461,8 +464,8 @@ The main drawback with such a verification technique is that it presents a huge 
 Large verification delay is presented from the non-deterministic nature of multithreaded programs. 
 Software verification for concurrent programs presents large state spaces thus, leading to state-space explosion problem as discussed in section~\ref{state_exp_prob}. 
 POR technique helps to reduce the state space problem by identifying the equivalence classes of program executions such that only one representative of each class needs to be verified. 
-Mazurkiewicz trace\citep{mazurkiewicz1986trace} is one such equivalence class representation. 
-Verification delays would reach higher values for benchmark programs even if state-of-the-art POR is used\citep{abdulla2014optimal}\citep{gueta2007cartesian}. 
+Mazurkiewicz trace~\citep{mazurkiewicz1986trace} is one such equivalence class representation. 
+Verification delays would reach higher values for benchmark programs even if state-of-the-art POR is used~\citep{abdulla2014optimal}\citep{gueta2007cartesian}. 
 The high complexity of state space exploration for concurrent systems is still a concern for large industrial software deployments. 
 However, individual traces can be verified swiftly as observed when relating verification time to the number of explored traces. 
 From DMT techniques we were able to conjure the reduction in the number of test cases. 
