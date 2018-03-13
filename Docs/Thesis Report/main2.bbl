@@ -1,4 +1,4 @@
-\begin{thebibliography}{29}
+\begin{thebibliography}{32}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -152,16 +152,16 @@ Patrick Metzler, Habib Saissi, P{\'e}ter Bokor, and Neeraj Suri.
 \newblock In \emph{Proceedings of the 32nd IEEE/ACM International Conference on
   Automated Software Engineering}, pages 776--781. IEEE Press, 2017.
 
+\bibitem[Netzer and Miller(1992)]{netzer1992race}
+Robert~HB Netzer and Barton~P Miller.
+\newblock What are race conditions?: Some issues and formalizations.
+\newblock \emph{ACM Letters on Programming Languages and Systems (LOPLAS)},
+  1\penalty0 (1):\penalty0 74--88, 1992.
+
 \bibitem[Olszewski et~al.(2009)Olszewski, Ansel, and Amarasinghe]{kendo}
 Marek Olszewski, Jason Ansel, and Saman Amarasinghe.
 \newblock Kendo: efficient deterministic multithreading in software.
 \newblock \emph{ACM Sigplan Notices}, 44\penalty0 (3):\penalty0 97--108, 2009.
-
-\bibitem[Peled(1993)]{por_repr}
-Doron Peled.
-\newblock All from one, one for all: on model checking using representatives.
-\newblock In \emph{International Conference on Computer Aided Verification},
-  pages 409--423. Springer, 1993.
 
 \bibitem[Peled(1998)]{por10yrs}
 Doron Peled.
@@ -182,11 +182,30 @@ Ji{\v{r}}{\'\i} {\v{S}}im{\v{s}}a, Randy Bryant, and Garth Gibson.
 \newblock In \emph{International SPIN Workshop on Model Checking of Software},
   pages 188--193. Springer, 2011.
 
+\bibitem[Soares and Stumm(2010)]{flexsc}
+Livio Soares and Michael Stumm.
+\newblock Flexsc: Flexible system call scheduling with exception-less system
+  calls.
+\newblock In \emph{Proceedings of the 9th USENIX conference on Operating
+  systems design and implementation}, pages 33--46. USENIX Association, 2010.
+
 \bibitem[Torrellas et~al.(1994)Torrellas, Lam, and
   Hennessy]{torrellas1994false}
 Josep Torrellas, HS~Lam, and John~L. Hennessy.
 \newblock False sharing and spatial locality in multiprocessor caches.
 \newblock \emph{IEEE Transactions on Computers}, 43\penalty0 (6):\penalty0
   651--663, 1994.
+
+\bibitem[Torvalds(1991{\natexlab{a}})]{schedheader}
+Linux Torvalds.
+\newblock Scheduler api headerfile in linux kernel, 1991{\natexlab{a}}.
+\newblock URL
+  \url{https://github.com/torvalds/linux/blob/master/include/linux/sched.h}.
+
+\bibitem[Torvalds(1991{\natexlab{b}})]{semaphoreheader}
+Linux Torvalds.
+\newblock Semaphore headerfile in linux kernel, 1991{\natexlab{b}}.
+\newblock URL
+  \url{https://github.com/torvalds/linux/blob/master/include/linux/semaphore.h}.
 
 \end{thebibliography}

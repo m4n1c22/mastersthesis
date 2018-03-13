@@ -79,9 +79,9 @@ struct trace_node{
 
 In our thesis, we have the thread ids in range from 1 to N. 
 Therefore, in the above example thread id 0 is now 1 and thread id 1 is 2. 
-Figure~\ref{vec_clk_repr} represents the vector representation of the trace depicted in figure~\ref{trace_without_ann}. 
+Figure~\ref{vec_clk_repr} represents the vector clock representation of the trace depicted in figure~\ref{trace_without_ann}. 
 This string is generated manually and passed as an input of the trace\_reg proc file. 
-Let us disassemble the string to get an understanding of how it is parsed in kernel space. 
+Let us disassemble the string to get a better understanding of how it is parsed in kernel space. 
 The curly braces determine the start and end of a given trace file. 
 The values within the parenthesis focuses on a single node in the graph which emphasises on a memory constraint for a certain thread. 
 In our vector representation, we have $(1,[1:1])$ as the first memory constraint. 
@@ -101,24 +101,24 @@ There are two types of semaphores - binary semaphore and counting semaphores.
 Counting semaphores are semaphores which allow an arbitrary resource count. 
 Whereas binary semaphores are restricted to only two values 0 and 1. 
 Binary semaphores are generally used to implement locks. 
-In Linux kernel semaphores are realized under $linux/semaphore.h$. 
-Semaphores are defined using the C struct $struct\ semaphore$. 
-$sema\_init()$ is used to initialize a semaphore. 
+In Linux kernel semaphores are realized under $linux/semaphore.h$~\citep{semaphoreheader}. 
+Semaphores are defined using the C struct $struct\ semaphore$~\citep{semaphoreheader}. 
+$sema\_init()$ is used to initialize a semaphore~\citep{semaphoreheader}. 
 In semaphores, we have up and down operations which deal with the increment and decrement of the value stored in the semaphore. 
 In semaphores when the value of the semaphore is 0 and if a down operation is performed, the semaphore would block the thread who called the down operation. 
 The thread is only resumed until an up operation of semaphore is performed by some other thread. 
 In Linux, we have different types of down operations and one up operation. 
 $down()$  is the conventional down operation which block the task until the semaphore value is retained to a positive value. 
-$down\_interruptible()$ is similar to $down()$ but can be   unblock the operation by triggering an interrupt from the user space. 
+$down\_interruptible()$ is similar to $down()$ but, can be unblocked by triggering an interrupt from the user space. 
 $down\_try\_lock()$ is another implementation of down operation in Linux. 
-It uses a busy waiting design to constantly check if the  value is positive or not, and it is an interruptible design. 
-Based on the performance requirement and design we use a suitable down operation. 
+It uses a busy waiting design to constantly check if the value is positive or not, and it is an interruptible design. 
+Based on the performance and design requirements we use a suitable down operation. 
 In this thesis, considering the debugging purposes we have used $down\_interruptible()$ as the down operation on the semaphore. 
 In this thesis, we have used an array of binary semaphores, where each semaphore is meant for each thread used in the multithreaded program. 
 The semaphore design is mainly used in Prototypes 1,2 and 5 designs used in this thesis. 
 Listing~\ref{sample_semaphore} provides a sample adaptation of semaphores in Linux kernel. 
 The function $some\_dec\_operation()$ is blocked on $down\_interruptible()$ call if value of $sem$ is still 0 before the call. 
-In $some\_inc\_operation()$ function we perform an $up$ operation on $sem$ thus, allowing any thread blocked on $sem$ to resume. 
+In $some\_inc\_operation()$ function, we perform an $up$ operation on $sem$ thus, allowing any thread blocked on $sem$ to resume. 
 \begin{lstlisting}[mathescape=true,style=customc,caption={Writing a sample Linux kernel program with semaphores},label={sample_semaphore}]
 struct semaphore sem;
 //kernel module initialization method
@@ -140,26 +140,23 @@ void some_inc_operation() {
 
 \end{lstlisting}
 
- 
-
-
 \subsection{Scheduler APIs}
 
 Scheduler APIs are a programming abstraction provided by the Linux Kernel for interacting with the OS scheduler. 
-The scheduler APIs are located inside the headerfile $linux/sched.h$. 
+The scheduler APIs are located inside the headerfile $linux/sched.h$~\citep{schedheader}. 
 They provide a lot functions to interact with the scheduler. 
 Some of them include the setting of the scheduler with a specific scheduling policy, setting CPU affinity of certain kernel level task, etc. 
-We are more interested in the APIs which deal with the wait queue and running queue of the OS scheduler. 
+We are more interested in the APIs which deal with the wait queue and run queue of the OS scheduler. 
 All threads or processes from user space are realized as tasks in kernel space. 
 For every kernel level task there is a $task\ struct$ associated with it. 
-To know more about $task\ struct$ please check the headerfile $linux/sched.h$. 
-In this thesis, we obtain the task struct associated with the thread and push the task to the wait queue when we need to block the thread associated with the task. 
+To know more about $task\ struct$ please check the headerfile $linux/sched.h$~\citep{schedheader}. 
+In this thesis, we obtain the $task\ struct$ associated with the thread and push the task to the wait queue, when we need to block the thread associated with the task. 
 The task would be later resumed by some other task by invoking another scheduler API. 
 For the blocking a task, we have a combination of two methods. 
-Initially, we call $set\_current\_task(TASK\_INTERRUPTIBLE)$ which sets the task state of the calling task to wait state(TASK\_INTERRUPTIBLE means it could be revived on some interrupts from the machine). 
-After this step, we call the method $schedule()$ which would relinquish the thread's control over the CPU. 
+Initially, we call $set\_current\_task(TASK\_INTERRUPTIBLE)$ which sets the task state of the calling task to wait state(TASK\_INTERRUPTIBLE means the task could be revived on some interrupts from the machine). 
+After this step, we call the method $schedule()$ which would relinquish the thread's control over the CPU~\citep{schedheader}. 
 In short, with these two steps you have pushed the thread to wait queue of the OS scheduler. 
-If the blocked thread needs to be revived, another task would invoke the method $wake\_up\_process(sleeping\_task)$. 
+If the blocked thread needs to be revived, another task would invoke the method $wake\_up\_process(sleeping\_task)$~\citep{schedheader}. 
 The task which invokes $wake\_up\_process()$ needs to have the $task\ struct$ of the blocked thread. 
 Prototypes 3,4 and 6 mentioned in this thesis use this technique for blocking and unblocking the threads. 
  
@@ -173,8 +170,6 @@ Since these modifications made to the memory locations are not the same location
 Thus, leading to a false sharing of the memory locations among threads. 
 Programming constructs such as C-structs are more susceptible to false sharing problems~\citep{torrellas1994false}. 
 The vector clock data type depicted in figure~\ref{vec_clk_datatype} is more susceptible to false sharing problem when the entire array is mapped under a single cache line. 
-False sharing degrades the performance of the distributed application. 
-In our thesis, we use the vector clock representation which uses a C struct representation. 
 Since the C structs are susceptible to false sharing, our vector clock data type is susceptible as well. 
 In chapter~\ref{eval_ch}, we perform a scaling of processor cores and we can observe in those evaluations the prototypes depicted in this thesis suffer from scalability problems. 
 False sharing could be regarded as one of these problems. 
@@ -182,9 +177,16 @@ One way to fix the problem would be removing the C-struct representation and rep
  
 \section{Building Prototypes}
 
+\subsection*{Prerequisites}
+The prototypes are only compatible with 64 bit Linux operating systems with kernel version needs to be greater than 3.0 and which support loadable modules. 
+For running the IRS framework, you would require LLVM-CLANG 3.9, GCC/G++ 4.9, BOOST 1.6.2 and latest version of graphviz. 
+You would additionally need the latest version of python and spdlog for generating debug logs. 
+
+
+\subsection*{Folder Structure}
 All prototypes used in this thesis follow the same folder structure and also the operation of building them. 
 Inside each prototype, we have an $include$, $scheduler$ and $Std\_Thread\_Impl$. 
-$scheduler$ folder deals with the business logic of the prototype which the scheduler module and processing of the trace. 
+$scheduler$ folder deals with the business logic of the prototype which includes the scheduler module and processing of the trace. 
 $include$ folder contains three headerfiles - $common.h$, $kernel\_space.h$ and $user\_space.h$. 
 The headers inside $include$ are mainly common headers used by the designs implemented in their respective scope(implementation scope means implementation is done either in kernel space or user space). 
 $Std\_Thread\_Impl$ contains the benchmarking programs used for the evaluation of the prototypes. 
@@ -210,8 +212,8 @@ The method needs to be called before the creation of the threads and it expects 
 $thread\_reg()$ needs to be called first within the thread function for registering the thread and it expects a thread id similar to $BeforeMA()$. 
 $reset\_clock()$ is the final method which needs to be used with the multithreaded program. 
 This method needs to be used once all the threads have completed their execution. 
-The program needs to be run in superuser mode because the created IOCTL device requires root permissions access. 
-The multithreaded should only be compiled and executed until the prototype module is loaded successfully.  
+The program needs to be run in superuser mode because the IOCTL device created when the module was loaded requires root permission for access. 
+The multithreaded program should only be compiled and executed until the all kernel modules of the prototype are loaded successfully.  
 
 
 

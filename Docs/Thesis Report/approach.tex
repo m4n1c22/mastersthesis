@@ -75,23 +75,23 @@ It primarily annotates the user program for shared memory events as shown in lis
 
 The scheduler implemented in the existing IRS framework addresses a user space implementation. 
 The user space adaptation of the scheduler focuses on two implementation variants. 
-First user space implementation focuses on a busy waiting design and the second user space implementation uses a conditional variable setup. 
+The first user space implementation focuses on a busy waiting design and the second user space implementation uses a conditional variable setup. 
 Let us call the first implementation as IRS\_Sh and second one as IRS\_Opt for the sake of simplicity. 
 IRS\_Sh uses the pool of user threads created during the multithreaded program to block and signal other threads. 
 It uses the busy waiting design to block a certain thread and use other threads in the pool to signal from the wait. 
 IRS\_Opt uses an additional scheduler thread which takes care of requests for blocking or unblocking certain thread. 
 It uses condition variables to address the blocking or unblocking functionality of a given thread. 
 IRS\_Sh provides poor performance when the number of threads are more than the number of cores. 
-Busy waiting designs performs poorly when the number of cores is less than the number of threads. 
+Busy waiting design performs poorly when the number of cores is less than the number of threads. 
 Whereas in case of IRS\_Opt, it uses conditional variables which is a synchronization abstraction provided by the pthread library. 
 In this thesis, we argue that such an implementation is expected to have high execution overhead when the amount of communication using the conditional variables increases. 
 The additional overhead in IRS\_Opt is expected to occur due to the library overheads from pthread library. 
-The term ``amount of communication'' is relative to the number of shared-memory events encountered in the multithreaded program. 
+The term `amount of communication' is relative to the number of shared-memory events encountered in the multithreaded program. 
 
-Since both the userspace solutions for the scheduler is expected to suffer from poor performance, we present a new approach of moving the scheduler logic to kernel space. 
-We expect to provide low execution overhead compared to the userspace solutions. 
-In rest of this chapter, we realize various ways to move the scheduler module to kernel space. 
-We expect to achieve a good performance with the solutions presented in the rest of this chapter.
+Since both the user space solutions for the scheduler is expected to suffer from poor performance, we present a new approach of moving the scheduler logic to kernel space. 
+We expect to provide low execution overhead compared to the user space solutions. 
+In the rest of this chapter, we realize various ways to move the scheduler module to kernel space. 
+We expect to achieve good performance with the solutions presented in the rest of this chapter.
 
 \subsection{Vector Clock \label{vec_clk}}
 
@@ -109,7 +109,7 @@ The following definition holds:
 The approaches discussed in this thesis uses a vector clock implementation for determining the number of memory events completed by a given thread, which is used to block or unblock a given thread. 
 The trace file generated as graph representations are manually converted into strings of vector clock representations for using in this thesis. 
 The vector clock representation only include the threads which are constrained. 
-More details about the vector clock representation and traces can be found in the appendix C.
+More details about the vector clock representation and traces can be found in the appendix~\ref{appendixc}.
 
 
 \subsection{Design classes}
@@ -119,6 +119,7 @@ The two approaches can be classified as: design with proxy and design without pr
 Proxy checking referred above is the checking for memory  access permission for the thread based on the constraints set in the trace. 
 
 \begin{lstlisting}[mathescape=true,style=customc,caption={Yield functionality and thread revival},frame=tlrb,label={lst:yield_func}]
+Kernel Space:
 yield(threadid j) {
 	if(memory_access_permission(j)==restricted) {
 		block_thread(j);
@@ -142,10 +143,11 @@ The decision making of the thread and the yield functionality are the only conce
 
 In this thesis, we propagate the decision making logic and yield functionality to kernel space as shown in Listing~\ref{lst:yield_func}. 
 However, in case of the second approach used in this thesis we have an additional proxy checking for memory permissions in user space. 
-We expect these propogations to yield a good performance compared to the user space solutions. 
+We expect these propagations to yield a good performance compared to the user space solutions. 
 
 \noindent\begin{minipage}{.45\textwidth}
 \begin{lstlisting}[mathescape=true,style=customc,caption={First Approach},frame=tlrb,label={lst:first_approach}]
+User Space:
 Thread j($j \in 1..N$): 
 //on activating a BeforeMA call
 BeforeMA() {
@@ -158,6 +160,7 @@ AfterMA() {
 \end{minipage}\hfill
 \begin{minipage}{.45\textwidth}
 \begin{lstlisting}[mathescape=true,style=customc,caption={Second Approach},frame=tlrb,label={lst:second_approach}]
+User Space:
 Thread j($j \in 1..N$): 
 //on activating a BeforeMA call
 BeforeMA() {
@@ -177,7 +180,8 @@ AfterMA() {
 This approach has no proxy checking in the user space. 
 When there is an occurrence of a shared memory event, this approach communicates to kernel space from the $BeforeMA()$ and $AfterMA()$ callback functions. 
 These functions aid the logic of implementing yield functionality in the thread and also in reviving other threads. 
-The pseudo implementation of this approach is depicted in listing~\ref{lst:first_approach}.
+The pseudo implementation of this approach is depicted in listing~\ref{lst:first_approach}. 
+Such an approach is suitable when the number of memory constraints are close to the total number of shared memory events in a multithreaded program. 
 There are four design prototypes using this approach. 
 Details related to these prototypes are discussed further in section \ref{nocheck}.
 
@@ -284,7 +288,7 @@ Such a design would facilitate towards a non-preemptive scheduler.
 By overcoming the additional synchronization overhead existent in the user space design, we encounter the problem of invoking IOCTL calls  for accessing the kernel module. 
 In a monolithic kernel architecture, most of the IOCTL calls are blocking synchronous calls to the kernel space. 
 Having too many IOCTL calls would increase the scheduler overhead on the program execution. 
-One solution is to make IOCTL calls when there is an actual need of a  context switch. 
+One solution is to make IOCTL calls when there is an actual need of a  context switch~\citep{flexsc}. 
 The user space threads would assess the trace based on which the IOCTL calls for the kernel space scheduler would be made. 
 We discuss about such a solution in two prototypes used in the implementation section.
 

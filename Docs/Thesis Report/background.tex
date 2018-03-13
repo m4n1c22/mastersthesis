@@ -1,19 +1,18 @@
 \section{Software Verification}
 
 Software programs are becoming increasingly complex. 
-With the rise in complexity and technological advancements, components within a software have become susceptible to various erroneous conditions. 
+With the rise in complexity and technological advancements, components within a software have become susceptible to various erroneous conditions such as bugs. 
 Software verification have been perceived as a solution for the problems arising in the software development cycle. 
 Software verification is primarily verifying if the specifications are met by the software~\citep{ghezzi2002fundamentals}.
 
 There are two fundamental approaches used in software verification - dynamic and static software verification~\citep{ghezzi2002fundamentals}. 
 Dynamic software verification is performed in conjunction with the execution of the software. 
-In this approach, the behavior of the execution program is checked- commonly known as Test phase. 
-Verification is succeeding phase also known as Review phase. 
-In dynamic verification, the verification adheres to the concept of test and experimentation. 
+This approach consists of two phases which are test and review phases. 
+Initially, the behavior of the execution program is checked for anomalies and then verification is done in the succeeding phase. 
 The verification process handles the test and behavior of the program under different execution conditions. 
-Static software verification is the complete opposite of the previous approach. 
+Static software verification is a converse of the previous approach. 
 The verification process is handled by checking the source code of the program before its execution. 
-Static code analysis is one such technique which uses a similar approach. 
+Static code analysis is one technique which uses static software verification. 
 
 The verification of software can also be classified in perspective of automation - manual verification and automated verification. 
 In manual verification, a reviewer manually verifies the software. 
@@ -24,11 +23,11 @@ This thesis work is focused on automated software verification for multithreaded
 
 \section{Multithreaded Programming \label{multi_thread}}
 
-Computing power has grown over the years. 
-Advancements are made in the domain of computer architecture by moving the computing power from single-core to multi-core architecture. 
-With such advancement, there were needs to adapt the programming designs from a serialized execution to more parallelizable execution. 
+Computing power has grown in the last two decades. 
+Advancements were made in the domain of computer architecture by moving the computing power from single-core to multi-core architectures. 
+With such advancement, there were needs to adapt the programs based on serialized execution to more parallelizable execution. 
 Various parallel programming models were perceived to accommodate the perceived progression. 
-Multithreaded programming model was one of the designs considered for the performance boost in computing~\citep{carver2005modern}. 
+Multithreaded programming was realized as one of the parallel programming designs to utilize the performance power in computing~\citep{carver2005modern}. 
 
 Threads are small tasks executed by a scheduler of an operating system, where the resources such as the processor, TLB (Translation Lookaside Buffer), cache, etc., are shared between them. 
 Threads share the same address space and resources. 
@@ -60,24 +59,27 @@ These bugs are very hard to find and reproduce.
 Most of these bugs are propagated from the mistakes made by the programmer~\citep{lopez2017study}. 
 Some of these concurrency bugs include:
 \begin{itemize}
-\item	Data Race
-\item 	Order violation
-\item	Deadlock
-\item	Livelock
+\item	Data Races
+\item 	Order violations
+\item	Deadlocks
+\item	Livelocks
 \end{itemize}
 
 Multithreaded programming yields non-deterministic execution order of a multithreaded program. 
-Non-deterministic execution order indicates different executions order for the same multithreaded program. 
+Non-deterministic execution order indicates different executions order for the same multithreaded program on each execution. 
 These different execution orders can generate different results. 
+Data races occur when the different execution orders generate different results for the same program. 
+Order violations are another problem which occurs due to the non-deterministic execution of the multithreaded programs. 
+Order violations occurs when a multithreaded program depends on a sequence of threads that the scheduler may not provide. 
 Thus, non-deterministic behavior of threads is one of the reasons for having the among mentioned bugs. 
-Data race and order violation are classified as race condition bugs~\citep{lopez2017study}. 
+Data race and order violation are classified as race condition bugs~\citep{lopez2017study} since, they are propagated from same class of problems which involves ordering of events. 
 Whereas, deadlock and livelock are classified as lack of progress bugs~\citep{lopez2017study}. 
 
 \subsection{Race Condition}
 
-Race condition is one of the most class of common concurrency problems.  
+A race condition is one of the most common class of concurrency problems.  
 The problem arises, when there are concurrent reads and writes of a shared memory location. 
-As stated above, the problem occurs with non-deterministic execution of threads. 
+As stated above, the problem occurs with the non-deterministic execution of threads. 
 
 Consider the following example, you have three threads and they share two variables \emph{x} and \emph{y}~\citep{carver2005modern}. 
 The value of \emph{x} is initially 0. 
@@ -93,11 +95,11 @@ Thread 1 & Thread 2 & Thread 3 \\
 \label{race_cond}
 \end{table}
 
-If the statements (1), (2) and (3) were executed as a sequential program. 
-The value of \emph{y} would be 2. 
-When the same program is split to three threads as shown in the above Table~\ref{race_cond}, the output of \emph{y} becomes unpredictable. 
-The possible values of \emph{y} = \{0,1,2\}. 
-The non-deterministic execution of the threads makes the output of \emph{y} non-deterministic. 
+If the statements (1), (2) and (3) were executed as a sequential program,  
+the value of $y$ would be 2. 
+When the same program is split to three threads as shown in the above Table~\ref{race_cond}, the output of $y$ becomes unpredictable. 
+The possible values for $y$ are 0, 1 and 2. 
+The non-deterministic execution of the threads makes the output of $y$ non-deterministic. 
 Table~\ref{poss_exec} depicts possible executions for the above multithreaded execution. 
 
 \begin{table}[h]
@@ -185,15 +187,15 @@ The above mentioned situation can be avoided by having one priority process/thre
 
 \section{Model Checking \label{model_check}}
 
-From section~\ref{con_bugs}, it is very clear that there needs to be verification for multithreaded programs. 
+Section~\ref{con_bugs} addresses a need for verification in multithreaded programs. 
 The verification solutions range from detecting causality violations to correctness of execution~\citep{d2008survey}. 
 Model checking is an example of such a technique. 
 It is used for automatically verifying correctness properties of finite-state concurrent systems~\citep{model_check}\citep{berard2013systems}. 
 This technique has a number of advantages over approaches that are based on simulation, testing and deductive reasoning. 
 When solving a problem algorithmically, both the model of the system and the specification are formulated in a precise mathematical language. 
 Finally, the problem is formulated as a task in logic, namely to verify whether a given structure adheres to a given logical formula.  
-The technique has been successfully used in practice to verify complex sequential designs and communication protocols~\citep{model_check}. 
-The model checker tries to verify all possible states of a system in a brute force manner~\citep{model_checking_principles}. 
+The technique has been successfully used in practice to verify complex sequential programs and communication protocols~\citep{model_check}. 
+A model checker tries to verify all possible states of a system in a brute force manner~\citep{model_checking_principles}. 
 Thus, making state space explosion as one of the major challenges.
 In section~\ref{state_exp_prob}, we discuss more about the state explosion problem. 
 Model checking tools usually verify the partial specification for liveness and safety properties~\citep{d2008survey}. 
@@ -226,11 +228,10 @@ There are two methods commonly used to represent states:
 
 \subsection{State explosion problem \label{state_exp_prob}}
 
-The state space of a program is exponential in nature when it comes to number of variables, inputs, width of the data types, etc,. 
-Presence of function calls and dynamic memory allocation makes it infinite~\citep{d2008survey}. 
-Concurrency makes the situation worse by having interleaving of threads during execution. 
-Interleaving generates exponential number of ways to execute a set of statements/instructions. 
-Thus, having an explosion in state space. 
+The state space of a program is exponential in nature when it comes to the number of variables, inputs, width of the data types, etc,. 
+The presence of function calls and dynamic memory allocation makes it infinite~\citep{d2008survey}. 
+Concurrency makes the situation worse by having an interleaving of the threads during execution. 
+Interleavings generate exponential number of ways to execute a set of statements/instructions thus, having an explosion in the state space. 
 There are various techniques used to avoid the \emph{state explosion problem}. 
  
 \subsection{Explicit-state Model Checking}
@@ -248,7 +249,7 @@ Explicit-state techniques are more suited for error detection and handling concu
 Symbolic model checking methods manipulate a set of states rather than single states. 
 Sets of states are represented by formulae in propositional logic. 
 It can handle much larger designs with hundreds of state variables. 
-Symbolic model checking uses different model checking algorithms: fix-point model checking(mainly for CTL), bounded model checking(mainly for LTL), invariant checking, etc,. 
+Symbolic model checking uses different model checking algorithms: fix-point model checking(mainly for CTL), bounded model checking(mainly for LTL), invariant checking. 
 Two main symbolic techniques used - Binary Decision Diagrams(BDD) and Propositional Satisfiability Checkers(SAT solvers). 
 BDDs are traditionally used to represent boolean functions. 
 A BDD is obtained from a Boolean decision tree by maximally sharing nodes and eliminating redundant nodes. 
@@ -265,9 +266,9 @@ This technique exploits the independence of concurrently executed events.
 Two events are independent of each other when executing them either order results in the same global state~\citep{model_check}. 
 A common model for representing concurrent software is to realize it as an interleaving model. 
 In an interleaving model, we have a single linear execution of the program arranged in an interleaved sequence. 
-Concurrently executed events appear to be ordered arbitrarily to each other. 
+Concurrently executed events appear to be ordered to each other arbitrarily. 
 Considering all interleaving sequences would lead to extremely large state space. 
-Constructing the full state graph would make the fitting into the memory difficult. 
+Constructing the full state graph would make fitting the graph into the memory difficult. 
 Therefore, a reduced state graph construction is used in this technique. 
  
 POR exploits the commutativity of concurrently executed transitions, which would result in the same state. 
@@ -275,8 +276,7 @@ Fig ~\ref{commutativity_example} depicts the commutativity behavior.
 $S$, $S_1$, $S_2$ and $R$ are various states of a given program and $\alpha_1$, $\alpha_2$ represents various transitions. 
 Consider two paths $P_1$ and $P_2$. 
 $P_1 = S \rightarrow S_1 \rightarrow  R$ and $P_2 = S \rightarrow S_2 \rightarrow  R$. 
-$P_1$ and $P_2$ reaches the same final state $R$. 
-Thus, showing us that commutativity of transitions $\alpha_1$, $\alpha_2$ on the given example. 
+$P_1$ and $P_2$ reaching the same final state $R$, shows us that the transitions $\alpha_1$ and $\alpha_2$ are commutativity.  
 
 
 
@@ -306,48 +306,41 @@ Thus, showing us that commutativity of transitions $\alpha_1$, $\alpha_2$ on the
 \label{commutativity_example}
 \end{figure}
 
-Partial order reduction derives its motivation from the early versions of algorithms used for partial order modeling of program execution. 
-POR is described as model checking using representatives~\citep{por_repr}. 
-Verification is performed using representatives from equivalence classes of behaviors. 
-
-The transitions of a system play a major role in the POR. 
+The transitions of a system play a major role in POR. 
 POR is based on the dependency relation that exists between the transitions of a systems. 
-A transition $\alpha \in T$ is enabled in a state $s$, if there is a state $s'$ such that $\alpha(s, s')$ holds. 
+A transition $\alpha \in T$ (where $T$ is the set of transitions) is enabled in a state $s$, if there is a state $s'$ such that $\alpha(s, s')$ holds. 
 Otherwise, $\alpha$ is disabled in $s$. 
+$\alpha(s, s')$ defines a transition function from state $s$ to $s'$. 
 The set of transitions enabled in $s$ is $enabled(s)$. 
 A transition $\alpha$ is deterministic, if for every state $s$ there is at most one state $s'$ such that $\alpha(s, s')$. 
-
-A path $\pi$ from a state $s_0$ is a finite or infinite sequence. 
-
-$\pi = s_0 \rightarrow s_1 \rightarrow ...$
-
-$\alpha_0(s_0, s_1)$, $\alpha_1(s_1, s_2)$ are transitions on the states in path $\pi$ such that for every $i$, $\alpha_i(s_i, s_{i+1})$ holds. 
-If $\pi$ is finite, then the length of $\pi$ is the number of transitions in $\pi$ and will be denoted by $\mid \pi \mid$. 
-Purpose of POR is to reduce the number of states, while preserving the correctness of the program. 
-A reduced state graph is generated using depth-first or breadth-first search methods. 
-Model checking algorithm is applied to the resultant graph, which has fewer states and edges. 
+The purpose of POR is to reduce the number of states, while preserving the correctness of the program. 
+A reduced state graph is generated for example using depth-first or breadth-first search methods. 
+A model checking algorithm is applied to the resultant graph, which has fewer states and edges. 
 
 An independence relation $I \subseteq T \times T$ is a symmetric, anti-reflexive relation such that for $s \in S$ and $(\alpha, \beta) \in I$:
 \begin{itemize}
-\item Enabledness 	If $\alpha,\beta \in enabled(s)$ then $\alpha \in enabled(\beta(s))$.
-\item Commutativity	$\alpha, \beta \in enabled(s)$ then $\alpha(\beta(s)) = \beta(\alpha(s))$.
+\item Enabledness: If $\alpha,\beta \in enabled(s)$ then $\alpha \in enabled(\beta(s))$.
+\item Commutativity: $\alpha, \beta \in enabled(s)$ then $\alpha(\beta(s)) = \beta(\alpha(s))$.
 \end{itemize}
+$\alpha(s)$ and $\beta(s)$ indicate different transitions on state $s$. 
+These functions return a resultant state after the transition. 
+
 The dependency relation $D$ is the complement of $I$, namely $D = (T \times T) \setminus I$. The enabledness condition states that a pair of independent transitions do not disable one another. 
-However, that it is possible for one to enable another. 
+However, it is possible for one to enable another. 
 Stuttering refers to a sequence of identically labeled states along a path. 
 In fig~\ref{commutativity_example}, we have two paths $P_1$ and $P_2$ which are stuttering equivalent. 
-Thus, the reduced graph would have fewer number of states and retains the correctness property of the model. 
+Thus, the reduced graph would have a fewer number of states and retains the correctness property of the model. 
 
-Two main POR techniques which are commonly considered: persistent/stubborn sets and sleep sets. 
+The commonly used POR techniques are persistent/stubborn sets and sleep sets. 
 Persistent set technique computes a provably-sufficient subset of the set of enabled transitions in each visited state such that unselected enabled transitions are guaranteed not to interfere with the execution of those being selected. 
-The selected set is called a persistent set. 
-Whereas, the most advanced algorithms are based on stubborn sets. 
-These algorithms exploit information about ``which communication objects in a process gets committed to in a given set of operations in future''~\citep{dynamic_por}. 
+The selected set is called a persistent set, 
+whereas the most advanced algorithms are based on stubborn sets~\citep{dynamic_por}. 
+These algorithms exploit information about which communication objects in a process gets committed to in a given set of operations in future~\citep{dynamic_por}. 
 Such an information is generally obtained from static code analysis. 
 The sleep set technique exploits information on dependencies exclusively among transitions enabled in the current state along with information recorded about the past of the search. 
-Both the techniques can be used simultaneously and are complementary. 
-Unfortunately, existing persistent/stubborn set techniques suffer from a severe fundamental limitation in the context of concurrent software systems. 
-The non-determinism in the execution of the concurrent programs makes the computation of precision difficult. 
+Both techniques can be used simultaneously and are complementary. 
+Unfortunately, existing persistent/stubborn set techniques suffer from a severe fundamental limitation in the context of concurrent programs. 
+The non-determinism in the execution of the concurrent programs makes the computation of precision function defined within these implementation difficult. 
 Sleep sets could be used but, it cannot avoid state explosion. 
 To overcome the above limitations, we have Dynamic POR, which is discussed further in the next section. 
 
@@ -421,24 +414,24 @@ A persistent set is calculated at each state in the state graph of a system.
 
 \section{Deterministic Multi-Threading \label{sec_dmt}}
 
-In sections \ref{multi_thread} and \ref{con_bugs}, we discussed about the non-determinism offered by multithreaded programming designs and the bugs associated with them. 
-By adhering to a deterministic execution, a multithreaded program can avoid heisenbugs in the designs. 
+In sections \ref{multi_thread} and \ref{con_bugs}, we discussed about the non-determinism offered by the multithreaded programs and the bugs associated with them. 
+By adhering to a deterministic execution, a multithreaded program can avoid heisenbugs in these designs. 
 In this section, we discuss about an approach which enforces deterministic execution to concurrent programs. 
 The determinism in the execution of concurrent programs are achieved by enforcing scheduling constraints during shared memory events, synchronization operations or during lock acquisitions. 
 Deterministic Multithreading(DMT) is a technique which addresses the above hypothesis. 
 
-DMT solutions presents a design methodology of enforcing a single schedule or execution trace for a given input of the program as depicted in figure~\ref{determinisitic_mapping}. 
-In the figure, we have set of inputs mapped to a set of schedules. 
+DMT solutions present a design methodology for enforcing a single schedule or execution trace on a given input of the program as depicted in figure~\ref{determinisitic_mapping}. 
+In the above figure, we have a set of inputs mapped to a set of schedules. 
 Figure~ \ref{trad_map} depicts the non-deterministic execution of the same multithreaded program. 
-Deterministic execution shown figure~\ref{determinisitic_mapping} can be achieved by determining points of synchronization or communication in the programs. 
-Dthreads~\citep{dthreads}, KENDO~\citep{kendo} and GRACE~\citep{grace} presents a deterministic solution using synchronization points in the program as the execution point to enforce determinism. 
+Deterministic execution shown figure~\ref{determinisitic_mapping} can be achieved by determining the points of synchronization or communication in these programs. 
+Dthreads~\citep{dthreads}, KENDO~\citep{kendo} and GRACE~\citep{grace} presents a deterministic solution using synchronization points in the program as an execution point to enforce determinism. 
 COREDET~\citep{coredet} presents solution based on memory level granularity. 
 In COREDET, a deterministic round-robin scheduler is executed at the occurrence of a shared memory event. 
-There are many frameworks - CoreDet~\citep{coredet}, Parrot~\citep{parrot}, Kendo~\citep{kendo}, DThreads~\citep{dthreads}, Grace~\citep{grace}, which adheres to this principle. 
+There are many frameworks - COREDET~\citep{coredet}, PARROT~\citep{parrot}, KENDO~\citep{kendo}, DThreads~\citep{dthreads}, GRACE~\citep{grace}, which adheres to this principle. 
 Some of these frameworks are discussed further in the next chapter. 
 
 DMT solutions can be observed as a solution from the area of concurrency testing because they help to reduce the number of necessary test cases in the multithreaded program. 
-These solutions trade potential execution time overhead(overhead in regard with execution of unmodified program) by reducing the non-determinism in multithreaded program for simplifying the testing process. 
+These solutions trade potential execution time overhead(overhead in regard with execution time of unmodified program) by reducing the non-determinism in multithreaded program for simplifying the testing process. 
 DMT solutions do not control the schedule in advance, thus making them unsuitable for automated verification of concurrent programs. 
 Moreover, it is not possible to adjust the level of non-determinism in these solutions. 
 Migrating these DMT solutions to perform program verification is unrealistic because, their scheduling constraints depend on concrete program inputs which, would require to verify all possible inputs separately. 
@@ -451,24 +444,24 @@ They also do not provide any fairness in scheduling or for parts of the program 
      \centering
      \subfloat[][Conventional Verification]{\includegraphics[scale=0.08]{figs/conventional.png}\label{conv_ver}}
      \subfloat[][Iterative Relaxed Scheduling]{\includegraphics[scale=0.08]{figs/irs_only.png}\label{irs_only}}
-     \caption{Conventional vs IRS verification adapted from \citet{metzler2017quick}}
+     \caption{Conventional verification vs IRS verification adapted from \citet{metzler2017quick}}
 \end{figure}
 
 
 \section{Iterative Relaxed Scheduling \label{iter_rel_sched}}
 
-From the previous section, it is abundantly clear the drawbacks of using DMT approaches for concurrency verification. 
+From the previous section, it is abundantly clear in the drawbacks of using DMT approaches for concurrency verification. 
 Iterative relaxed scheduling(IRS) is a program verification technique used for concurrent programs. 
 Figure~\ref{conv_ver} presents a conventional software verification approach for concurrent programs. 
 The main drawback with such a verification technique is that it presents a huge verification delay. 
 Large verification delay is presented from the non-deterministic nature of multithreaded programs. 
-Software verification for concurrent programs presents large state spaces thus, leading to state-space explosion problem as discussed in section~\ref{state_exp_prob}. 
+Software verification for concurrent programs present large state spaces thus, leading to state-space explosion problem as discussed in section~\ref{state_exp_prob}. 
 POR technique helps to reduce the state space problem by identifying the equivalence classes of program executions such that only one representative of each class needs to be verified. 
 Mazurkiewicz trace~\citep{mazurkiewicz1986trace} is one such equivalence class representation. 
 Verification delays would reach higher values for benchmark programs even if state-of-the-art POR is used~\citep{abdulla2014optimal}\citep{gueta2007cartesian}. 
 The high complexity of state space exploration for concurrent systems is still a concern for large industrial software deployments. 
-However, individual traces can be verified swiftly as observed when relating verification time to the number of explored traces. 
-From DMT techniques we were able to conjure the reduction in the number of test cases. 
+However, individual traces can be verified swiftly as observed when relating the verification time to the number of explored traces. 
+From DMT techniques we were able to conjecture the reduction in the number of test cases. 
 DMT solutions do not allow to control the schedule that will occur in advance, which makes them unsuitable for automated verification of multithreaded programs. 
 In chapter~\ref{rel_work}, we discuss about the various DMT techniques in more detail and how it compares with the IRS solution. 
 
@@ -477,8 +470,8 @@ IRS provides a way to adjust the amount of non-determinism thus, providing an ad
 In IRS instead of waiting for the entire verification to complete, we can use the intermediate verification results that guarantee program correctness with one or more schedules for the execution of the multithreaded program. 
 Mazurkiewicz traces helps to use POR as a verification technique with intermediate verification results. 
 Figure~\ref{irs_only} depicts the idea of IRS. 
-IRS is in a way ``recorder-replay design''. 
-The verifier in IRS submits intermediate schedules for IRS environment to execute which is similar to the ``recorder'' in ``recorder-replay'' designs. 
+IRS is in a way ``recorder-replay'' design. 
+The verifier in IRS submits intermediate schedules for IRS environment to execute, which is similar to the ``recorder''. 
 The scheduler in the IRS environment reuse the execution traces submitted by the verifier thus, making it ``replayer''. 
 In chapter~\ref{rel_work}, we discuss some DMT solutions which use a similar design paradigm.  
 IRS uses LLVM for instrumenting multithreaded programs which use shared memory design. 
@@ -488,7 +481,11 @@ Mazurkiewicz traces generated by the verifier is obtained in relation with the s
 With the scheduler and the recorded traces, IRS is able to enforce scheduling constraints to the multithreaded program. 
 
 The IRS framework presented by \citet{metzler2017quick} uses two different design variants to realize the scheduler implementation. 
-The IRS scheduler is realized entirely in the userspace. 
+The first design conceives the scheduling decision within the pool of user threads created in the multithreaded program. 
+The user threads in this design shares scheduling decision thus making them shared schedulers. 
+The blocking and unblocking of the threads in this design is done with a busy waiting implementation. 
+In the second design, we use a seperate thread for handling the scheduling decisions, and we use condition variables for handling the blocking and unblocking of threads. 
+The IRS scheduler in this framework~\citep{metzler2017quick} is realized entirely in the userspace. 
 In this thesis, we present an alternative by moving the IRS scheduler to the kernel space. 
 Chapter \ref{approach_ch} highlights the need for such migration and later discusses about the kernel space adaptation. 
 
