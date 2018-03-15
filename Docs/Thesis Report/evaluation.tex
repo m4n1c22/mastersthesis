@@ -16,11 +16,11 @@ Configurations by scaling the number of processor cores is mainly intended to pe
 
 We would be using the following abbreviations in the rest of the evaluations for simplicity of expression.
 \begin{itemize}
-\item {IRS\_Sh} - One of the IRS user space implementation discussed in sections~\ref{iter_rel_sched} and \ref{mot}. 
+\item {IRS\_Sh} - One of the IRS user space implementation discussed in section~\ref{iter_rel_sched}. 
 It addresses the use of a busy waiting design for blocking a thread and use the other threads in the thread pool to signal the blocked thread. 
 Thus, making the scheduling decision shared among the threads. 
 This design does not have an additional thread for handling the scheduling decisions. 
-\item {IRS\_Opt} - Another user space IRS solution discussed in sections~ \ref{iter_rel_sched} and \ref{mot}. 
+\item {IRS\_Opt} - Another user space IRS solution discussed in section~ \ref{iter_rel_sched}. 
 It uses an additional thread for handling the scheduling decisions and uses conditional variables to block a certain thread when memory access is restricted. 
 \item {Proto\_1} - Section~\ref{sync_des} highlights all the prototypes used in this thesis to provide various solutions addressing the transition of scheduling decision to kernel space. 
 Prototype 1 is the first synchronization discussed in section~\ref{sync_des} which uses a shared scheduler design similar to IRS\_Sh but, the blocking of threads is enforced by using semaphores in kernel space. 

@@ -71,27 +71,27 @@ AfterMA();
 LLVM is another component part of the IRS framework. 
 It primarily annotates the user program for shared memory events as shown in listing~\ref{lst:uninstr_usr_pgm} and \ref{lst:instr_usr_pgm}. 
 
-\subsection{Motivation \label{mot}}
-
-The scheduler implemented in the existing IRS framework addresses a user space implementation. 
-The user space adaptation of the scheduler focuses on two implementation variants. 
-The first user space implementation focuses on a busy waiting design and the second user space implementation uses a conditional variable setup. 
-Let us call the first implementation as IRS\_Sh and second one as IRS\_Opt for the sake of simplicity. 
-IRS\_Sh uses the pool of user threads created during the multithreaded program to block and signal other threads. 
-It uses the busy waiting design to block a certain thread and use other threads in the pool to signal from the wait. 
-IRS\_Opt uses an additional scheduler thread which takes care of requests for blocking or unblocking certain thread. 
-It uses condition variables to address the blocking or unblocking functionality of a given thread. 
-IRS\_Sh provides poor performance when the number of threads are more than the number of cores. 
-Busy waiting design performs poorly when the number of cores is less than the number of threads. 
-Whereas in case of IRS\_Opt, it uses conditional variables which is a synchronization abstraction provided by the pthread library. 
-In this thesis, we argue that such an implementation is expected to have high execution overhead when the amount of communication using the conditional variables increases. 
-The additional overhead in IRS\_Opt is expected to occur due to the library overheads from pthread library. 
-The term `amount of communication' is relative to the number of shared-memory events encountered in the multithreaded program. 
-
-Since both the user space solutions for the scheduler is expected to suffer from poor performance, we present a new approach of moving the scheduler logic to kernel space. 
-We expect to provide low execution overhead compared to the user space solutions. 
-In the rest of this chapter, we realize various ways to move the scheduler module to kernel space. 
-We expect to achieve good performance with the solutions presented in the rest of this chapter.
+%\subsection{Motivation \label{mot}}
+%
+%The scheduler implemented in the existing IRS framework addresses a user space implementation. 
+%The user space adaptation of the scheduler focuses on two implementation variants. 
+%The first user space implementation focuses on a busy waiting design and the second user space implementation uses a conditional variable setup. 
+%Let us call the first implementation as IRS\_Sh and second one as IRS\_Opt for the sake of simplicity. 
+%IRS\_Sh uses the pool of user threads created during the multithreaded program to block and signal other threads. 
+%It uses the busy waiting design to block a certain thread and use other threads in the pool to signal from the wait. 
+%IRS\_Opt uses an additional scheduler thread which takes care of requests for blocking or unblocking certain thread. 
+%It uses condition variables to address the blocking or unblocking functionality of a given thread. 
+%IRS\_Sh provides poor performance when the number of threads are more than the number of cores. 
+%Busy waiting design performs poorly when the number of cores is less than the number of threads. 
+%Whereas in case of IRS\_Opt, it uses conditional variables which is a synchronization abstraction provided by the pthread library. 
+%In this thesis, we argue that such an implementation is expected to have high execution overhead when the amount of communication using the conditional variables increases. 
+%The additional overhead in IRS\_Opt is expected to occur due to the library overheads from pthread library. 
+%The term `amount of communication' is relative to the number of shared-memory events encountered in the multithreaded program. 
+%
+%Since both the user space solutions for the scheduler is expected to suffer from poor performance, we present a new approach of moving the scheduler logic to kernel space. 
+%We expect to provide low execution overhead compared to the user space solutions. 
+%In the rest of this chapter, we realize various ways to move the scheduler module to kernel space. 
+%We expect to achieve good performance with the solutions presented in the rest of this chapter.
 
 \subsection{Vector Clock \label{vec_clk}}
 
@@ -567,7 +567,6 @@ Run a kernel level thread every 1ms which invokes signal_permitted_threads funct
 
 ctxt_switch_thread(thread_id tid) {	
 	if(check_perm(tid)==restricted) {
-		signal_all_other_threads(tid);
 		waitqueue.push(tid);
 		down(threads_sem[tid]); 
 	}
@@ -655,7 +654,6 @@ Run a kernel level thread every 1ms which invokes signal_permitted_threads funct
 Queue waitqueue={}
 ctxt_switch_thread(thread_id tid) {	
 	if(check_perm(tid)==restricted) {	
-		signal_all_other_threads(tid);
 		waitqueue.push(tid);
 		set_current_task_state(TASK_WAIT);
 		schedule();
@@ -670,3 +668,31 @@ signal_permitted_threads() {
 }
 //rest remains the same.
 \end{lstlisting}
+
+\subsection*{Additional Note}
+
+We have $signal\_all\_other\_threads()$ method invoked within $ctxt\_switch\_thread()$ method in Prototypes 1 and 3. 
+The above call is made from $ctxt\_switch\_thread()$ to ensure that the design does not run into any deadlocks. 
+
+A $waitqueue$ is used in all the prototypes. 
+It is used to maintain a bookkeeping for all the blocked threads. 
+A design without $waitqueue$ would require the checking memory access permission with the trace to be done differently. 
+The modified design would have all the signaling threads checking the trace for all threads which could be blocked and signaling all the blocked threads independently whereas, in the design discussed in this thesis we use a $waitqueue$. 
+The waitqueue is implemented as an array of boolean values and with size of total number of threads. 
+To check if a thread is blocked or not, we can access array with the thread's id as its index. 
+Firstly, such a modified design highlights a possibility of a race conditions when removing a memory event from a trace. 
+A memory event is removed from the trace once the event is completed. 
+Secondly, the prototypes using semaphores(Prototypes 1,2 and 5) could not be adapted with such design changes. 
+Let us consider that, there are 4 threads in the multithreaded program. 
+Three of the threads are running, whereas the last thread is blocked. 
+When all first three threads invoke the $signal\_other\_threads()$ method, they would perform the $up$ operation on the semaphore variable meant for last thread(assuming that the fourth thread is allowed to execute). 
+Problem here is that the value of the semaphore say $sema_4$ would be 3 and not one, value 3 would indicate the fourth thread to miss the yield functionality for the next three restricted memory access. 
+As indicated in the appendix~\ref{appendixc}, we use a binary semaphore and not a counting semaphore for the threads in Prototypes 1,2 and 5. 
+To avoid the race conditions, we could have a mutex around the code section which deals with the removal of the memory event from the trace. 
+Invoking mutexes or locks regularly can affect the performance of the multithreaded program~\citep{torrellas1994false}. 
+Having a mutex inside this code section would increase the execution overhead drastically. 
+Moreover, such a design with mutex would make the design  to be logically equivalent to the one with the $waitqueue$. 
+Therefore, there is no gain in making such a change. 
+
+The algorithmic time complexity for running $signal\_all\_other\_threads()$ is $O(n^2)$, whereas $set\_clk()$ is $O(1)$. 
+In $ctxt\_switch\_thread()$ method we have higher algorithmic time complexity in Prototypes 1 and 3, since they invoke $signal\_all\_other\_threads()$ internally.
