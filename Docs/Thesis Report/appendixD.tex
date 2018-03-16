@@ -1,6 +1,7 @@
 \begin{itemize}
 
-\item 	API 	-   Application Programming Interface.
+\item 	API 	-   Application Programming Interface
+\item	BDD		-	Binary Decision Diagrams
 \item	CPU		-	Central Processing Unit
 \item	DMT		-	Deterministic Multithreading
 \item	IOCTL	-	Input Output Control
@@ -14,6 +15,8 @@ Thus, making the scheduling decision shared among the threads.
 This design does not have an additional thread for handling the scheduling decisions. 
 \item	LKM		-	Loadable Kernel Module
 \item	OS		-	Operating System
+\item	POR		- 	Partial Order Reduction
+\item	POSIX	- 	Portable Operating System Interface
 \item	ProcFS  -   Process File System, a virtual file system in Linux Operating System.
 \item {Proto\_1} - Section~\ref{sync_des} highlights all the prototypes used in this thesis to provide various solutions addressing the transition of scheduling decision to kernel space. 
 Prototype 1 is the first synchronization discussed in section~\ref{sync_des} which uses a shared scheduler design similar to IRS\_Sh but, the blocking of threads is enforced by using semaphores in kernel space. 
@@ -27,7 +30,12 @@ It uses scheduler APIs instead of semaphores.
 As discussed in section~\ref{sec_app} it uses a proxy checking of memory access permission in user space.
 \item {Proto\_6} - Prototype 6 are an extension of Prototype 4, it is another design which addresses the second approach discussed in section~\ref{sec_app}. 
 As discussed in section~\ref{sec_app} it uses a proxy checking of memory access permission in user space.
+\item Pthreads- POSIX Threads
 \item RTID - Real Thread ID which is assigned within the proc file system for any thread created within the user land. 
-\item TaskID - All threads are internally realized as tasks in kernel space and are allocated with an identifier which is task Identifier.
-\item UTID - User defined thread ID which is relative inside the user program.
+\item SMP		- Symmetric Multi-Processor
+\item StableMT 	- Stable Multithreading
+\item TaskID 	- All threads are internally realized as tasks in kernel space and are allocated with an identifier which is task Identifier.
+\item TLB	- Translation Lookaside Buffer
+\item UTID 	- User defined thread ID which is relative inside the user program.
+\item VM	-	Virtual machine
 \end{itemize}
