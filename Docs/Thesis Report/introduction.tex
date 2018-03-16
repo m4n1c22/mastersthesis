@@ -1,8 +1,8 @@
 In the past two decades, we have observed a dramatic increase in the computing power of silicon based chips. 
 Heat dissipation and energy consumption now limit the ability of the hardware manufacturers to speed up the chips by increasing their clock rate. 
-Such a phenomenon has led to a major shift in computer architecture, where single-core CPUs have been replaced by CPUs consisting of a number of processing cores. 
+Such a phenomenon has led to a major shift in computer architecture, where single-core \acrshort{cpu}s have been replaced by \acrshort{cpu}s consisting of a number of processing cores. 
 The implication of such a switch is that the performance of sequential applications would no longer increase with each generation of processors, because the individual processing components are not getting faster. 
-On the other hand, applications which are rewritten to use multiple threads can take advantage of these available computing resources to increase their performance by executing their computations in parallel across multiple CPUs. 
+On the other hand, applications which are rewritten to use multiple threads can take advantage of these available computing resources to increase their performance by executing their computations in parallel across multiple \acrshort{cpu}s. 
 
 Unfortunately, writing multithreaded programs are not easy as sequential programs. 
 Multithreaded programs are susceptible to a lot of errors namely concurrency bugs~\citep{carver2005modern}. 
@@ -13,21 +13,21 @@ Multithreaded programs that do not properly lock shared data structures can suff
 Chapter~\ref{bkgd} provides a technical background of this thesis which highlights the concurrency bugs and various formal methods designed to deal with these bugs.
 
 There are many tools and libraries created to detect and avoid these bugs. 
-Deterministic MultiThreading(DMT) is one such solution intended to debug these concurrency bugs~\citep{dthreads}. 
-However, DMT based solutions are suitable for concurrency testing and not a realistic solution for verification of the software application. 
-In chapter~\ref{rel_work}, we discuss more about various DMT based solutions.  
-Iterative Relaxed Scheduling(IRS) is a verification technique used for checking multithreaded programs~\citep{metzler2017quick}. 
-In section~\ref{iter_rel_sched}, we explain the working of IRS in detail. 
-This thesis is based on the IRS verification technique. 
+\acrfull{dmt} is one such solution intended to debug these concurrency bugs~\citep{dthreads}. 
+However, \acrshort{dmt} based solutions are suitable for concurrency testing and not a realistic solution for verification of the software application. 
+In chapter~\ref{rel_work}, we discuss more about various \acrshort{dmt} based solutions.  
+\acrfull{irs} is a verification technique used for checking multithreaded programs~\citep{metzler2017quick}. 
+In section~\ref{iter_rel_sched}, we explain the working of \acrshort{irs} in detail. 
+This thesis is based on the \acrshort{irs} verification technique. 
 
-The existing IRS framework has a manual verifier, LLVM instrumentor and scheduler. 
+The existing \acrshort{irs} framework has a manual verifier, LLVM instrumentor and scheduler. 
 Manual verifier outputs an execution trace once it is deemed to be safe. 
-For every iteration of IRS, verifier generates an execution trace. 
+For every iteration of \acrshort{irs}, verifier generates an execution trace. 
 The multithreaded program is instrumented with LLVM to incorporate annotations for every shared memory access. 
-IRS specific methods are added before and after every shared memory access in the multithreaded program. 
+\acrshort{irs} specific methods are added before and after every shared memory access in the multithreaded program. 
 Scheduler ensures the instrumented program executes with the scheduling constraints indicated in the execution trace provided by the verifier. 
 
-The IRS framework proposed by \citet{metzler2017quick} has the scheduler implemented entirely in the user space. 
+The \acrshort{irs} framework proposed by \citet{metzler2017quick} has the scheduler implemented entirely in the user space. 
 The user space adaptation of the scheduler focuses on two implementation variants. 
 The first user space implementation focuses on a busy waiting design and the second user space implementation uses a conditional variable setup. 
 Let us call the first implementation as IRS\_Sh and second one as IRS\_Opt for the sake of simplicity. 
@@ -42,28 +42,28 @@ In this thesis, we argue that such an implementation is expected to have high ex
 The additional overhead in IRS\_Opt is expected to occur due to the library overheads from pthread library. 
 The term `amount of communication' is relative to the number of shared-memory events encountered in the multithreaded program. 
 Both the user space solutions for the scheduler is expected to suffer from poor performance. 
-Moreover, they present additional synchronizations with their user space approach which are meant to impact the scheduling decisions of the OS scheduler. 
+Moreover, they present additional synchronizations with their user space approach which are meant to impact the scheduling decisions of the \acrshort{os} scheduler. 
 Having these additional synchronizations can present itself with some additional overhead in the overall execution time of the multithreaded program. 
 In thesis, we present a new approach by moving the scheduler logic to kernel space. 
 With such a migration, we expect to have no additional synchronizations in user space and we expect to have lower execution overhead generated by the kernel space adaptation.  
 
-We implement IRS scheduler as a loadable kernel module(LKM). 
-LKM implementations are portable and easy to develop, load and debug. 
-However, by moving the IRS scheduler to kernel space we encounter some design changes and challenges with the implementation. 
-In IRS, a thread is allowed to proceed only if the scheduling constraints allow the thread to continue its execution. 
+We implement \acrshort{irs} scheduler as a \acrfull{lkm}. 
+\acrshort{lkm} implementations are portable and easy to develop, load and debug. 
+However, by moving the \acrshort{irs} scheduler to kernel space we encounter some design changes and challenges with the implementation. 
+In \acrshort{irs}, a thread is allowed to proceed only if the scheduling constraints allow the thread to continue its execution. 
 These constraints in execution trace are based on the number of shared memory events completed by a certain thread. 
 The dependencies of shared memory between threads enforces certain memory constraints among these threads. 
-In IRS before every shared memory access, we check for memory access permission which is based on the trace file or scheduling constraints provided by the verifier. 
-In this thesis, we use two design approaches for implementing IRS scheduler in kernel space. 
+In \acrshort{irs} before every shared memory access, we check for memory access permission which is based on the trace file or scheduling constraints provided by the verifier. 
+In this thesis, we use two design approaches for implementing \acrshort{irs} scheduler in kernel space. 
 The first approach invokes the kernel space for every shared memory event encountered in the multithreaded program. 
 Whereas, in the second approach we have proxy checking for memory access permission in the user space, when encountered with a shared memory event. 
 We avoid unnecessary invocations to kernel space with every shared memory events encountered in the multithreaded program. 
 In chapter~\ref{approach_ch}, we discuss more about the designs used in this thesis. 
 
-We use various benchmarking programs such as Last Zero~\citep{abdulla2014optimal}, Indexer~\citep{dynamic_por}, Dining Philosopher's Problem~\citep{silberschatz2014operating} and Fibonacci for comparing the IRS user space solution with the kernel space solution used in this thesis. 
-The above comparison is done based on the execution overhead generated by the benchmarking program when its execution is constrained with various IRS solutions. 
-IRS is a software verification approach intended to be used for multithreading programs which use shared memory design. 
-We perform evaluations of the above benchmarks on various IRS implementations by scaling the processor core count. 
+We use various benchmarking programs such as Last Zero~\citep{abdulla2014optimal}, Indexer~\citep{dynamic_por}, Dining Philosopher's Problem~\citep{silberschatz2014operating} and Fibonacci for comparing the \acrshort{irs} user space solution with the kernel space solution used in this thesis. 
+The above comparison is done based on the execution overhead generated by the benchmarking program when its execution is constrained with various \acrshort{irs} solutions. 
+\acrshort{irs} is a software verification approach intended to be used for multithreading programs which use shared memory design. 
+We perform evaluations of the above benchmarks on various \acrshort{irs} implementations by scaling the processor core count. 
 The scaling configurations used for such an evaluation are two, four and eight. 
 The evaluation by scaling the processor cores are expected to reveal any scalability issues in the designs such as false sharing. 
 Detailed analysis and evaluation of these benchmarks are highlighted in chapter~\ref{eval_ch}.

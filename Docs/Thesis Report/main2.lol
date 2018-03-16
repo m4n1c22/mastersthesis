@@ -8,11 +8,11 @@
 \contentsline {lstlisting}{\numberline {4.4}First Approach}{19}{lstlisting.4.4}
 \contentsline {lstlisting}{\numberline {4.5}Second Approach}{19}{lstlisting.4.5}
 \contentsline {lstlisting}{\numberline {4.6}Pseudo Code for checking memory access permission}{24}{lstlisting.4.6}
-\contentsline {lstlisting}{\numberline {4.7}Pseudo Code for Prototype 1}{25}{lstlisting.4.7}
-\contentsline {lstlisting}{\numberline {4.8}Pseudo Code for Prototype 2}{26}{lstlisting.4.8}
-\contentsline {lstlisting}{\numberline {4.9}Pseudo Code for Prototype 5 and 6}{27}{lstlisting.4.9}
-\contentsline {lstlisting}{\numberline {4.10}Pseudo Code for Prototype 3}{28}{lstlisting.4.10}
-\contentsline {lstlisting}{\numberline {4.11}Pseudo Code for Prototype 4}{28}{lstlisting.4.11}
+\contentsline {lstlisting}{\numberline {4.7}Pseudo Code for Prototype 1}{26}{lstlisting.4.7}
+\contentsline {lstlisting}{\numberline {4.8}Pseudo Code for Prototype 2}{27}{lstlisting.4.8}
+\contentsline {lstlisting}{\numberline {4.9}Pseudo Code for Prototype 5 and 6}{28}{lstlisting.4.9}
+\contentsline {lstlisting}{\numberline {4.10}Pseudo Code for Prototype 3}{29}{lstlisting.4.10}
+\contentsline {lstlisting}{\numberline {4.11}Pseudo Code for Prototype 4}{29}{lstlisting.4.11}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
@@ -23,3 +23,4 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {lstlisting}{\numberline {C.1}Writing a sample Linux kernel program with semaphores}{61}{lstlisting.1.C.1}
+\addvspace {10\p@ }

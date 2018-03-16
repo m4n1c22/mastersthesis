@@ -37,7 +37,7 @@ As discussed in section~\ref{sec_app} it uses a proxy checking of memory access 
 
 \end{itemize}
 
-In short, Proto\_1, Proto\_2, Proto\_3, Proto\_4 use the first approach discussed in section~\ref{fir_app}. 
+In short, \Gls{Proto_1} , Proto\_2, Proto\_3, Proto\_4 use the first approach discussed in section~\ref{fir_app}. 
 Whereas, Proto\_5 and Proto\_6 use the second approach discussed in section~\ref{sec_app}.
 
 \section{Benchmarks}
@@ -88,7 +88,8 @@ We expect some of the prototypes to make unnecessary calls to kernel space when 
 These unnecessary calls are expected to generate more overhead on execution time. 
 For multithreaded programs which have extremely less number of memory constraints compared to the total number of shared memory events is expected to yield poor performance on the prototypes which yield unnecessary calls. 
 Thus, making this evaluation metric a crucial parameter when comparing various prototypes. 
-More explanation about such a behavior is discussed in section~\ref{sec_app}.  
+More explanation about such a behavior is discussed in section~\ref{sec_app}. 
+This evaluation metric would also help in understanding the prototypes which would have high and low synchronization overhead. 
 We describe the use of this metric more in this section~\ref{vol_kernel_calls}.  
 
 
@@ -161,6 +162,8 @@ The set\_clock ioctl command is the only call made consistently for every memory
 Table~\ref{fib_exec_over} shows us that the execution overhead is drastically reduced for the prototypes 5 and 6. 
 Reduction in the number of IOCTL calls is reason for such a difference in the execution overhead. 
 Prototypes 5-6 provide lower execution time overhead compared to other prototypes, when the condition indicated in equation~\ref{mem_cond} is satisfied. 
+The evaluation metric `number of necessary synchronization calls' is primarily targeted for IOCTL calls for synchronization purposes. 
+Since Prototypes 5-6 present lower execution time overhead and have less number of synchronization calls, we can safely indicate that they present lowest synchronization overhead among the prototypes for this design.  
 
 \section{Comparison between user space and kernel space IRS solutions}
 
