@@ -3,10 +3,15 @@ python eval_fibonacci.py
 Exec Time(micro seconds) plain:
 204.064
 -----------------------------------------------------------------------------
-Exec Time(micro seconds) IRS for each trace:
+Exec Time(micro seconds) IRS_Sh for each trace:
 [4444.964, 2694.457, 982.568]
 Overhead(%) IRS for each trace:
 [2078.221, 1220.398, 381.5]
+-----------------------------------------------------------------------------
+Exec Time(micro seconds) IRS_Opt for each trace:
+[16416.576, 11782.373, 10860.127]
+Overhead(%) IRS for each trace:
+[7944.79, 5673.862, 5221.922]
 -----------------------------------------------------------------------------
 Prototype 1 Exec Time(micro seconds) for each trace:
 [1034.264, 953.385, 920.387]

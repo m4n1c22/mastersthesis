@@ -1,6 +1,7 @@
 @Misc{commkernelanduser,
-title = {TLDP - Communication between user space and kernel space},
+title = {TLDP - Kernel Space - User Space Interfaces},
 author = {Ariane Keller},
+year={2008},
 url = {http://wiki.tldp.org/kernel_user_space_howto}
 }
 @book{silberschatz2014operating,
@@ -104,7 +105,6 @@ url = {http://wiki.tldp.org/kernel_user_space_howto}
   author={Flanagan, Cormac and Godefroid, Patrice},
   booktitle={ACM Sigplan Notices},
   volume={40},
-  number={1},
   pages={110--121},
   year={2005},
   organization={ACM}
@@ -162,7 +162,6 @@ url = {http://wiki.tldp.org/kernel_user_space_howto}
   author={Bergan, Tom and Anderson, Owen and Devietti, Joseph and Ceze, Luis and Grossman, Dan},
   booktitle={ACM SIGARCH Computer Architecture News},
   volume={38},
-  number={1},
   pages={53--64},
   year={2010},
   organization={ACM}
@@ -190,7 +189,6 @@ url = {http://wiki.tldp.org/kernel_user_space_howto}
   author={Berger, Emery D and Yang, Ting and Liu, Tongping and Novark, Gene},
   booktitle={ACM sigplan notices},
   volume={44},
-  number={10},
   pages={81--96},
   year={2009},
   organization={ACM}
@@ -210,6 +208,22 @@ url = {http://wiki.tldp.org/kernel_user_space_howto}
   pages={776--781},
   year={2017},
   organization={IEEE Press}
+}
+@inproceedings{peregrine,
+  title={Efficient deterministic multithreading through schedule relaxation},
+  author={Cui, Heming and Wu, Jingyue and Gallagher, John and Guo, Huayang and Yang, Junfeng},
+  booktitle={Proceedings of the Twenty-Third ACM Symposium on Operating Systems Principles},
+  pages={337--351},
+  year={2011},
+  organization={ACM}
+}
+@inproceedings{dbug,
+  title={dBug: systematic testing of unmodified distributed and multi-threaded systems},
+  author={{\v{S}}im{\v{s}}a, Ji{\v{r}}{\'\i} and Bryant, Randy and Gibson, Garth},
+  booktitle={International SPIN Workshop on Model Checking of Software},
+  pages={188--193},
+  year={2011},
+  organization={Springer}
 }
 @inproceedings{parsec,
   title={The PARSEC benchmark suite: Characterization and architectural implications},
@@ -236,4 +250,68 @@ url = {http://wiki.tldp.org/kernel_user_space_howto}
   pages={373--384},
   year={2014},
   publisher={ACM}
+}
+@inproceedings{gueta2007cartesian,
+  title={Cartesian partial-order reduction},
+  author={Gueta, Guy and Flanagan, Cormac and Yahav, Eran and Sagiv, Mooly},
+  booktitle={International SPIN Workshop on Model Checking of Software},
+  pages={95--112},
+  year={2007},
+  organization={Springer}
+}
+@inproceedings{flexsc,
+  title={FlexSC: Flexible system call scheduling with exception-less system calls},
+  author={Soares, Livio and Stumm, Michael},
+  booktitle={Proceedings of the 9th USENIX conference on Operating systems design and implementation},
+  pages={33--46},
+  year={2010},
+  organization={USENIX Association}
+}
+@incollection{dijkstra1968cooperating,
+  title={Cooperating sequential processes},
+  author={Dijkstra, Edsger W},
+  booktitle={The origin of concurrent programming},
+  pages={65--138},
+  year={1968},
+  publisher={Springer}
+}
+@incollection{dijkstra1968structure,
+  title={The structure of the multiprogramming system},
+  author={Dijkstra, Edsger W},
+  booktitle={The origin of concurrent programming},
+  pages={139--152},
+  year={1968},
+  publisher={Springer}
+}
+@article{torrellas1994false,
+  title={False sharing and spatial locality in multiprocessor caches},
+  author={Torrellas, Josep and Lam, HS and Hennessy, John L.},
+  journal={IEEE Transactions on Computers},
+  volume={43},
+  number={6},
+  pages={651--663},
+  year={1994},
+  publisher={IEEE}
+}
+@article{netzer1992race,
+  title={What are race conditions?: Some issues and formalizations},
+  author={Netzer, Robert HB and Miller, Barton P},
+  journal={ACM Letters on Programming Languages and Systems (LOPLAS)},
+  volume={1},
+  number={1},
+  pages={74--88},
+  year={1992},
+  publisher={ACM}
+}
+@Misc{schedheader,
+title = {Scheduler API headerfile in Linux Kernel},
+author = {Linux Torvalds},
+year={1991},
+url = {https://github.com/torvalds/linux/blob/master/include/linux/sched.h}
+}
+@Misc{semaphoreheader,
+title = {Semaphore headerfile in Linux Kernel},
+author = {Linux Torvalds},
+year={1991},
+url = {https://github.com/torvalds/linux/blob/master/include/linux/semaphore.h}
 }

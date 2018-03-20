@@ -1,19 +1,15 @@
-%This chapter addresses various design variants and challenges embedded with the proposed solution of moving a fine-grained scheduler to kernel space. 
-
 In this chapter, we address the approach used for realizing IRS in kernel space. 
 In the first section, we discuss a theoretical design. 
-In the later sections, we address the potential challenges related to its implementation and the perceived prototypes.
+In the later sections, we address the potential challenges related to its implementation and the implementation of the prototypes.
 
-\section{Theoretical Design}
+\section{Theoretical Design \label{theor_des}}
 
-The key component of this thesis is the scheduler. 
-Scheduler handles the scheduling of various user level threads based on their memory access permissions. 
-Memory access permissions are perceived by traces. 
-The traces are realized simple graphs with nodes. 
-Each node denotes a shared memory event for a thread which can be a read or a write event. 
+Figure~\ref{design_overview} depicts the design overview of the IRS. 
+Verifier and scheduler are the main components of IRS. 
+Verifier is not an automated software.
+However, there are some changes in the representation of some components such as the trace/scheduling constraints which are discussed in section \ref{vec_clk}.
 
 \tikzstyle{custblock} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=white!30]
-
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}[node distance=2cm]
@@ -43,24 +39,24 @@ Each node denotes a shared memory event for a thread which can be a read or a wr
 \label{design_overview}
 \end{figure}
 
-The above figure depicts the design overview of the IRS. 
-This thesis is based on the same design.  
-Verifier is one of the main components of IRS. 
-Verifier is not an automated software.
-However, there are some changes in the representation of some components such as the trace/scheduling constraints which are discussed in the next section. 
+The key component of this thesis is the scheduler. 
+Scheduler handles the scheduling of various user level threads based on their memory access permissions. 
+Memory access permissions are perceived by trace files. 
+Trace files represent the execution order of shared memory events for the threads in a multithreaded program.  
+The trace in a trace file is realized as simple graph with nodes. 
+Each node denotes a shared memory event for a thread which can be a read or a write event. 
 \\
 \noindent\begin{minipage}{.45\textwidth}
-\begin{lstlisting}[mathescape=true,style=customc,caption=Uninstrumented User Program,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,style=customc,caption={Uninstrumented User Program},frame=tlrb,label={lst:uninstr_usr_pgm}]
 Shared Variable: x;
 Thread j($j \in 1..N$): 
 ......
 x=0;	//shared memory access
 ....
 \end{lstlisting}
-\label{uninstr_usr_pgm}
 \end{minipage}\hfill
 \begin{minipage}{.45\textwidth}
-\begin{lstlisting}[mathescape=true,style=customc,caption=Instrumented User Program,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,style=customc,caption={Instrumented User Program},frame=tlrb,label={lst:instr_usr_pgm}]
 Shared Variable: x;
 Thread j($j \in 1..N$): 
 ......
@@ -69,13 +65,34 @@ x=0;	//shared memory access
 AfterMA();
 ....
 \end{lstlisting}
-\label{instr_usr_pgm}
 \end{minipage}
 
 LLVM is another component part of the IRS framework. 
-It primarily annotates the user program for shared memory events as shown in listing 4.1 and 4.2. 
+It primarily annotates the user program for shared memory events as shown in listing~\ref{lst:uninstr_usr_pgm} and \ref{lst:instr_usr_pgm}. 
 
-\subsection{Vector Clock}
+%\subsection{Motivation \label{mot}}
+%
+%The scheduler implemented in the existing IRS framework addresses a user space implementation. 
+%The user space adaptation of the scheduler focuses on two implementation variants. 
+%The first user space implementation focuses on a busy waiting design and the second user space implementation uses a conditional variable setup. 
+%Let us call the first implementation as IRS\_Sh and second one as IRS\_Opt for the sake of simplicity. 
+%IRS\_Sh uses the pool of user threads created during the multithreaded program to block and signal other threads. 
+%It uses the busy waiting design to block a certain thread and use other threads in the pool to signal from the wait. 
+%IRS\_Opt uses an additional scheduler thread which takes care of requests for blocking or unblocking certain thread. 
+%It uses condition variables to address the blocking or unblocking functionality of a given thread. 
+%IRS\_Sh provides poor performance when the number of threads are more than the number of cores. 
+%Busy waiting design performs poorly when the number of cores is less than the number of threads. 
+%Whereas in case of IRS\_Opt, it uses conditional variables which is a synchronization abstraction provided by the pthread library. 
+%In this thesis, we argue that such an implementation is expected to have high execution overhead when the amount of communication using the conditional variables increases. 
+%The additional overhead in IRS\_Opt is expected to occur due to the library overheads from pthread library. 
+%The term `amount of communication' is relative to the number of shared-memory events encountered in the multithreaded program. 
+%
+%Since both the user space solutions for the scheduler is expected to suffer from poor performance, we present a new approach of moving the scheduler logic to kernel space. 
+%We expect to provide low execution overhead compared to the user space solutions. 
+%In the rest of this chapter, we realize various ways to move the scheduler module to kernel space. 
+%We expect to achieve good performance with the solutions presented in the rest of this chapter.
+
+\subsection{Vector Clock \label{vec_clk}}
 
 Vector clock is an algorithmic design motivated from Lamport logical clocks~\citep{fidge1991logical}. 
 It is used to detect causality violations and generating a partial ordering of events in a distributed system. 
@@ -88,10 +105,10 @@ The following definition holds:
 \item $x \to y$ indicates event $x$ happened before event $y$. It is defined as : if $x \to y$, then $VC(x) < VC(y)$
 \end{itemize}
 
-The design uses vector clock implementation for determining the number of memory events encountered by a given thread and use this information to block or unblock a given thread. 
+The approaches discussed in this thesis uses a vector clock implementation for determining the number of memory events completed by a given thread, which is used to block or unblock a given thread. 
 The trace file generated as graph representations are manually converted into strings of vector clock representations for using in this thesis. 
-The vector clock representation only include the threads which are constrainted. 
-More details about the vector clock representation can be found in the appendix C.
+The vector clock representation only include the threads which are constrained. 
+More details about the vector clock representation and traces can be found in the appendix~\ref{appendixc}.
 
 
 \subsection{Design classes}
@@ -100,35 +117,36 @@ We have two different classes of approach used for this thesis.
 The two approaches can be classified as: design with proxy and design without proxy checking. 
 Proxy checking referred above is the checking for memory  access permission for the thread based on the constraints set in the trace. 
 
-\begin{lstlisting}[mathescape=true,style=customc,caption=Yield functionality and thread revival,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,style=customc,caption={Yield functionality and thread revival},frame=tlrb,label={lst:yield_func}]
+Kernel Space:
 yield(threadid j) {
 	if(memory_access_permission(j)==restricted) {
 		block_thread(j);
 	}
 }
 reviveotherthreads() {
-	for Thread j($j \in 1..N$) except j is not the current thread:
+	for thread j($j \in 1..N$) except j is not the current thread:
 		if(memory_access_permission(j)==allowed) {
 			unblock_thread(j);
 		}	
 	}
 }
 \end{lstlisting}
-\label{yield_func}
 From figure~\ref{design_overview}, it is evident that we require scheduling constraints/traces and the instrumented program for executing with the scheduler. 
 The IRS implementation which this thesis is based upon, uses an LLVM implementation for instrumenting the user program. 
-When instrumenting the user program, LLVM inserts function calls to two methods namely $BeforeMA()$ and $AfterMA()$ which are inserted in places before and after every shared memory access in the program as shown in Listing~4.1 \& 4.2. 
+When instrumenting the user program, LLVM inserts function calls to two methods namely $BeforeMA()$ and $AfterMA()$ which are inserted in places before and after every shared memory access in the program as shown in Listing~\ref{lst:uninstr_usr_pgm} and \ref{lst:instr_usr_pgm}. 
 The instrumented program is later, run with the scheduling constraints on the scheduler. 
 The decision to block the thread is handled by the thread itself by invoking the yield functionality. 
 A thread would block itself when it has no permission to access the shared memory. 
 The decision making of the thread and the yield functionality are the only concepts discussed with the prototypes in this thesis. 
 
-In this thesis, we propagate the decision making logic and yield functionality to kernel space as shown in Listing 4.3. 
+In this thesis, we propagate the decision making logic and yield functionality to kernel space as shown in Listing~\ref{lst:yield_func}. 
 However, in case of the second approach used in this thesis we have an additional proxy checking for memory permissions in user space. 
-We expect these propogations to yield a good performance compared to the user space solutions. 
+We expect these propagations to yield a good performance compared to the user space solutions. 
 
 \noindent\begin{minipage}{.45\textwidth}
-\begin{lstlisting}[mathescape=true,style=customc,caption=First Approach,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,style=customc,caption={First Approach},frame=tlrb,label={lst:first_approach}]
+User Space:
 Thread j($j \in 1..N$): 
 //on activating a BeforeMA call
 BeforeMA() {
@@ -138,10 +156,10 @@ AfterMA() {
 	reviveotherthreads();
 }
 \end{lstlisting}
-\label{first_approach}
 \end{minipage}\hfill
 \begin{minipage}{.45\textwidth}
-\begin{lstlisting}[mathescape=true,style=customc,caption=Second Approach,frame=tlrb]{Name}
+\begin{lstlisting}[mathescape=true,style=customc,caption={Second Approach},frame=tlrb,label={lst:second_approach}]
+User Space:
 Thread j($j \in 1..N$): 
 //on activating a BeforeMA call
 BeforeMA() {
@@ -153,33 +171,39 @@ AfterMA() {
 	reviveotherthreads();
 }
 \end{lstlisting}
-\label{second_approach}
 \end{minipage}
 
 
-\subsubsection{First Approach}
+\subsubsection{First Approach \label{fir_app}}
 
 This approach has no proxy checking in the user space. 
-When there is an occurence of a shared memory event, this approach communicates to kernel space from the $BeforeMA()$ and $AfterMA()$ callback functions. 
+When there is an occurrence of a shared memory event, this approach communicates to kernel space from the $BeforeMA()$ and $AfterMA()$ callback functions. 
 These functions aid the logic of implementing yield functionality in the thread and also in reviving other threads. 
-The pseudo implementation of this approach is depicted in listing 4.4.
+The pseudo code of this approach is depicted in listing~\ref{lst:first_approach}. 
+Such an approach is suitable when the number of memory constraints are close to the total number of shared memory events in a multithreaded program. 
 There are four design prototypes using this approach. 
-Details related to these prototypes are discussed further in this section.
+Details related to these prototypes are discussed further in section \ref{nocheck}.
 
-\subsubsection{Second Approach}
+\subsubsection{Second Approach \label{sec_app}}
 
 This approach has a proxy checking in the user space. 
-When there is an occurrence of a shared memory event, this approach initially checks for memory access permission and based on the outcome of the check, it communicates to the kernel space. 
+When there is an occurrence of a shared memory event, this approach initially checks for memory access permission in user space and based on the outcome of the check, it communicates to the kernel space. 
 $BeforeMA()$ and $AfterMA()$ functions are used in the same way as in first approach. 
 However, with the only difference of having a proxy check for memory access permission inside the $BeforeMA()$. 
-The pseudo implementation of this approach is depicted in listing 4.5.
-There are two design prototypes using this approach. More details about these prototypes are discussed further in this section.
-With the proxy checking in place, this design is expected to provide good performance when the following condition occurs: $num\_memory\_constraints << total\_memory\_events$. 
-This approach reduces the number of unnecessary yield calls made to kernel space which reduces drastic overhead generated by communication and waiting in kernel space.
+The pseudo code of this approach is depicted in listing~\ref{lst:second_approach}.
+There are two design prototypes using this approach. More details about these prototypes are discussed further in section \ref{proxycheck}.
+With the proxy checking in place, this design is expected to provide good performance when the following condition occurs: 
 
+\begin{equation}
+num\_memory\_constraints << total\_memory\_events
+\label{mem_cond}
+\end{equation}
 
+$num\_memory\_constraints$ represents the number of memory constraints provided in the trace file for the multithreaded program and $total\_memory\_events$ indicates the total number of shared memory events present in the same multithreaded program.
+This approach reduces the number of unnecessary yield calls made to kernel space, which reduces drastic overhead generated by communication and waiting in kernel space. 
+When the above condition fails, this approach would behave like the first approach, but would have higher overhead because of the proxy checking in user space. 
+Under such scenarios, the prototypes under the first approach is expected to provide a good performance. 
 
-\section{Design Challenges}
 
 \section*{Note}
 In the progression of this document, we would be using certain acronyms to indicate certain meanings. 
@@ -190,6 +214,10 @@ Some of them are:
 \item \textbf{TaskID} - All threads are internally realized as tasks in kernel space and are allocated with an identifier which is task ID.
 \item \textbf{API} -Application Programming Interface.
 \end{itemize}
+
+\section{Design Challenges}
+
+In this section, we address some of the challenges we might face when moving the scheduling decisions of IRS to kernel space.
 
 \subsection{Mapping UTID to Task Object}
 
@@ -212,7 +240,7 @@ The synchronization is also required between the scheduler module and registrati
 The mapping of UTID - task object is realized, when the registration of a UTID to the scheduler is done. 
 In the registration, the user thread is required to pass the UTID. 
 The task object is obtained by invoking $get\_current\_task()$ function during registration call. 
-The data structure is created to store the mapping of UTID to task object. 
+A data structure is created to store the mapping of UTID to task object. 
 An item in the data structure is created whenever a registration of UTID takes place. 
 An item is otherwise accessed during the invocation of $context\_switch()$ function. 
 In a user space environment, there are solutions such as dictionary mapper or even hash table designs. 
@@ -227,8 +255,8 @@ Some of them are:
 
 \begin{itemize}
 \item ProcFS - Virtual file system for handling process and thread information base. Useful for small and short communications. 
-\item Netlink - Special IPC scheme between kernel space and user space which uses sockets. 
-\item System call - Functional implementation mainly meant to communicate some data or perform a specific service in kernel space. 
+\item Netlink - Special IPC scheme between kernel space and user space which uses sockets. However, extremely expensive when opening and closing of sockets.
+\item System call - Functional implementation mainly meant to communicate some data or perform a specific service in kernel space. It requires a static implementation in the kernel source tree. Extremely hard to develop and debug the implementation.
 \item CharacterDevice - Special buffering interface provided for communicating with character device driver setups.
 \item Mmap - Fastest way of copying data between kernel space and user space without explicit copying. Useful for large transactions of data.
 \item Signals - Unidirectional communication. Communicated from kernel space to user space. 
@@ -245,21 +273,21 @@ IOCTL provides the possibility for a plug and play design.
 \subsection{Mapping the trace object to kernel space}
 
 The proposed design uses vector clocks as an outline for trace implementation. 
-The traces generated as graphs are mapped to kernel space a struct object. 
+The traces generated as graphs are mapped to kernel space as a struct object. 
 Graphs are realized as graphviz files. 
-Parsing of graph is required in order to be mapped to the kernel space. 
+Parsing of graph is required before they are mapped to the kernel space. 
 The parsed graph is passed to the kernel space as a long string via a custom proc file. 
 Currently, there is no automated method existent in this thesis to generate a graph string from a graphviz file. 
 We generate the trace string manually and pass it as an input to the custom proc file when the user program starts.
 
 \subsection{Trace verification inside user program vs kernel space scheduler}
 
-On occurrence of a shared memory event, the respective callbacks (BeforeMA() \& AfterMA() - Before memory access and After memory access) from the user program would trigger a system call to the kernel module. 
+On occurrence of a shared memory event, the respective callbacks (BeforeMA() \& AfterMA() - Before memory access and After memory access) from the user program would trigger an IOCTL call to the kernel module. 
 Such a design would facilitate towards a non-preemptive scheduler. 
 By overcoming the additional synchronization overhead existent in the user space design, we encounter the problem of invoking IOCTL calls  for accessing the kernel module. 
 In a monolithic kernel architecture, most of the IOCTL calls are blocking synchronous calls to the kernel space. 
 Having too many IOCTL calls would increase the scheduler overhead on the program execution. 
-One solution is to make IOCTL calls when there is an actual need of a  context switch. 
+One solution is to make IOCTL calls when there is an actual need of a  context switch~\citep{flexsc}. 
 The user space threads would assess the trace based on which the IOCTL calls for the kernel space scheduler would be made. 
 We discuss about such a solution in two prototypes used in the implementation section.
 
@@ -286,11 +314,12 @@ The same vector design needs to be used inside the kernel space as well, for its
 
 %----Implementation section------%
 
-\section{Synchronization Designs}
+\section{Synchronization Designs \label{sync_des}}
 
-We classify the designs in two classes for our convenience. 
+As discussed in the previous sections, we classify the designs into two classes. 
 The classification is based on the checking for memory permission in user space. 
 The first class has no checking for memory permission in the user space and the second has a proxy checking in user space for memory permission. 
+Tables~\ref{protos_without_proxy} and \ref{protos_with_proxy} depict this classification.
 
 \begin{table}[h]
 \begin{center}
@@ -322,34 +351,31 @@ Scheduler APIs &  & Prototype 6\\
 \label{protos_with_proxy}
 \end{table}
 
+The yield functionality depicted in all the prototypes either use a semaphore based solution or scheduler APIs. To get a better understanding about semaphores and scheduler APIs please refer to appendix C.
 
-\subsection{Design with no checking in user space}
+The implementation of all prototypes comprise of three loadable kernel modules: thread registration, trace control and scheduler. 
+The scheduler module is the only module implemented differently for all the prototypes.
 
-In the following designs, we address the use of check permission of memory access method entirely in Kernel space.
+\subsection{Trace Registration}
 
-\subsubsection{Design with no additional scheduler thread} \label{no_check_no_add}
-
-The design described in this section addresses the use of no additional scheduler thread. 
-
-
-\subsubsection*{Trace Registration}
-
-\begin{tikzpicture}[scale=0.7,transform shape]
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.9,transform shape]
  
   % Draw diagram elements
   % trace registration area
-  \path \spacelayer {TRACEFILE}{Trace File}{Input to the scheduler};  
-  \path (TRACEFILE.south)+(0.0,-2.0)\spacelayer {TRACEOBJ}{Trace Object}{Trace object is created and communicated to kernel space};  
-  \path (TRACEOBJ.east)+(5.0,0.0) \spacelayer {TRACEPROCFS}{Trace Reg File}{Proc FS custom file for passing the trace object to kernel space};
-  \path (TRACEPROCFS.east)+(4.5,0.0) \spacelayer {TRACESYSCALL}{SYSCALL\\ TRACE}{write() system call};  
-  \path (TRACESYSCALL.south)+(0.0,-3.0) \spacelayer {TRACECALLBACK}{Trace Write Callback}{Callback function triggered inside LKM during write of trace object};
+  \path \spacelayer {TRACEFILE}{Trace File}{};  
+  \path (TRACEFILE.south)+(0.0,-2.0)\spacelayer {TRACEOBJ}{Trace Object}{};  
+  \path (TRACEOBJ.east)+(5.0,0.0) \spacelayer {TRACEPROCFS}{Trace Reg File}{};
+  \path (TRACEPROCFS.east)+(4.5,0.0) \spacelayer {TRACESYSCALL}{Syscall\\ trace}{};  
+  \path (TRACESYSCALL.south)+(0.0,-3.0) \spacelayer {TRACECALLBACK}{Trace Write Callback}{};
   
   % Draw arrows between elements
 
   %thread registration block
   \path [line] (TRACEFILE.south) -- node [left] {$trace$}
 									 node [right] {$file$} (TRACEOBJ);
-  \path [line] (TRACEOBJ.east) -- node [above] {$trace_reg()$} (TRACEPROCFS);
+  \path [line] (TRACEOBJ.east) -- node [above] {$trace\_reg()$} (TRACEPROCFS);
 
   \path [line] (TRACEPROCFS.east) -- node [above] {$write()$} (TRACESYSCALL);
   
@@ -361,21 +387,27 @@ The design described in this section addresses the use of no additional schedule
   \background{TRACESYSCALL}{TRACESYSCALL}{TRACECALLBACK}{TRACECALLBACK}{Kernel Space}
 
 \end{tikzpicture}
-
+\caption{Trace Registration}
+\label{trace_reg}
+\end{figure}
 The trace file is passed on as an input for the scheduler. 
-In the above flow diagram, the trace file is read by the main user thread at the start of its execution. 
+In figure~\ref{trace_reg}, the trace file is read by the main user thread at the start of its execution. 
 It parses the file, creates and passes the trace object to the kernel space as string via a custom file created in the proc file system. 
+Trace registration is implemented within the trace control module. 
+The trace control module deals with the manipulation of trace object in the kernel space. 
+Trace control module is imported into the scheduler module for obtaining the trace control functionality and also to access the trace itself. 
+\subsection{Thread Registration}
 
-\subsubsection*{Thread Registration}
-
-\begin{tikzpicture}[scale=0.7,transform shape] 
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.9,transform shape] 
   
   % thread registration block area
-  \path \spacelayer {THREADINIT}{Thread\\ Created}{thread\_init()};  
-  \path (THREADINIT.south)+(0.0,-2.0)\spacelayer {USERTHREADREG}{Thread\\ Registration}{reg\_thread()};  
-  \path (USERTHREADREG.east)+(5.0,0.0) \spacelayer {REGPROCFS}{Registration File}{Proc FS custom file for communication};
-  \path (REGPROCFS.east)+(4.5,0.0) \spacelayer {REGSYSCALL}{SYSCALL\\ THREAD\\ REGISTRATION}{write() system call};
-  \path (REGSYSCALL.south)+(0.0,-2.0) \spacelayer {REGCALLBACK}{Write Callback}{Callback function triggered inside LKM during write of thread ID};
+  \path \spacelayer {THREADINIT}{Thread\\ Created}{};  
+  \path (THREADINIT.south)+(0.0,-2.0)\spacelayer {USERTHREADREG}{Thread\\ Registration}{};  
+  \path (USERTHREADREG.east)+(5.0,0.0) \spacelayer {REGPROCFS}{Registration File}{};
+  \path (REGPROCFS.east)+(4.5,0.0) \spacelayer {REGSYSCALL}{Syscall\\ Thread\\ Registration}{};
+  \path (REGSYSCALL.south)+(0.0,-2.0) \spacelayer {REGCALLBACK}{Write Callback}{};
 
   \background{THREADINIT}{THREADINIT}{USERTHREADREG}{USERTHREADREG}{User Space}
   \background{REGSYSCALL}{REGSYSCALL}{REGCALLBACK}{REGCALLBACK}{Kernel Space}
@@ -384,7 +416,7 @@ It parses the file, creates and passes the trace object to the kernel space as s
    %thread registration block
   \path [line] (THREADINIT.south) -- node [left] {$register$}
 									 node [right] {$thread$} (USERTHREADREG);
-  \path [line] (USERTHREADREG.east) -- node [above] {$reg_thread()$} (REGPROCFS);
+  \path [line] (USERTHREADREG.east) -- node [above] {$reg\_thread()$} (REGPROCFS);
 
   \path [line] (REGPROCFS.east) -- node [above] {$write()$} (REGSYSCALL);
   
@@ -392,503 +424,274 @@ It parses the file, creates and passes the trace object to the kernel space as s
                                  node [right]{$triggered$} (REGCALLBACK);
 
 \end{tikzpicture}
-
-In the above picture, the registration block happens when a user thread is created. 
+\caption{Thread Registration}
+\label{thread_reg}
+\end{figure}
+In figure~\ref{thread_reg}, the registration block happens when a user thread is created. 
 The registration happens via a custom proc file system. 
-
-
-
-
-\subsubsection*{Memory Assessment}
-
-Prior to any global memory access, the given design would invoke \emph{IOCTL} command with \emph{CTXT\_SWITCH} and thread id of the thread which addressed the memory event as its parameters. 
-
-
-\begin{tikzpicture}[scale=0.7,transform shape]
- 
- 
-  % memory assessment area
-  
-  \path \spacelayer {BEFOREMA}{Before M.A}{A callback is triggered before memory access is made to the global memory};
-  \path (BEFOREMA.south)+(0.0,-2.0) \spacelayer {REQCTXTSWITCH}{Request \\ Context Switch}{ioctl(CTXT\_SWITCH, tid)};
-  
-  \path (REQCTXTSWITCH.south)+(0.0,-2.0) \spacelayer {MEMACCESS}{Memory\\ Access}{The Actual global Memory Access by the thread};
-
-  \path (MEMACCESS.south)+(0.0,-2.0) \spacelayer {AFTERMA}{After M.A}{A callback is triggered after memory access is made to the global memory};
-  \path (AFTERMA.south)+(0.0,-3.0) \spacelayer {USRSIGOTHERS}{Request \\ Signal Other Threads}{ioctl(SIG\_OTHERS, tid)};  
-  
-  
-  \path (REQCTXTSWITCH.east)+(8.0,2.0) \spacelayer {CONTEXTSWITCH}{Context Switch call}{If memory access is restricted, signal\_other\_threads() and call down(thread\_sem[tid]) }; 
-  \path (CONTEXTSWITCH.east)+(3.0,-5.0) \spacelayer {CHECKTRACE}{Check trace}{Checks if the execution in the input trace is valid or not.}; 
-  \path (CONTEXTSWITCH.west)+(-2.0,-6.0) \spacelayer {THREADSEM}{THREAD\\ Semaphore}{Array of semaphores used by corresponding thread. Up and Down calls are made.}; 
- \path (CONTEXTSWITCH.south)+(0.0,-10.0) \spacelayer {SIGNALOTHERS}{Signal other\\ Threads}{Signals all the permitted threads to be resumed by calling up() on their respective semaphores. For verifying the permission internal call is made to checktrace}; 
- 
-  
-  
-
-  % Draw arrows between elements
-
- 
- 
-  
-
-  %memory assessment block
-  \path [line] (BEFOREMA.south) -- node [left] {$req$} (REQCTXTSWITCH);
-  \path [line] (AFTERMA.south) -- node [left] {$req$} (USRSIGOTHERS);
-
-  \path [line] (REQCTXTSWITCH.east) -- node [midway,above,sloped] {$ioctl()$} (CONTEXTSWITCH);
-  
-  \path [line] (CONTEXTSWITCH.south) -- node [left] {} (CHECKTRACE);
-  \path [line] (CONTEXTSWITCH.south) -- node [midway,above,sloped] {down(sem[tid])} (THREADSEM);
-  \path [line] (CONTEXTSWITCH.south) -- node [left] {} (SIGNALOTHERS);
-  \path [line] (CHECKTRACE.north) -- node [midway,above,sloped] {allowed\ or\ restricted} (CONTEXTSWITCH);  
-   
-  \path [line] (SIGNALOTHERS.north) -- node [left] {} (CHECKTRACE);   
-  \path [line] (CHECKTRACE.south) -- node [midway,above,sloped] {allowed\ or\ restricted} (SIGNALOTHERS);
-  \path [line] (SIGNALOTHERS.north) -- node [midway,above,sloped] {up(sem[tid])} (THREADSEM);
-   
-   \path [line] (USRSIGOTHERS.east) -- node [midway,above,sloped] {$ioctl()$} (SIGNALOTHERS);
-  %\path [linepart] (CONTEXTSWITCH.west) -- node [above] {$thread$}
-                                 %node [right]{$resume$} (THREADRESUME);
-
-  %background generation block
- 
-  \background{BEFOREMA}{BEFOREMA}{USRSIGOTHERS}{USRSIGOTHERS}{User Space}
-  \background{THREADSEM}{CONTEXTSWITCH}{CHECKTRACE}{SIGNALOTHERS}{Kernel Space}
-  
-
-\end{tikzpicture}
-
-
-\newpage
-\subsubsection*{Pseudo Implementation}
-\begin{lstlisting}[title=Data Types Section used by user space and kernel space, style=customc]
-enum IOCTL CMDS  { 
-	GET_CURR_CLK = 1, 
-  	CTXT_SWITCH = 2, 
-  	SIGNAL_OTHER_THREADS = 3,
-  	RESET_CLK = 4,
-  	SET_MY_CLK = 5
-}
-\end{lstlisting}
-
-\begin{lstlisting}[title=Check Permission for memory access, style=customc]
-mem_access check_mem_acc_perm(vec_clk* curr_vec_clk, vec_clk* trace_inst, thread_id_t tid) {
-
-   int i;
-   if(trace_inst->clocks[tid-1] == curr_vec_clk->clocks[tid-1]) 
-   {
-     for i in range(0, THREAD_COUNT) 
-     {
-	if(i!=(tid-1)) 
-	{
-	 if(trace_inst->clocks[i] <= curr_vec_clk->clocks[i]) 
-	 {
-	 	continue;
-	 }
-	 else 
-	 {
-	 	return e_ma_restricted;
-	 }
+For convenience a $thread\_reg()$ method is invoked in the user space, which internally registers the thread to the kernel space. 
+The thread registration implementation is done entirely in thread registration kernel module. 
+This registration is used to allocate memory space for bookkeeping the thread entry in scheduler. 
+%\newpage
+\begin{lstlisting}[mathescape=true,style=customc,caption={Pseudo Code for checking memory access permission},frame=tlrb,label={lst:check_perm}]
+mem_access = {allowed, restricted};
+check_mem_acc_perm(curr_vec_clk, traceobj, thread_id tid) {
+	if(clock[tid] is same in traceobj and curr_vec_clk) {
+		$\forall$thread_id i in {{1...N}-{tid}}:
+		if clock[i] in traceobj is greater to the one in curr_vec_clk) {
+			return restricted;		
+		}	
 	}
-     }
-   }
-   else if(trace_inst->clocks[tid-1] < curr_vec_clk->clocks[tid-1]) 
-   {
-   	return e_ma_restricted;
-   }
-   return e_ma_allowed;
+	else if(clock[tid] in traceobj is lower than one curr_vec_clk) {
+		return restricted;	
+	}
+	return allowed;
 }
-
 \end{lstlisting}
 
 
-\begin{lstlisting}[title=User Space Implementation, style=customc]
+\subsection{IOCTL Manager}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.7, node distance=2cm]
+%Custom blocks
+\node (ioctlmgr) [custblock] {IOCTL Manager};
+\node (ctxtswitch) [custblock,right of=ioctlmgr,xshift =10cm,yshift =3cm] {Context Switch};
+\node (signalothers) [custblock,right of=ioctlmgr,xshift =10cm,yshift =1.5cm] {Signal Other Threads};
+\node (setclk) [custblock,right of=ioctlmgr,xshift =10cm] {Set Current Vector Clock};
+\node (getclk) [custblock,right of=ioctlmgr,xshift =10cm,yshift =-1.5cm] {Get Current Vector Clock};
+\node (resetclk) [custblock,right of=ioctlmgr,xshift =10cm,yshift =-3cm] {Reset Current Vector Clock};
+
+
+%Arrows
+\draw [->,thick] (ioctlmgr.east) -- (ctxtswitch);
+\draw [->,thick] (ioctlmgr.east) -- (signalothers);
+\draw [->,thick] (ioctlmgr.east) -- (setclk);
+\draw [->,thick] (ioctlmgr.east) -- (getclk);
+\draw [->,thick] (ioctlmgr.east) -- (resetclk);
+\end{tikzpicture}
+\caption{IOCTL Manager}
+\label{ioctl_mgr}
+\end{figure}
+IOCTL Manager is an abstraction layer in the kernel space used to contain any commands triggered from the user space. 
+The manager acts as an interface for the commands requested by user space for kernel level services. 
+It provides five different commands of operation as shown in figure~\ref{ioctl_mgr}. 
+Among the five operations, three operations deal with the vector clock manipulation. 
+The commands $context\_switch$ and $signal\_other\_threads$ are generally very expensive commands when invoked. 
+You can observe their implementation in later sections of this chapter. 
+$context\_switch$ command is used by all prototypes when there is a need to yield to the scheduler. 
+$signal\_other\_threads$ command is used by  prototypes 1 and 3, the threads signal among themselves. 
+In case of prototypes other than 1 and 3, $set\_clk$ command is used more frequent for updating a given thread's memory event. 
+Updating the vector clock is a short operation when compared to signaling other threads. 
+The prototypes 1 and 3 are expected showcase poor performance when encountered with the condition: $num\_memory\_constraints << total\_memory\_events$. 
+These prototypes invoke $signal\_other\_threads$ command for every shared memory event thus, having a poor performance. 
+Reset vector clock is invoked at the completion of the user program for resetting the clock and using it for the next execution. 
+Get current vector clock is used to obtain the entire vector clock during the time of invocation. 
+This command is primarily used for debugging purposes. 
+
+
+\subsection{Design with no checking in user space \label{nocheck}}
+
+In the following designs, we address the use of check for memory access  permission method entirely in kernel space. 
+The pseudo code for the checking for memory access permission is depicted in listing~\ref{lst:check_perm}. 
+All the prototypes in this thesis would be using the implementation shown in listing~\ref{lst:check_perm} for checking the memory access permission.
+
+\subsubsection{Design with no additional scheduler thread} \label{no_check_no_add}
+
+The design described in this section addresses the use of no additional scheduler thread. 
+Prior to any global memory access, the given design would invoke IOCTL command with $context\_switch$ and thread id of the thread which addressed the memory event as its parameters. 
+Prototypes 1 and 3 primarily works with a similar implementation. 
+These prototypes defer in place of blocking and unblocking of the threads. 
+Listing~\ref{lst:proto1} depicts the pseudo code of prototype 1.
+\newpage
+\begin{lstlisting}[mathescape=true,caption={Pseudo Code for Prototype 1}, style=customc,frame=tlrb,label={lst:proto1}]
+User Space:
+Thread j($j \in 1..N$):
 BeforeMA() {	
-	ioctl(CTXT_SWITCH, thread_id);	
+	ioctl(CONTEXT_SWITCH, thread_id);	
 }
 
 AfterMA() {	
 	ioctl(SIGNAL_OTHER_THREADS, thread_id);
 }
 
-reset_clock() {
-	ioctl(RESET_CLK);
-}
-
-//This method is defined by the thread library which is used by the user
-thread_create_impl(thread t) {
-	t ->thread_init(tid);
-	t ->thread_exec(thread_function);
-}
-
-thread_function() {
-	reg_thread();	//This method increments a threadcount variable in kernel space.
-	....	
-	Before_MA(); 	//function triggered before accessing the global memory
-	Mem_Access();   //global memory access permitted for the thread
-	AfterMA();		//function triggered after accessing the global memory		
-	....
-	thread_exit()
-}
-
-trace_reg() {	
-	fd = open("/proc/trace_reg",O_RDWR);
-	close(fd);	
-}
-
-main() {	
-	trace_reg()
-	thread t = thread_create(tid, thread_function); 
-	//thread_create_impl() is called internally
-	.....
-	t.join();	
-	return EXIT_SUCCESS;
-}
-
-
-\end{lstlisting}
-
-\newpage
-\begin{lstlisting}[title=Kernel Space - IOCTL, style=customc]
-/* This method is triggered whenever ioctl commands are issued from the user space */
-ioctl_access(IOCTL_CMDS cmd) {	
-	switch(cmd) {
-		case CTXT_SWITCH: 
-			req_ctxt_switch(thread_id);//requests for context switch
-			break;
-		case SIGNAL_OTHER-THREADS:
-			Increment_curr_clk(thread_id); //this will increment the current clk for the given thread id.
-			signal_all_other_threads(thread_id);
-			break;
-		case GET_CURR_CLK:
-			get_curr_clk();//returns the current vector clock.
-			break;
-		case RESET_CLK:
-			reset_clk(); //reset the current vector clock to zero.
-			break:		
-		case SET_CURR_CLK:
-			set_curr_clk(clk);//sets the current vector clock with the clk received.
-	}
-}
-
-//Methods of interest with respect to the ioctl cmds
-mem_access check_mem_access_with_trace(thread_id_t tid) {
-	...
-	//method internally calls check_mem_acc_perm() with current clock time and uses the first valid instance vector clock registered for a given thread in the trace array.
-		
-	//returns e_ma_allowed|e_ma_restricted based on the check_mem_acc_perm()
-}
-
-ctxt_switch_thread(thread_id_t tid) {	
-	down(threads_sem[tid-1]); //perform semaphore down operation respective semaphore.
-	/**if the value is already 0 when performing the down, the thread waits until the value is positive.*/
-}
-
-signal_all_other_threads(thread_id_t tid) {
-	//critical section for wait queue
-	up(threads_sem[i])$\forall$	
-	//critical section ends.
-}
-
-req_ctxt_switch(thread_id_t tid) {
-		if(check_mem_access_with_trace(tid) == e_ma_restricted) {
-
+Kernel Space:
+semaphore threads_sem[1..N] = {0...0};
+Queue waitqueue={}
+ctxt_switch_thread(thread_id tid) {	
+	if(check_perm(tid)==restricted) {
 		signal_all_other_threads(tid);
-		
-		//critical section for waitqueue
-		wait_queue[tid-1] = 1; //sets the thread inline for waiting
-		//critical section ends.
-		
-		ctxt_switch_thread(tid);
-
+		waitqueue.push(tid);
+		down(threads_sem[tid]); 
 	}
+}
+signal_all_other_threads(thread_id tid) {
+	$\forall$ thread_id i in {{1...N}-{tid}}:
+		if(i in waitqueue and check_perm(i)==allowed) {
+			waitqueue.remove(i);
+			up(threads_sem[i]);
+		}
 }
 
 \end{lstlisting}
 
 \subsubsection{Design with an additional scheduler thread}\label{sec_add_thread}
 
-In this design, we create an additional scheduler thread primarily addressing the signaling mechanism pertained in the previous design. 
+In this design, we have an additional scheduler thread which addresses the signaling mechanism pertained in the previous design. 
 By having an additional scheduler thread, we move the entire signaling system to the scheduler thread.
-Thus, reducing the execution overhead encountered in the user space thread for signaling other threads.
-
-The major change from the previous design apart from additional thread is in the memory assessment block.
-
-\subsubsection*{Memory assessment block}
-\begin{tikzpicture}[scale=0.7,transform shape]
- 
- 
-  % memory assessment area
-  
-  \path \spacelayer {BEFOREMA}{Before M.A}{A callback is triggered before memory access is made to the global memory};
-  \path (BEFOREMA.south)+(0.0,-2.0) \spacelayer {REQCTXTSWITCH}{Request \\ Context Switch}{ioctl(CTXT\_SWITCH, tid)};
-  
-  \path (REQCTXTSWITCH.south)+(0.0,-2.0) \spacelayer {MEMACCESS}{Memory\\ Access}{The Actual global Memory Access by the thread};
-
-  \path (MEMACCESS.south)+(0.0,-2.0) \spacelayer {AFTERMA}{After M.A}{A callback is triggered after memory access is made to the global memory};
-  \path (AFTERMA.south)+(0.0,-3.0) \spacelayer {SETCLK}{Setting \\ Global Vector clock}{ioctl(SET\_CLK, tid)};  
-  
-  
-  \path (REQCTXTSWITCH.east)+(9.0,2.0) \spacelayer {CONTEXTSWITCH}{Context Switch call}{If memory access is restricted, signal\_other\_threads() and call down(thread\_sem[tid]) }; 
-  \path (CONTEXTSWITCH.east)+(3.0,-5.0) \spacelayer {CHECKTRACE}{Check trace}{Checks if the execution in the input trace is valid or not.}; 
-  \path (CONTEXTSWITCH.west)+(-2.0,-6.0) \spacelayer {THREADSEM}{THREAD\\ Semaphore}{Array of semaphores used by corresponding thread. Up and Down calls are made.}; 
-  \path (CONTEXTSWITCH.south)+(0.0,-10.0) \spacelayer {SIGNALOTHERS}{Signal other\\ Threads}{Signals all the permitted threads to be resumed by calling up() on their respective semaphores. For verifying the permission internal call is made to checktrace}; 
- \path (SIGNALOTHERS.west)+(-3.0,0.0) \spacelayer {SETVECCLK}{Set Vector\\ Clock}{Kernel adaptation of set vector clock method invoked on ioctl call.}; 
- \path (SIGNALOTHERS.east)+(+3.0,0.0) \spacelayer {ADDTHREAD}{Additional\\ Thread}{Additional thread invokes signalothers method for every x ms.};  
-  
-
-  % Draw arrows between elements
-
- 
- 
-  
-
-  %memory assessment block
-  \path [line] (BEFOREMA.south) -- node [left] {$req$} (REQCTXTSWITCH);
-  \path [line] (AFTERMA.south) -- node [left] {$req$} (SETCLK);
-
-  \path [line] (REQCTXTSWITCH.east) -- node [midway,above,sloped] {$ioctl()$} (CONTEXTSWITCH);
-  
-  \path [line] (CONTEXTSWITCH.south) -- node [left] {} (CHECKTRACE);
-  \path [line] (CONTEXTSWITCH.south) -- node [midway,above,sloped] {down(sem[tid])} (THREADSEM);
-  \path [line] (CONTEXTSWITCH.south) -- node [left] {} (SIGNALOTHERS);
-  \path [line] (CHECKTRACE.north) -- node [midway,above,sloped] {allowed\ or\ restricted} (CONTEXTSWITCH);  
-   
-  \path [line] (SIGNALOTHERS.north) -- node [left] {} (CHECKTRACE);   
-  \path [line] (CHECKTRACE.south) -- node [midway,above,sloped] {allowed\ or\ restricted} (SIGNALOTHERS);
-  \path [line] (SIGNALOTHERS.north) -- node [midway,above,sloped] {up(sem[tid])} (THREADSEM);
-   
-   \path [line] (SETCLK.east) -- node [midway,above,sloped] {$ioctl()$} (SETVECCLK);
-  %\path [linepart] (CONTEXTSWITCH.west) -- node [above] {$thread$}
-                                 %node [right]{$resume$} (THREADRESUME);
-   \path [line] (ADDTHREAD.west) -- node [left] {} (SIGNALOTHERS);
-  %background generation block
- 
-  \background{BEFOREMA}{BEFOREMA}{SETCLK}{SETCLK}{User Space}
-  \background{SETVECCLK}{CONTEXTSWITCH}{CHECKTRACE}{SIGNALOTHERS}{Kernel Space}
-  
-
-\end{tikzpicture}
-\newpage
-\subsubsection*{Pseudo Implementation}
-
+Thus, reducing the execution overhead encountered in the pool of user space threads for signaling other threads.
 The major changes are in kernel space code. 
-However, there are minor variations in the \emph{AfterMA()} in user space. 
-
-\begin{lstlisting}[title=User Space Implementation, style=customc]
-//Rest of the code remains the same
+However, there are minor variations in the $AfterMA()$ in user space. 
+Inside the $AfterMA()$ call, we invoke the $set\_clk$ command. 
+It is used to update the memory event for the thread which encountered the memory event. 
+Prototypes 2 and 4 follow similar implementation. 
+However, they defer in the blocking and unblocking mechanism of the thread. 
+\newpage
+\begin{lstlisting}[mathescape=true,caption={Pseudo Code for Prototype 2}, style=customc,frame=tlrb,label={lst:proto2}]
+User Space:
+Thread j($j \in 1..N$):
+BeforeMA() {	
+	ioctl(CONTEXT_SWITCH, thread_id);	
+}
 
 AfterMA() {	
-	ioctl(SET_MY_CLK, thread_id);
+	ioctl(SET_CLK, thread_id);
 }
 
-//Rest of the code remains the same
+Kernel Space:
+semaphore threads_sem[1..N] = {0...0};
+Queue waitqueue={};
 
-\end{lstlisting}
+Run a kernel level thread every 1ms which invokes signal_permitted_threads function.
 
-\begin{lstlisting}[title=Kernel Space - General module definitions, style=customc]
-//code remains the same
-
+ctxt_switch_thread(thread_id tid) {	
+	if(check_perm(tid)==restricted) {
+		waitqueue.push(tid);
+		down(threads_sem[tid]); 
+	}
+}
+set_clk(thread_id tid) {
+	vec_clk[tid]++;
+}
 signal_permitted_threads() {
-	//critical section for wait queue
-	for i in(0,THREAD_COUNT) {
-		if(wait_queue[i] == 1) {
-			if(check_mem_access_with_trace(i+1) == e_ma_allowed) {
-				/**Performs up operation on the respective thread semaphore.*/
-				up(threads_sem[i]);
-				wait_queue[i]=0;			
-			}		
+	$\forall$ thread_id i in {1...N}:
+		if(i in waitqueue and check_perm(i)==allowed) {
+			waitqueue.remove(i);
+			up(threads_sem[i]);
 		}
-	}	
-	
-	//critical section ends.
 }
-
-module_init() {
-	//code remains the same
-	
-	kernel_thread tk = create_kernel_thread(signal_permitted_threads)
-	tk->setTimerCallForEvery(x) //this method will make call to signal permitted threads for every x ms.
-}
-
-//code remains the same
 \end{lstlisting}
 
+\subsection{Design with proxy checking in user space\label{proxycheck}}
 
-\subsection{Design with checking in user space}
-
-In the following designs, we address the use of check permission of memory access method both in User Space and Kernel space.
+In the following designs, we address the use of checking for memory access permission both in user space and kernel space.
 
 \subsubsection{Design with no additional scheduler thread}
 
-Without an additional thread in kernel space, the design would require a signaling function inside \emph{AfterMA()}, similar to the one used in Design~\ref{no_check_no_add}. 
-Triggering a signaling mechanism is an additional overhead on the thread calling the \emph{AfterMA()}. 
+Without an additional thread in kernel space, the design would require a signaling function inside $AfterMA()$, similar to the one used in Design~\ref{no_check_no_add} with no additional scheduler thread. 
+Triggering a signaling mechanism is an additional overhead on the thread calling the $AfterMA()$. 
 Therefore, such a design is not a wise choice when considering the performance metrics such as execution time.
  
 \subsubsection{Design with an additional scheduler thread}
 
-The scheduler implementation is similar to one defined in the section \ref{sec_add_thread}. 
-Key difference is the additional checking for memory permissions in the user space. 
-
-\subsubsection*{Memory assessment block}
-\begin{tikzpicture}[scale=0.7,transform shape]
- 
- 
-  % memory assessment area
-
-  \path \spacelayer {BEFOREMA}{Before M.A}{A callback is triggered before memory access is made to the global memory. If memory access is restricted, req\_ctxt()};
-  \path (BEFOREMA.south)+(-3.0,-2.5) \spacelayer {CHECKTRACEUSR}{Check trace}{Checks if the execution in the input trace is valid or not.};   
-  
-  \path (BEFOREMA.south)+(0.0,-6.0) \spacelayer {REQCTXTSWITCH}{Request \\ Context Switch}{ioctl(CTXT\_SWITCH, tid)};
-  
-  \path (REQCTXTSWITCH.south)+(-3.0,-2.0) \spacelayer {MEMACCESS}{Memory\\ Access}{The Actual global Memory Access by the thread};
-
-  \path (MEMACCESS.south)+(3.0,-2.0) \spacelayer {AFTERMA}{After M.A}{A callback is triggered after memory access is made to the global memory};
-  \path (AFTERMA.south)+(0.0,-3.0) \spacelayer {SETCLK}{Setting \\ Global Vector clock}{ioctl(SET\_CLK, tid)};  
-  
-  
-  \path (REQCTXTSWITCH.east)+(9.0,2.0) \spacelayer {CONTEXTSWITCH}{Context Switch call}{If memory access is restricted, signal\_other\_threads() and call down(thread\_sem[tid]) }; 
-  \path (CONTEXTSWITCH.east)+(3.0,-5.0) \spacelayer {CHECKTRACE}{Check trace}{Checks if the execution in the input trace is valid or not.}; 
-  \path (CONTEXTSWITCH.west)+(-2.0,-6.0) \spacelayer {THREADSEM}{THREAD\\ Semaphore}{Array of semaphores used by corresponding thread. Up and Down calls are made.}; 
-  \path (CONTEXTSWITCH.south)+(0.0,-10.0) \spacelayer {SIGNALOTHERS}{Signal other\\ Threads}{Signals all the permitted threads to be resumed by calling up() on their respective semaphores. For verifying the permission internal call is made to checktrace}; 
- \path (SIGNALOTHERS.west)+(-3.0,0.0) \spacelayer {SETVECCLK}{Set Vector\\ Clock}{Kernel adaptation of set vector clock method invoked on ioctl call.}; 
- \path (SIGNALOTHERS.east)+(+3.0,0.0) \spacelayer {ADDTHREAD}{Additional\\ Thread}{Additional thread invokes signalothers method for every x ms.};  
-  
-
-  % Draw arrows between elements
-
- 
- 
-  
-
-  %memory assessment block
-  \path [line] (BEFOREMA.south) -- node [left] {} (CHECKTRACEUSR);
-  \path [line] (CHECKTRACEUSR.south) -- node  [midway,right] {$restricted$} (REQCTXTSWITCH);
-  \path [line] (CHECKTRACEUSR.south) -- node  [left] {$allowed$} (MEMACCESS);
-  \path [line] (AFTERMA.south) -- node [left] {$req$} (SETCLK);
-
-  \path [line] (REQCTXTSWITCH.east) -- node [midway,above,sloped] {$ioctl()$} (CONTEXTSWITCH);
-  
-  \path [line] (CONTEXTSWITCH.south) -- node [left] {} (CHECKTRACE);
-  \path [line] (CONTEXTSWITCH.south) -- node [midway,above,sloped] {down(sem[tid])} (THREADSEM);
-  \path [line] (CONTEXTSWITCH.south) -- node [left] {} (SIGNALOTHERS);
-  \path [line] (CHECKTRACE.north) -- node [midway,above,sloped] {allowed\ or\ restricted} (CONTEXTSWITCH);  
-   
-  \path [line] (SIGNALOTHERS.north) -- node [left] {} (CHECKTRACE);   
-  \path [line] (CHECKTRACE.south) -- node [midway,above,sloped] {allowed\ or\ restricted} (SIGNALOTHERS);
-  \path [line] (SIGNALOTHERS.north) -- node [midway,above,sloped] {up(sem[tid])} (THREADSEM);
-   
-   \path [line] (SETCLK.east) -- node [midway,above,sloped] {$ioctl()$} (SETVECCLK);
-  %\path [linepart] (CONTEXTSWITCH.west) -- node [above] {$thread$}
-                                 %node [right]{$resume$} (THREADRESUME);
-   \path [line] (ADDTHREAD.west) -- node [left] {} (SIGNALOTHERS);
-  %background generation block
- 
-  \background{CHECKTRACEUSR}{BEFOREMA}{SETCLK}{SETCLK}{User Space}
-  \background{SETVECCLK}{CONTEXTSWITCH}{CHECKTRACE}{SIGNALOTHERS}{Kernel Space}
-  
-
-\end{tikzpicture}
-\subsubsection*{Pseudo Implementation}
-
+The scheduler implementation is similar to one defined in the section \ref{sec_add_thread} with an additional scheduler thread. 
+Key difference is the additional checking for memory access permissions in the user space. 
 The major changes are in user space code. 
-
-
-\begin{lstlisting}[title=User Space Implementation, style=customc]
-//Rest of the code remains the same
-
-
-mem_access ma_status[THREAD_COUNT];
-vec_clk curr_clk_time;
-
-initialize_vec_clock() {
-
-    for i in range(0, THREAD_COUNT)
-    {
-        curr_clk_time.clocks[i] = 0;
-    }
-}
-
-BeforeMA() {
-
-	ma_status[thread_id-1] = check_mem_access_with_trace(thread_id);
-	if(ma_status[id-1] == e_ma_restricted) {
-		ioctl(CTXT_SWITCH, thread_id);	
+Prototypes 5 and 6 use a similar setup as shown in listing~\ref{lst:proto5}. 
+However, they differ in their blocking and unblocking mechanism of threads. 
+As explained in the previous sections, this design is expected to perform better if the condition indicated in  equation~\ref{mem_cond}.
+\begin{lstlisting}[mathescape=true,caption={Pseudo Code for Prototype 5 and 6}, style=customc,frame=tlrb,label={lst:proto5}]
+User Space:
+Thread j($j \in 1..N$):
+BeforeMA() {	
+	if(check_perm(j)==restricted) {
+		ioctl(CONTEXT_SWITCH, thread_id);	
 	}
-	  
 }
 
 AfterMA() {	
-	ioctl(SET_MY_CLK, thread_id);
-	curr_clk_time.clocks[thread_id-1]++;
+	ioctl(SET_CLK, thread_id);
 }
-
-//Rest of the code remains the same
-
+//Rest of the code remains the same.
 \end{lstlisting}
-
 \subsection{Variant in blocking implementation}
 
 In the previous designs, the blocking was done using semaphores. 
-In the variant design, we use the combination of \emph{schedule()} and \emph{wake\_up\_process()} functions provided by the Linux scheduler APIs. 
-The kernel level tasks associated for the provided user level threads are moved from running queue to wait queue by initially setting the task status as \emph{TASK\_INTERRUPTIBLE} and yielding the processor by invoking \emph{schedule()}. 
-The task added in wait queue is later resumed, when \emph{wake\_up\_process(sleeping\_task)} is invoked by another task. 
-On calling the \emph{wake\_up\_process(sleeping\_task)}, the task status for \emph{sleeping\_task} is set as \emph{TASK\_RUNNING}. 
+In the variant design, we use the combination of $schedule()$ and $wake\_up\_process()$ functions provided by the Linux scheduler APIs. 
+The kernel level tasks associated for the provided user level threads are moved from running queue to wait queue by initially setting the task status as $TASK\_INTERRUPTIBLE$ and yielding the processor by invoking $schedule()$. 
+The task added in wait queue is later resumed, when $wake\_up\_process(sleeping\_task)$ is invoked by another task(primarily another thread). 
+On calling the $wake\_up\_process(sleeping\_task)$, the task status for $sleeping\_task$ is set as $TASK\_RUNNING$. 
 It would be pushed to run queue and executed in future by the operating system scheduler on the basis of scheduler class and priority of tasks in run queue. 
- 
- 
-\subsubsection*{Variant Pseudo Code for Design \ref{no_check_no_add}}
-
-
-\begin{lstlisting}[title=Kernel Space - IOCTL, style=customc]
-//code remains the same
-
-ctxt_switch_thread(thread_id_t tid) {	
-	//critical section for wait queue
-	wait_queue[tid-1].is_waiting = 1;
-	wait_queue[tid-1].my_task = current;
-	set_current_state(TASK_INTERRUPTIBLE);
-	//critical section ends
-	schedule();
+Prototype 3,4 and 6 utilizes this design.
+Listing~\ref{lst:proto3} and \ref{lst:proto4} depicts Prototypes 3 and 4.  
+\newpage
+\begin{lstlisting}[mathescape=true,caption={Pseudo Code for Prototype 3}, style=customc,frame=tlrb,label={lst:proto3}]
+//rest remains the same.
+Kernel Space:
+Queue waitqueue={}
+ctxt_switch_thread(thread_id tid) {	
+	if(check_perm(tid)==restricted) {
+		signal_all_other_threads(tid);
+		waitqueue.push(tid);
+		set_current_task_state(TASK_WAIT);
+		schedule();
+	}
 }
-
-signal_all_other_threads(thread_id_t tid) {
-	//critical section for wait queue
-	for i in(0,THREAD_COUNT) {
-		if(i!=(tid-1)&&(wait_queue[i].is_waiting==1)) {
-			if(check_mem_access_with_trace(i+1) == e_ma_allowed) {
-				wait_queue[i].is_waiting = 0;
-				wake_up_process(wait_queue[i].my_task);				
-			}		
+signal_all_other_threads(thread_id tid) {
+	$\forall$ thread_id i in {{1...N}-{tid}}:
+		if(i in waitqueue and check_perm(i)==allowed) {
+			waitqueue.remove(i);
+			wakeup_process(taskforthreadid(i));
 		}
-	}	
-	
-	//critical section ends.
 }
-
-
-\end{lstlisting}
-
-\subsubsection*{Variant Pseudo Code for Design \ref{sec_add_thread}}
-
-\begin{lstlisting}[title=Kernel Space - General module definitions, style=customc]
-//code remains the same
-
+\end{lstlisting} 
+\begin{lstlisting}[mathescape=true,caption={Pseudo Code for Prototype 4}, style=customc,frame=tlrb,label={lst:proto4}]
+//rest remains the same.
+Kernel Space:
+Run a kernel level thread every 1ms which invokes signal_permitted_threads function.
+Queue waitqueue={}
+ctxt_switch_thread(thread_id tid) {	
+	if(check_perm(tid)==restricted) {	
+		waitqueue.push(tid);
+		set_current_task_state(TASK_WAIT);
+		schedule();
+	}
+}
 signal_permitted_threads() {
-	//critical section for wait queue
-	for i in(0,THREAD_COUNT) {
-		if(wait_queue[i].is_waiting==1) {
-			if(check_mem_access_with_trace(i+1) == e_ma_allowed) {
-				/**Performs up operation on the respective thread semaphore.*/
-				wait_queue[i].is_waiting = 0;
-				wake_up_process(wait_queue[i].my_task);	
-			}		
+	$\forall$ thread_id j in {1...N}:
+		if(j in waitqueue and check_perm(j)==allowed) {
+			waitqueue.remove(j);
+			wakeup_process(taskforthreadid(j));
 		}
-	}	
-	
-	//critical section ends.
 }
-
-//code remains the same
+//rest remains the same.
 \end{lstlisting}
+
+\subsection*{Additional Note}
+
+We have $signal\_all\_other\_threads()$ method invoked within $ctxt\_switch\_thread()$ method in Prototypes 1 and 3. 
+The above call is made from $ctxt\_switch\_thread()$ to ensure that the design does not run into any deadlocks. 
+
+A $waitqueue$ is used in all the prototypes. 
+It is used to maintain a bookkeeping for all the blocked threads. 
+A design without $waitqueue$ would require the checking memory access permission with the trace to be done differently. 
+The modified design would have all the signaling threads checking the trace for all threads which could be blocked and signaling all the blocked threads independently whereas, in the design discussed in this thesis we use a $waitqueue$. 
+The waitqueue is implemented as an array of boolean values and with size of total number of threads. 
+To check if a thread is blocked or not, we can access array with the thread's id as its index. 
+Firstly, such a modified design highlights a possibility of a race conditions when removing a memory event from a trace. 
+A memory event is removed from the trace once the event is completed. 
+Secondly, the prototypes using semaphores(Prototypes 1,2 and 5) could not be adapted with such design changes. 
+Let us consider that, there are 4 threads in the multithreaded program. 
+Three of the threads are running, whereas the last thread is blocked. 
+When all first three threads invoke the $signal\_other\_threads()$ method, they would perform the $up$ operation on the semaphore variable meant for last thread(assuming that the fourth thread is allowed to execute). 
+Problem here is that the value of the semaphore say $sema_4$ would be 3 and not one, value 3 would indicate the fourth thread to miss the yield functionality for the next three restricted memory access. 
+As indicated in the appendix~\ref{appendixc}, we use a binary semaphore and not a counting semaphore for the threads in Prototypes 1,2 and 5. 
+To avoid the race conditions, we could have a mutex around the code section which deals with the removal of the memory event from the trace. 
+Invoking mutexes or locks regularly can affect the performance of the multithreaded program~\citep{torrellas1994false}. 
+Having a mutex inside this code section would increase the execution overhead drastically. 
+Moreover, such a design with mutex would make the design  to be logically equivalent to the one with the $waitqueue$. 
+Therefore, there is no gain in making such a change. 
+
+The algorithmic time complexity for running $signal\_all\_other\_threads()$ is $O(n^2)$, whereas $set\_clk()$ is $O(1)$. 
+In $ctxt\_switch\_thread()$ method we have higher algorithmic time complexity in Prototypes 1 and 3, since they invoke $signal\_all\_other\_threads()$ internally.

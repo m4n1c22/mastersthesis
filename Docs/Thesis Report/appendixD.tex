@@ -1,0 +1,41 @@
+\begin{itemize}
+
+\item 	API 	-   Application Programming Interface
+\item	BDD		-	Binary Decision Diagrams
+\item	CPU		-	Central Processing Unit
+\item	DMT		-	Deterministic Multithreading
+\item	IOCTL	-	Input Output Control
+\item	IPC		-	Inter Process Communication
+\item	IRS		-	Iterative Relaxed Scheduling
+\item  {IRS\_Opt} - Another user space IRS solution discussed in section~ \ref{iter_rel_sched}. 
+It uses an additional thread for handling the scheduling decisions and uses conditional variables to block a certain thread when memory access is restricted. 
+\item {IRS\_Sh} - One of the IRS user space implementation discussed in section~\ref{iter_rel_sched}. 
+It addresses the use of a busy waiting design for blocking a thread and use the other threads in the thread pool to signal the blocked thread. 
+Thus, making the scheduling decision shared among the threads. 
+This design does not have an additional thread for handling the scheduling decisions. 
+\item	LKM		-	Loadable Kernel Module
+\item	OS		-	Operating System
+\item	POR		- 	Partial Order Reduction
+\item	POSIX	- 	Portable Operating System Interface
+\item	ProcFS  -   Process File System, a virtual file system in Linux Operating System.
+\item {Proto\_1} - Section~\ref{sync_des} highlights all the prototypes used in this thesis to provide various solutions addressing the transition of scheduling decision to kernel space. 
+Prototype 1 is the first synchronization discussed in section~\ref{sync_des} which uses a shared scheduler design similar to IRS\_Sh but, the blocking of threads is enforced by using semaphores in kernel space. 
+\item {Proto\_2} - Prototype 2 is an extension of the previous prototype. 
+Prototype also uses semaphores in kernel space for blocking a given thread but, the signaling the blocked thread is done by an additional thread which is similar to IRS\_Opt.
+\item {Proto\_3} - Prototype 3 is a lot similar to Prototype 1 in the nature of behavior when it comes to design and its approach to scheduling. 
+Main difference of Prototype 3 compared to Prototype 1 is the use of scheduler APIs instead of semaphores for blocking a given thread. 
+\item {Proto\_4} - Prototype 4 is a design variant of Prototype 2. It uses the same scheduling approach as Prototype 2 but, differs in the blocking of a given thread. 
+It uses scheduler APIs instead of semaphores. 
+\item {Proto\_5} - Prototype 5 are an extension of Prototype 2, it is one of the designs which addresses the second approach discussed in section~\ref{sec_app}. 
+As discussed in section~\ref{sec_app} it uses a proxy checking of memory access permission in user space.
+\item {Proto\_6} - Prototype 6 are an extension of Prototype 4, it is another design which addresses the second approach discussed in section~\ref{sec_app}. 
+As discussed in section~\ref{sec_app} it uses a proxy checking of memory access permission in user space.
+\item Pthreads- POSIX Threads
+\item RTID - Real Thread ID which is assigned within the proc file system for any thread created within the user land. 
+\item SMP		- Symmetric Multi-Processor
+\item StableMT 	- Stable Multithreading
+\item TaskID 	- All threads are internally realized as tasks in kernel space and are allocated with an identifier which is task Identifier.
+\item TLB	- Translation Lookaside Buffer
+\item UTID 	- User defined thread ID which is relative inside the user program.
+\item VM	-	Virtual machine
+\end{itemize}

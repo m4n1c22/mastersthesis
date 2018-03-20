@@ -1,1 +1,26 @@
----conclusion comes here---
+The IRS scheduler designs implemented in this thesis highlights a new approach in designing the scheduler for the IRS framework which involved by  moving the scheduler logic to kernel space. 
+We introduced two different design approaches in moving the IRS scheduler to kernel space. 
+The first approach triggers an IOCTL call to kernel space for every shared memory event.
+In the second approach, we reduce the number of IOCTL calls made to the kernel space for every shared memory event. 
+The reduction in the number of IOCTL calls is achieved by having a proxy checking for memory access permission during a shared memory event. 
+The kernel space solutions presented with six different prototypes. 
+The first four prototypes used the first approach and the last two prototypes were realized with the second approach. 
+All the prototypes presented in this thesis were incremental improvements over its former.
+We also introduced an alternative representation in the form of vector clocks for realizing the scheduling constraints enforced on threads in a multithreaded program. 
+The vector clock representation was intended to reduce the code complexity and for overcoming one of the design challenges of this thesis. 
+
+In our experiments, we compared the IRS user space and IRS kernel space solutions with the benchmarking programs - Fibonacci, Last Zero, Indexer and Dining Philosopher's Problem. 
+In our experiments, we observed that IRS\_Sh performed poorly when the number of threads were more than the number of cores and when the memory constraints spanned all the threads in the benchmarking program. 
+We also observed that the IRS\_Opt performed better in nearly all the benchmarks but, performed poorly when the memory constraints were spanned to fewer number of threads as observed with Indexer and Fibonacci experiments. 
+Among the kernel space designs, prototypes 5 and 6 performed the best in nearly all the experiments. 
+However, the experiments showed us that when the number of memory constraints came closer to the total number of shared memory events Prototypes 1 and 3 were better as it can be observed with Fibonacci and Last Zero benchmarks. 
+In our experiments, we observed that kernel space designs perform better when number of memory constraints are higher and closer to the total number of shared memory events. 
+However, the prototypes depicted in this thesis suffer from scalability problems as observed with the experiments done on scaling of the processor cores. 
+The prototypes could be optimized by removing the C-structure representation of vector clock, which could help in overcoming a potential false sharing problem. 
+
+An experimental study of all these prototypes suggested a new design outlook for moving the IRS scheduler to kernel space. 
+Based on a preliminary analysis, it is evident that there is a need of solution which is a combination of IRS\_Opt and Prototypes 5-6. 
+Such a design would require the custom yield and revive functionality from prototypes 5-6 and checking for memory access permission would be handled in the user space entirely. 
+In short, the condition variable design used in IRS\_Opt would be replaced by the custom yield and revive functionality from Prototypes 5-6. 
+Such an approach may help to further improve the performance of constrained execution of a multithreaded program on IRS environment.
+

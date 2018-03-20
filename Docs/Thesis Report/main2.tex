@@ -28,7 +28,13 @@
 %======================================================
 % General package loading and definitions
 %======================================================
-\usepackage{inputenc} 
+%\usepackage{mla}
+%\renewcommand{\sfdefault}{cmss}
+%\renewcommand{\rmdefault}{cmr}
+%\renewcommand{\ttdefault}{cmtt}
+%\usepackage[utf8]{inputenc}
+\usepackage{inputenc}
+
 \usepackage{textcomp} 
 \usepackage{ngerman}
 \usepackage[american,ngerman]{babel}
@@ -259,7 +265,57 @@
   morekeywords={thread, thread_init, thread_exec, join, main},
 }
 
-	
+%---------Glossary part-----------
+\usepackage{glossaries}
+\makeindex 
+\makeglossaries
+\newacronym{irs}{IRS}{Iterative Relaxed Scheduling}
+\newacronym{dmt}{DMT}{Deterministic Multithreading}
+\newacronym{api}{API}{Application Programming Interface}
+\newacronym{cpu}{CPU}{Central Processing Unit} 
+\newacronym{os}{OS}{Operating System} 
+\newacronym{lkm}{LKM}{Loadable Kernel Module} 
+
+\newglossaryentry{IRS_Sh}
+{
+    name=IRS Shared Scheduler design,
+    description={sdfsdf}
+} 
+\newglossaryentry{IRS_Opt}
+{
+    name=IRS Condition Variable Scheduler design,
+    description={}
+} 	
+\newglossaryentry{Proto_1}
+{
+    name=Prototype 1,
+    description={}
+} 		
+\newglossaryentry{Proto_2}
+{
+    name=Prototype 2,
+    description={}
+} 		
+\newglossaryentry{Proto_3}
+{
+    name=Prototype 3,
+    description={}
+} 			
+\newglossaryentry{Proto_4}
+{
+    name=Prototype 4,
+    description={}
+} 		
+\newglossaryentry{Proto_5}
+{
+    name=Prototype 5,
+    description={}
+} 		
+\newglossaryentry{Proto_6}
+{
+    name=Prototype 1,
+    description={}
+} 		
 %======================================================
 % MAIN DOCUMENT STARTS HERE
 %======================================================
@@ -287,7 +343,7 @@
 	\tableofcontents
 	\listoffigures
 	\listoftables
-
+	\lstlistoflistings
 	\begin{abstract}
 	\input{abstract}
 	\end{abstract}		
@@ -316,14 +372,14 @@
 	\chapter{Evaluation \label{eval_ch}}	
 	\input{evaluation}
 	
-	\chapter{Conclusion}
+	\chapter{Conclusion and Future Outlook}
 	\input{conclusion}
 	%\input{content2}
 	
 	%======================================================
 	% The back matter
 	%======================================================
-	%\cleardoublepage
+	\cleardoublepage
 	\refstepcounter{dummy}
 	\addcontentsline{toc}{chapter}{\bibname}
 	%\bibliographystyle{alpha} % <--- layout of the bib
@@ -338,7 +394,14 @@
 	\input{appendixA}	
 	\chapter{Experimental Results \label{appendixb}}
 	\input{appendixB}
+	\chapter{Additional Explanations and Building Prototypes \label{appendixc}}
+	\input{appendixC}		
+	\chapter{Acronyms and Glossaries}	
+	\input{appendixD}
 	\end{appendices}	
+	%\clearpage
+	%\printglossary[type=\acronymtype] 
+	%\printglossary
 	
 \end{document}
 %======================================================

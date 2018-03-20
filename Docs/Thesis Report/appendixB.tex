@@ -1,6 +1,42 @@
 \section{Last Zero}
 
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Prototypes 1-4 & Prototypes 5-6\\ %[0.5ex] 
+ \hline
+Trace-1 & 62 & 39\\
+Trace-2 & 62 & 31\\
+Trace-3 & 62 & 31\\
+Trace-4 & 62 & 31\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Number of IOCTL calls made for Last Zero benchmark}
+\label{last_zero_num_syncs}
+
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Prototypes 1-4 & Prototypes 5-6\\ %[0.5ex] 
+ \hline
+Trace-1 & 31 & 8\\
+Trace-2 & 31 & 0\\
+Trace-3 & 31 & 0\\
+Trace-4 & 31 & 0\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Number of context switch calls made for Last Zero benchmark}
+\label{last_zero_num_ctxt}
+\end{table}
+
 \subsection{Two Cores}
+Plain execution time(Unconstrained execution) is 469.199 $\mu$s.
 \begin{table}[h]
 \begin{center}
  \begin{tabular}{|c c c c c c c c c|} 
@@ -17,8 +53,9 @@ Trace-4 & 2.373 & 59.937 & 181.197 & 226.441 & 197.909 & 201.305 & 174.226 & 176
 \caption{Execution overhead(\%) when compared with plain execution of Last Zero}
 \label{last_zero_irs_res_cores_2}
 \end{table}
-
+\newpage
 \subsection{Four Cores}
+Plain execution time(Unconstrained execution) is 595.724 $\mu$s.
 \begin{table}[h]
 \begin{center}
  \begin{tabular}{|c c c c c c c c c|} 
@@ -37,6 +74,7 @@ Trace-4 & -19.370 & 62.22 & 208.598 & 243.083 & 160.428 & 191.643 & 172.793 & 16
 \end{table}
 
 \subsection{Eight Cores}
+Plain execution time(Unconstrained execution) is 595.724 $\mu$s.
 \begin{table}[h]
 \begin{center}
  \begin{tabular}{|c c c c c c c c c|} 
@@ -56,7 +94,47 @@ Trace-4 & 36.206 & 62.22 & 204.648 & 281.475 & 216.443 & 296.927 & 218.399 & 192
 
 \section{Indexer}
 
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Prototypes 1-4 & Prototypes 5-6\\ %[0.5ex] 
+ \hline
+Trace-1 & 144 & 76\\
+Trace-2 & 144 & 72\\
+Trace-3 & 144 & 72\\
+Trace-4 & 144 & 72\\
+Trace-5 & 143 & 72\\
+Trace-6 & 143 & 72\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Number of IOCTL calls made for Indexer benchmark}
+\label{indexer_num_syncs}
+
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Prototypes 1-4 & Prototypes 5-6\\ %[0.5ex] 
+ \hline
+Trace-1 & 72 & 4\\
+Trace-2 & 72 & 0\\
+Trace-3 & 72 & 0\\
+Trace-4 & 72 & 0\\
+Trace-5 & 72 & 0\\
+Trace-6 & 72 & 0\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Number of context switch calls made for Indexer benchmark}
+\label{indexer_num_ctxt}
+\end{table}
+\newpage
 \subsection{Two Cores}
+Plain execution time(Unconstrained execution) is 434.1 $\mu$s.
 \begin{table}[h]
 \begin{center}
  \begin{tabular}{|c c c c c c c c c|} 
@@ -75,8 +153,8 @@ Trace-6 & 114.149 & 1942.555 & 219.88 & 220.863 & 217.671 & 259.263 & 202.801 & 
 \caption{Execution overhead(\%) when compared with plain execution of Indexer}
 \label{indexer_irs_res_cores_2}
 \end{table}
-
 \subsection{Four Cores}
+Plain execution time(Unconstrained execution) is 554.975 $\mu$s.
 \begin{table}[h]
 \begin{center}
  \begin{tabular}{|c c c c c c c c c|} 
@@ -95,8 +173,9 @@ Trace-6 & 32.884 & 1813.431 & 235.273 & 242.227 & 232.892 & 233.356 & 213.21 & 2
 \caption{Execution overhead(\%) when compared with plain execution of Indexer}
 \label{indexer_irs_res_cores_4}
 \end{table}
-\newpage
+
 \subsection{Eight Cores}
+Plain execution time(Unconstrained execution) is 695.938 $\mu$s.
 \begin{table}[h]
 \begin{center}
  \begin{tabular}{|c c c c c c c c c|} 
@@ -118,7 +197,41 @@ Trace-6 & 9.726 & 1392.006 & 194.167 & 235.813 & 194.466 & 250.578 & 166.475 & 1
 
 \section{Dining Philosopher's Problem}
 
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Prototypes 1-4 & Prototypes 5-6\\ %[0.5ex] 
+ \hline
+Trace-1 & 1923 & 989\\
+Trace-2 & 1952 & 960\\
+Trace-3 & 1940 & 961\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Number of IOCTL calls made for Dining Philosophers Problem benchmark}
+\label{dining_phil_num_syncs}
+
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Prototypes 1-4 & Prototypes 5-6\\ %[0.5ex] 
+ \hline
+Trace-1 & 961 & 32\\
+Trace-2 & 976 & 0\\
+Trace-3 & 970 & 0\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Number of context switch calls made for Dining Philosophers Problem benchmark}
+\label{dining_phil_num_ctxt}
+\end{table}
+\newpage
 \subsection{Two Cores}
+Plain execution time(Unconstrained execution) is 461.486 $\mu$s.
 \begin{table}[h]
 \begin{center}
  \begin{tabular}{|c c c c c c c c c|} 
@@ -137,6 +250,7 @@ Trace-3 & 2842.118 & 588.281 & 2085.458 & 936.671 & 2012.523 & 1070.232 & 576.78
 
 
 \subsection{Four Cores}
+Plain execution time(Unconstrained execution) is 531.877 $\mu$s.
 \begin{table}[h]
 \begin{center}
  \begin{tabular}{|c c c c c c c c c|} 
@@ -153,8 +267,9 @@ Trace-3 & 697.035 & 436.169 & 2549.619 & 1240.308 & 2388.429 & 1027.419 & 720.76
 \label{dining_phil_irs_res_cores_4}
 \end{table}
 
-\newpage
+%\newpage
 \subsection{Eight Cores}
+Plain execution time(Unconstrained execution) is 725.887 $\mu$s.
 \begin{table}[h]
 \begin{center}
  \begin{tabular}{|c c c c c c c c c|} 
@@ -170,3 +285,57 @@ Trace-3 & 301.401 & 365.057 & 2207.008 & 966.478 & 2185.629 & 791.868 & 625.616 
 \caption{Execution overhead(\%) when compared with plain execution of Dining Philosophers Problem}
 \label{dining_phil_irs_res_cores_8}
 \end{table}
+
+\newpage
+
+\section{Fibonacci}
+
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Prototype 1-4 & Prototype 5-6\\ %[0.5ex] 
+ \hline
+ Trace-1 & 300 & 175\\ 
+ Trace-2 & 300 & 150\\
+ Trace-3 & 300 & 150\\
+ \hline
+\end{tabular}
+\end{center}
+\caption{number of IOCTL calls made for Fibonacci benchmark}
+\label{fibonacci_num_ioctls}
+\end{table}
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c c c|} 
+ \hline
+ & Prototype 1-4 & Prototype 5-6\\ %[0.5ex] 
+ \hline
+ Trace-1 & 150 & 27\\ 
+ Trace-2 & 150 & 0\\
+ Trace-3 & 150 & 0\\
+ \hline
+\end{tabular}
+\end{center}
+\caption{Number of context switch calls made for Fibonacci benchmark}
+\label{fibonacci_num_ctxts}
+\end{table}
+
+\subsection{Two Cores}
+Plain execution time(Unconstrained execution) is 204.064 $\mu$s.
+\begin{table}[h]
+\begin{center}
+ \begin{tabular}{|c c c c c c c c c|} 
+ \hline
+ & IRS\_Sh & IRS\_Opt& Proto-1 & Proto-2 & Proto-3 & Proto-4 & Proto-5 & Proto-6\\ %[0.5ex] 
+ \hline
+Trace-1 & 2078.221 & 7944.79 & 406.833 & 454.785 & 385.416 & 455.745 & 277.793 & 275.343\\
+Trace-2 & 1220.398 & 5673.862 & 367.199 & 520.352 & 352.506 & 509.843 & 160.266 & 160.307\\
+Trace-3 & 381.5 & 5221.922 & 351.029 & 416.653 & 333.704 & 412.206 & 152.425 & 153.06\\
+\hline
+\end{tabular}
+\end{center}
+\caption{Execution overhead(\%) when compared with plain execution of Fibonacci}
+\label{fibonacci_irs_res_cores_2}
+\end{table}
+

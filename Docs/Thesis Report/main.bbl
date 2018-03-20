@@ -1,15 +1,9 @@
-\begin{thebibliography}{32}
+\begin{thebibliography}{18}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
-
-\bibitem[Abdulla et~al.(2014)Abdulla, Aronis, Jonsson, and
-  Sagonas]{abdulla2014optimal}
-Parosh Abdulla, Stavros Aronis, Bengt Jonsson, and Konstantinos Sagonas.
-\newblock Optimal dynamic partial order reduction.
-\newblock \emph{ACM SIGPLAN Notices}, 49\penalty0 (1):\penalty0 373--384, 2014.
 
 \bibitem[Baier et~al.(2008)Baier, Katoen, and
   Larsen]{model_checking_principles}
@@ -63,12 +57,6 @@ Edward~G Coffman, Melanie Elphick, and Arie Shoshani.
 \newblock \emph{ACM Computing Surveys (CSUR)}, 3\penalty0 (2):\penalty0 67--78,
   1971.
 
-\bibitem[Cui et~al.(2011)Cui, Wu, Gallagher, Guo, and Yang]{peregrine}
-Heming Cui, Jingyue Wu, John Gallagher, Huayang Guo, and Junfeng Yang.
-\newblock Efficient deterministic multithreading through schedule relaxation.
-\newblock In \emph{Proceedings of the Twenty-Third ACM Symposium on Operating
-  Systems Principles}, pages 337--351. ACM, 2011.
-
 \bibitem[Cui et~al.(2013)Cui, Simsa, Lin, Li, Blum, Xu, Yang, Gibson, and
   Bryant]{parrot}
 Heming Cui, Jiri Simsa, Yi-Hong Lin, Hao Li, Ben Blum, Xinan Xu, Junfeng Yang,
@@ -78,28 +66,11 @@ Heming Cui, Jiri Simsa, Yi-Hong Lin, Hao Li, Ben Blum, Xinan Xu, Junfeng Yang,
 \newblock In \emph{Proceedings of the Twenty-Fourth ACM Symposium on Operating
   Systems Principles}, pages 388--405. ACM, 2013.
 
-\bibitem[Dijkstra(1968{\natexlab{a}})]{dijkstra1968cooperating}
-Edsger~W Dijkstra.
-\newblock Cooperating sequential processes.
-\newblock In \emph{The origin of concurrent programming}, pages 65--138.
-  Springer, 1968{\natexlab{a}}.
-
-\bibitem[Dijkstra(1968{\natexlab{b}})]{dijkstra1968structure}
-Edsger~W Dijkstra.
-\newblock The structure of the multiprogramming system.
-\newblock In \emph{The origin of concurrent programming}, pages 139--152.
-  Springer, 1968{\natexlab{b}}.
-
 \bibitem[D'silva et~al.(2008)D'silva, Kroening, and Weissenbacher]{d2008survey}
 Vijay D'silva, Daniel Kroening, and Georg Weissenbacher.
 \newblock A survey of automated techniques for formal software verification.
 \newblock \emph{IEEE Transactions on Computer-Aided Design of Integrated
   Circuits and Systems}, 27\penalty0 (7):\penalty0 1165--1178, 2008.
-
-\bibitem[Fidge(1991)]{fidge1991logical}
-Colin Fidge.
-\newblock Logical time in distributed computing systems.
-\newblock \emph{Computer}, 24\penalty0 (8):\penalty0 28--33, 1991.
 
 \bibitem[Flanagan and Godefroid(2005)]{dynamic_por}
 Cormac Flanagan and Patrice Godefroid.
@@ -112,16 +83,9 @@ Carlo Ghezzi, Mehdi Jazayeri, and Dino Mandrioli.
 \newblock \emph{Fundamentals of software engineering}.
 \newblock Prentice Hall PTR, 2002.
 
-\bibitem[Gueta et~al.(2007)Gueta, Flanagan, Yahav, and
-  Sagiv]{gueta2007cartesian}
-Guy Gueta, Cormac Flanagan, Eran Yahav, and Mooly Sagiv.
-\newblock Cartesian partial-order reduction.
-\newblock In \emph{International SPIN Workshop on Model Checking of Software},
-  pages 95--112. Springer, 2007.
-
-\bibitem[Keller(2008)]{commkernelanduser}
+\bibitem[Keller()]{commkernelanduser}
 Ariane Keller.
-\newblock Tldp - kernel space - user space interfaces, 2008.
+\newblock Tldp - communication between user space and kernel space.
 \newblock URL \url{http://wiki.tldp.org/kernel_user_space_howto}.
 
 \bibitem[Liu et~al.(2011)Liu, Curtsinger, and Berger]{dthreads}
@@ -138,74 +102,20 @@ Carmen~Torres Lopez, Stefan Marr, Hanspeter M{\"o}ssenb{\"o}ck, and
   actor-based programs.
 \newblock \emph{arXiv preprint arXiv:1706.07372}, 2017.
 
-\bibitem[Mazurkiewicz(1986)]{mazurkiewicz1986trace}
-Antoni Mazurkiewicz.
-\newblock Trace theory.
-\newblock In \emph{Advanced course on Petri nets}, pages 278--324. Springer,
-  1986.
-
-\bibitem[Metzler et~al.(2017)Metzler, Saissi, Bokor, and
-  Suri]{metzler2017quick}
-Patrick Metzler, Habib Saissi, P{\'e}ter Bokor, and Neeraj Suri.
-\newblock Quick verification of concurrent programs by iteratively relaxed
-  scheduling.
-\newblock In \emph{Proceedings of the 32nd IEEE/ACM International Conference on
-  Automated Software Engineering}, pages 776--781. IEEE Press, 2017.
-
-\bibitem[Netzer and Miller(1992)]{netzer1992race}
-Robert~HB Netzer and Barton~P Miller.
-\newblock What are race conditions?: Some issues and formalizations.
-\newblock \emph{ACM Letters on Programming Languages and Systems (LOPLAS)},
-  1\penalty0 (1):\penalty0 74--88, 1992.
-
 \bibitem[Olszewski et~al.(2009)Olszewski, Ansel, and Amarasinghe]{kendo}
 Marek Olszewski, Jason Ansel, and Saman Amarasinghe.
 \newblock Kendo: efficient deterministic multithreading in software.
 \newblock \emph{ACM Sigplan Notices}, 44\penalty0 (3):\penalty0 97--108, 2009.
 
+\bibitem[Peled(1993)]{por_repr}
+Doron Peled.
+\newblock All from one, one for all: on model checking using representatives.
+\newblock In \emph{International Conference on Computer Aided Verification},
+  pages 409--423. Springer, 1993.
+
 \bibitem[Peled(1998)]{por10yrs}
 Doron Peled.
 \newblock Ten years of partial order reduction.
 \newblock In \emph{Computer Aided Verification}, pages 17--28. Springer, 1998.
-
-\bibitem[Silberschatz et~al.(2014)Silberschatz, Galvin, and
-  Gagne]{silberschatz2014operating}
-Abraham Silberschatz, Peter~Baer Galvin, and Greg Gagne.
-\newblock \emph{Operating system concepts essentials}.
-\newblock John Wiley \& Sons, Inc., 2014.
-
-\bibitem[{\v{S}}im{\v{s}}a et~al.(2011){\v{S}}im{\v{s}}a, Bryant, and
-  Gibson]{dbug}
-Ji{\v{r}}{\'\i} {\v{S}}im{\v{s}}a, Randy Bryant, and Garth Gibson.
-\newblock dbug: systematic testing of unmodified distributed and multi-threaded
-  systems.
-\newblock In \emph{International SPIN Workshop on Model Checking of Software},
-  pages 188--193. Springer, 2011.
-
-\bibitem[Soares and Stumm(2010)]{flexsc}
-Livio Soares and Michael Stumm.
-\newblock Flexsc: Flexible system call scheduling with exception-less system
-  calls.
-\newblock In \emph{Proceedings of the 9th USENIX conference on Operating
-  systems design and implementation}, pages 33--46. USENIX Association, 2010.
-
-\bibitem[Torrellas et~al.(1994)Torrellas, Lam, and
-  Hennessy]{torrellas1994false}
-Josep Torrellas, HS~Lam, and John~L. Hennessy.
-\newblock False sharing and spatial locality in multiprocessor caches.
-\newblock \emph{IEEE Transactions on Computers}, 43\penalty0 (6):\penalty0
-  651--663, 1994.
-
-\bibitem[Torvalds(1991{\natexlab{a}})]{schedheader}
-Linux Torvalds.
-\newblock Scheduler api headerfile in linux kernel, 1991{\natexlab{a}}.
-\newblock URL
-  \url{https://github.com/torvalds/linux/blob/master/include/linux/sched.h}.
-
-\bibitem[Torvalds(1991{\natexlab{b}})]{semaphoreheader}
-Linux Torvalds.
-\newblock Semaphore headerfile in linux kernel, 1991{\natexlab{b}}.
-\newblock URL
-  \url{https://github.com/torvalds/linux/blob/master/include/linux/semaphore.h}.
 
 \end{thebibliography}
