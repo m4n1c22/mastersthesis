@@ -1,7 +1,289 @@
-\documentclass[10pt]{article}
+\documentclass[12pt]{article}
+
+%preamble
+\usepackage{forest}
+
+    \definecolor{folderbg}{RGB}{124,166,198}
+    \definecolor{folderborder}{RGB}{110,144,169}
+
+    \def\Size{4pt}
+    \tikzset{
+      folder/.pic={
+        \filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
+          (-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);  
+        \filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
+          (-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+      }
+    }
+
 \begin{document}
 
 
-\title{\vspace{-3.5cm} How to make the prototypes work?}
-%\maketitle
+\title{\vspace{-3.5cm} How can you make the prototypes to work?}
+\author{
+		 Sreeram Sadasivam\\
+		M.Sc Distributed Software Systems\\
+		TU Darmstadt, Germany\\
+		sreeram.sadasivam@stud.tu-darmstadt.de
+}
+\maketitle
+
+This document covers the details about how you can build the prototypes used for the IRS scheduler realized in kernel space. 
+This document also covers the details about how you can get the evaluations done.
+
+\section*{Prerequisties}
+The prototypes are only compatible with any 64 bit Linux operating system with a kernel version greater than 3.0 and which support loadable modules. 
+For running the IRS framework, you would require LLVM-CLANG 3.9, GCC/G++ 4.9, BOOST 1.6.2, latest version of cmake and latest version of graphviz. 
+You would additionally need the latest version of python and spdlog for generating debug logs(This prerequiste is only applicable if you are intending to run the evaluations). 
+
+\section*{Where can you find the Prototypes?}
+
+You can find all the prototypes inside the directory \textbf{Prototype\_Impl} which deals with the implementations of various prototypes. 
+Inside this folder, you would find two main sub-folders dealing with two approaches discussed in the thesis work related to these prototypes. 
+These two approaches are realized in the folders: \textbf{no\_check\_userspace} and \textbf{check\_userspace}.
+
+\begin{figure}[h]
+\begin{forest}
+      for tree={
+        font=\ttfamily,
+        grow'=0,
+        child anchor=west,
+        parent anchor=south,
+        anchor=west,
+        calign=first,
+        inner xsep=7pt,
+        edge path={
+          \noexpand\path [draw, \forestoption{edge}]
+          (!u.south west) +(7.5pt,0) |- (.child anchor) pic {folder} \forestoption{edge label};
+        },
+         file/.style={edge path={\noexpand\path [draw, \forestoption{edge}]
+          (!u.south west) +(7.5pt,0) |- (.child anchor) \forestoption{edge label};},
+          inner xsep=2pt,font=\small\ttfamily
+                     },
+        before typesetting nodes={
+          if n=1
+            {insert before={[,phantom]}}
+            {}
+        },
+        fit=band,
+        before computing xy={l=15pt},
+      }  
+    [Project Root
+     [Docs]
+	 [evaluations]
+     [Prototype\_Impl]
+     [userspace\_implementation]
+    ]
+    \end{forest}
+    \caption{Directory tree from project root}
+\end{figure}
+\begin{figure}[h]
+\begin{forest}
+      for tree={
+        font=\ttfamily,
+        grow'=0,
+        child anchor=west,
+        parent anchor=south,
+        anchor=west,
+        calign=first,
+        inner xsep=7pt,
+        edge path={
+          \noexpand\path [draw, \forestoption{edge}]
+          (!u.south west) +(7.5pt,0) |- (.child anchor) pic {folder} \forestoption{edge label};
+        },
+         file/.style={edge path={\noexpand\path [draw, \forestoption{edge}]
+          (!u.south west) +(7.5pt,0) |- (.child anchor) \forestoption{edge label};},
+          inner xsep=2pt,font=\small\ttfamily
+                     },
+        before typesetting nodes={
+          if n=1
+            {insert before={[,phantom]}}
+            {}
+        },
+        fit=band,
+        before computing xy={l=15pt},
+      }  
+     [Prototype\_Impl
+      [no\_check\_userspace
+        [Prototype\_1
+        ]
+        [Prototype\_2
+        ]
+        [Prototype\_3      
+        ]
+        [Prototype\_4
+        ]
+      ]
+      [check\_userspace
+        [Prototype\_5
+        ]
+        [Prototype\_6
+        ]
+      ]
+      [include]
+      [Traces]
+      [Makefile, file]
+      [eval\_dining\_phil\_prob.py,file]
+      [eval\_fibonacci.py,file]
+      [eval\_indexer.py,file]
+      [eval\_indexer\_t15.py,file]
+      [eval\_last\_zero.py,file]
+      [test\_dining\_phil\_prob\_userspace.sh,file]
+	  [test\_fibonacci\_userspace.sh,file]
+	  [test\_indexer\_t15\_userspace.sh,file]
+	  [test\_last\_zero\_userspace.sh,file]
+    ]
+    \end{forest}
+    \caption{Directory tree of Prototype\_Impl}
+    \label{tree_protos}
+\end{figure}
+\begin{figure}[h]
+\begin{forest}
+      for tree={
+        font=\ttfamily,
+        grow'=0,
+        child anchor=west,
+        parent anchor=south,
+        anchor=west,
+        calign=first,
+        inner xsep=7pt,
+        edge path={
+          \noexpand\path [draw, \forestoption{edge}]
+          (!u.south west) +(7.5pt,0) |- (.child anchor) pic {folder} \forestoption{edge label};
+        },
+         file/.style={edge path={\noexpand\path [draw, \forestoption{edge}]
+          (!u.south west) +(7.5pt,0) |- (.child anchor) \forestoption{edge label};},
+          inner xsep=2pt,font=\small\ttfamily
+                     },
+        before typesetting nodes={
+          if n=1
+            {insert before={[,phantom]}}
+            {}
+        },
+        fit=band,
+        before computing xy={l=15pt},
+      }  
+     [Prototype\_X
+      [include]
+      [scheduler]
+      [Std\_Thread\_Impl]
+      [Makefile, file]
+      [dining\_phil.sh,file]
+	  [fibonacci.sh,file]      
+	  [indexer\_t12.sh,file]
+	  [indexer\_t15.sh,file]
+	  [last\_zero.sh,file]
+    ]
+    \end{forest}
+    \caption{Directory tree of any Prototype}
+    \label{tree_mod_proto}
+\end{figure}
+Directory trees represented below shows us how the source files for the various Prototypes are mapped to the directory structure. 
+\newpage
+\section*{Loading and Unloading the Prototype}
+
+Before we load the prototype to kernel space, we need to know the number of threads used in the multithreaded program. 
+Currently, all the prototypes have the $THREAD\_COUNT$ parameter as statically defined. 
+You have to modify the macro entry $THREAD\_COUNT$ inside the headerfile $common.h$ with the number of threads you have in your multithreaded program. 
+Once that step is complete, you can load the kernel module by running the makefile located in the root directory of the prototype with target load. 
+The command $make\ load$ will compile and load the prototype to kernel space with the number of threads you have indicated in the $common.h$ headerfile. 
+The command $make\ unload$ will remove the module from the kernel space and clean up the module versions from your machine. 
+
+\subsection*{Loading the Prototype}
+
+\begin{itemize}
+\item Move into the directory location \textbf{Prototype\_Impl} where all the prototypes are mapped as shown in the directory tree~\ref{tree_protos}. 
+\item Move to the Prototype you need to load, complying the directory tree shown in figure~\ref{tree_protos}. 
+\item Inside every Prototype folder you would find the directory structure similar to the one shown in figure~\ref{tree_mod_proto}.
+\item Running the command $make\ load$ will compile and load the prototype to kernel space with the number of threads you have indicated in the $common.h$ headerfile. 
+\end{itemize}
+
+\subsection*{Unloading the Prototype}
+
+\begin{itemize}
+\item Move into the directory location \textbf{Prototype\_Impl} where all the prototypes are mapped as shown in the directory tree~\ref{tree_protos}. 
+\item Move to the Prototype you need to load, complying the directory tree shown in figure~\ref{tree_protos}. 
+\item Inside every Prototype folder you would find the directory structure similar to the one shown in figure~\ref{tree_mod_proto}.
+\item Running the command $make\ unload$ will remove the module from the kernel space and clean up the module versions from your machine. 
+\end{itemize}
+
+\section*{Invoking Prototype related functions from a Multithreaded Program}
+
+We have five main functions which are defined in the headerfile $user\_space.h$. 
+These functions are $BeforeMA()$, $AfterMA()$, $initialize\_trace()$, $reset\_clock()$ and $thread\_reg()$. 
+Currently, these prototypes are not integrated with LLVM therefore, methods such as $BeforeMA()$ and $AfterMA()$ needs to be invoked at the point of every shared memory event of the threads manually. 
+But this functionality could be modified once integrated with LLVM. 
+These two function expect the thread id which is value in the range of 1 to N. 
+$initialize\_trace()$ is the first method which needs to be invoked from the multithreaded program. 
+The method needs to be called before the creation of the threads and it expects a vector clock representation similar to the one described in the thesis, but without newline and white space characters. 
+$thread\_reg()$ needs to be called first within the thread function for registering the thread and it expects a thread id similar to $BeforeMA()$. 
+$reset\_clock()$ is the final method which needs to be used with the multithreaded program. 
+This method needs to be used once all the threads have completed their execution. 
+The program needs to be run in superuser mode because the IOCTL device created when the module was loaded requires root permission for access. 
+The multithreaded program should only be compiled and executed until the all kernel modules of the prototype are loaded successfully.  
+\newpage
+\section*{Running Evaluations} 
+\subsection*{Building the user space IRS solution}
+
+\begin{itemize}
+\item Currently, the choice between \emph{IRS\_Opt} and \emph{IRS\_Sh}(two IRS user space solutions discussed in the thesis work) is not programmatically controlled. 
+You would have go into the \textbf{userspace\_implementation} folder. 
+Move inside this location \textbf{MemoryCheck\/src\/Scheduler\/} where you find the file \textbf{Runtime.cpp}.
+\item Modify the line containing the following code:
+
+$scheduler.reset(new SharedScheduler(threadCount, traces));$
+
+    to 
+
+$scheduler.reset(new OptimizingScheduler(threadCount, *permissionManager));$ 
+
+if you need to change the IRS user space scheduler to use behave as \emph{IRS\_Opt} instead of \emph{IRS\_Sh}. 
+\item To enforce this scheduler, you need to build the IRS framework. 
+\item Run $mkdir\ build$  inside the \textbf{MemoryCheck} folder. 
+\item Move inside the build directory and run the command $cmake ..$. 
+Note: You need to have the latest version of cmake installed to run the IRS framework.
+\item Once this command is run successfully, run the command $make$. 
+This command would build the IRS framework which would also include the benchmarks and tests added as a part of the framework. 
+Therefore, this command would take some time to complete. 
+\end{itemize}
+
+\subsection*{Running the benchmark}
+
+You can the run the existing benchmarks by moving into the folder location \textbf{experiments} under the \textbf{userspace\_implementation} folder. 
+You can find the binary executables with and without IRS of each benchmark inside this folder. 
+These binary executables have a soft symbolic link inside the \textbf{experiments} folder, ensure that original binaries are generated at its source location of the link. 
+
+For running the benchmark inside the Prototypes, you would need to first ensure the Prototype has been loaded into the kernel space with the necessary steps adhered in the previous sections. 
+Once the prototype module is loaded into the kernel, you can run the command $sudo\ make\ test\_<benchmark>$. 
+The value of benchmark would be: {last\_zero, indexer\_t15, dining\_phil, fibonacci}. 
+Or, you run any script located inside the Prototype directory with the command $sh\ <benchmark\_scr>.sh$. 
+The value of benchmark\_scr would be: {last\_zero, indexer\_t15, dining\_phil\_prob, fibonacci}. 
+This script would automatically load the prototype into the kernel with the necessary configuration for the benchmark and compile and run the benchmark 1000 times. 
+Once the executions are complete of the benchmark, you would get different files with .dat extensions. 
+These files contain the execution time taken for each benchmark under a specific execution traces. 
+If a benchmark is executed with 3 traces, there would be three dat files containing the results of execution time taken when run with these 3 traces. 
+
+\subsection*{Testing and Evaluation of Benchmark across IRS solutions}
+
+You can run an automated Makefile script located inside the \textbf{Prototype\_Impl} folder. 
+You can run the benchmark with the following command:
+
+$make\ test\_and\_eval\_<benchmark>$.
+
+The value of benchmark includes: {indexer\_t15, last\_zero, dining\_phil,fibonacci}. 
+Running the above command would internally trigger a script for running the provided benchmark across all the prototypes and also run inside the configured IRS user space scheduler. 
+The results are generated and printed on to the terminal screen with evaluation results based on the metric - execution time overhead. 
+The benchmark is executed 1000 times across each IRS solution. 
+
+\section*{Evaluation results used for the thesis} 
+You can find the results of various benchmarks under the folder evaluations.
+
+
+\section*{Note}
+
+The script used to run the IRS user space solution would only run the benchmark and not build the IRS framework. 
+Therefore, you have to manually build the framework yourself with the necessary scheduler option. 
+If you change the scheduler from \emph{IRS\_Opt} to \emph{IRS\_Sh}, you would have to rebuild the entire IRS framework which is described in the previous sections. 
+
+
 \end{document}
