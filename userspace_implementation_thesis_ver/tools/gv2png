@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for file in "$@"; do
+  dot -Tpng -o ${file}.png ${file}
+done

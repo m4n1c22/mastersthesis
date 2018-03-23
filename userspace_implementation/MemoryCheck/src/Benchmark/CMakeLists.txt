@@ -12,7 +12,7 @@ set(LLVM_PASS "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libMemoryInstrumentationPass.so
 set(SCHEDULER_LIBRARY "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/libscheduler.a")
 set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../include")
 
-foreach(BENCHMARK last_zero readers_writers shared_pointer indexer file_system peterson dekker fibonacci bigshot lamport blackscholes dining_phil_prob prod_cons)
+foreach(BENCHMARK last_zero readers_writers shared_pointer indexer file_system peterson dekker fibonacci bigshot lamport blackscholes swaptions dining_phil_prob)
 
         set(BENCHMARK_SRC ${CMAKE_CURRENT_SOURCE_DIR}/${BENCHMARK}.cpp)
         set(BENCHMARK_SRC_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/${BENCHMARK}_main.cpp)
@@ -21,6 +21,10 @@ foreach(BENCHMARK last_zero readers_writers shared_pointer indexer file_system p
         set(BENCHMARK_LL ${IR_DIRECTORY}/${BASENAME}.ll)
         set(BENCHMARK_IRS_LL ${IR_DIRECTORY}/${BASENAME}_irs.ll)
         set(BENCHMARK_IRS_O ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${BASENAME}_irs.o)
+
+        if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${BENCHMARK})
+            add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/${BENCHMARK})
+        endif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${BENCHMARK})
 
         add_custom_command(
             OUTPUT ${BENCHMARK_LL}
@@ -69,5 +73,10 @@ foreach(BENCHMARK last_zero readers_writers shared_pointer indexer file_system p
         target_link_libraries(${BENCHMARK}_irs ${Boost_LIBRARIES})
 
         add_executable(${BENCHMARK}_plain ${BENCHMARK_SRC} ${BENCHMARK_SRC_MAIN})
+
+        if(TARGET ${BENCHMARK}_targets)
+            target_link_libraries(${BENCHMARK}_irs ${BENCHMARK}_targets)
+            target_link_libraries(${BENCHMARK}_plain ${BENCHMARK}_targets)
+        endif(TARGET ${BENCHMARK}_targets)
 
 endforeach(BENCHMARK)

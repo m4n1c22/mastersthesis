@@ -3,7 +3,6 @@
 
 #include "Scheduler/Scheduler.h"
 #include "Scheduler/SharedScheduler.h"
-#include "Scheduler/OptimizingScheduler.h"
 #include "Scheduler/Trace.h"
 
 // +----------------+                               +----------------------+
@@ -23,6 +22,19 @@
 // +----------------+                               +----------------------+
 
 namespace Runtime {
+
+/**
+Types of scheduler
+*/
+enum eSelectedScheduler {
+	eDefault = 0,
+	eBusyWaitScheduler = 1,
+	eConditionVariableScheduler = 2,
+	eSoftYieldScheduler = 3,
+	eHardYieldScheduler = 4
+};
+
+//eSelectedScheduler selection_sched = eDefault;
 
 void registerBenchmark(int argc, char *argv[], int threadCount, void (*benchmark)());
 

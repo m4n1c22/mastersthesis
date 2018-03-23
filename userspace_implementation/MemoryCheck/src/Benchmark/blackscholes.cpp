@@ -335,7 +335,6 @@ void run_benchmark() {
     printf("PARSEC Benchmark Suite Version "__PARSEC_XSTRING(PARSEC_VERSION) "\n");
     fflush(NULL);
 #else
-    printf("PARSEC Benchmark Suite\n");
     fflush(NULL);
 #endif // PARSEC_VERSION
 #ifdef ENABLE_PARSEC_HOOKS
@@ -406,8 +405,6 @@ void run_benchmark() {
     };
 
 #endif
-    printf("Num of Options: %d\n", numOptions);
-    printf("Num of Runs: %d\n", NUM_RUNS);
 
 #define PAD 256
 #define LINESIZE 64
@@ -430,8 +427,6 @@ void run_benchmark() {
         volatility[i] = data[i].v;
         otime[i] = data[i].t;
     }
-
-    printf("Size of data: %ld\n", numOptions * (sizeof(OptionData) + sizeof(int)));
 
 #ifdef ENABLE_PARSEC_HOOKS
     __parsec_roi_begin();
@@ -546,4 +541,4 @@ void run_benchmark() {
     __parsec_bench_end();
 #endif
 }
-}
+} // namespace blackscholes

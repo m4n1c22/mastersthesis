@@ -1,0 +1,1 @@
+/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/test_stacktrace.dir/Scheduler/StacktraceTest.cpp.o  -o ../bin/test_stacktrace -rdynamic ../lib/libscheduler.a -lpthread -lcgraph -lgvc -Wl,-Bstatic -lboost_system -lboost_filesystem -lboost_program_options -lboost_graph -lboost_regex -Wl,-Bdynamic 

@@ -1,0 +1,1 @@
+/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/dining_phil_prob_plain.dir/dining_phil_prob.cpp.o CMakeFiles/dining_phil_prob_plain.dir/dining_phil_prob_main.cpp.o  -o ../../bin/dining_phil_prob_plain -rdynamic 

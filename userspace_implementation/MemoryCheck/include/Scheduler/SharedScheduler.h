@@ -1,5 +1,5 @@
-#ifndef SCHEDULER_OPTIMIZING_SCHEDULER_H_
-#define SCHEDULER_OPTIMIZING_SCHEDULER_H_
+#ifndef SCHEDULER_SHARED_SCHEDULER_H_
+#define SCHEDULER_SHARED_SCHEDULER_H_
 
 #include "Scheduler/Scheduler.h"
 #include "Scheduler/Trace.h"

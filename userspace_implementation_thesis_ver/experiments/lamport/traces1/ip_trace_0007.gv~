@@ -1,0 +1,25 @@
+digraph G {
+    rank=same
+    rankdir=LR
+    ranksep=3
+subgraph t0 {
+0 [count=0, is_write=1, label="tid=0 count=0 start_addr=0x752508 is_write=1", start_addr="0x752508", tid=0];
+1 [count=1, is_write=1, label="tid=0 count=1 start_addr=0x752500 is_write=1", start_addr="0x752500", tid=0];
+2 [count=2, is_write=0, label="tid=0 count=2 start_addr=0x752504 is_write=0", start_addr="0x752504", tid=0];
+3 [count=3, is_write=1, label="tid=0 count=3 start_addr=0x752504 is_write=1", start_addr="0x752504", tid=0];
+}
+subgraph t1 {
+20 [count=0, is_write=1, label="tid=1 count=0 start_addr=0x75250c is_write=1", start_addr="0x75250c", tid=1];
+21 [count=1, is_write=1, label="tid=1 count=1 start_addr=0x752500 is_write=1", start_addr="0x752500", tid=1];
+22 [count=2, is_write=0, label="tid=1 count=2 start_addr=0x752504 is_write=0", start_addr="0x752504", tid=1];
+23 [count=3, is_write=1, label="tid=1 count=3 start_addr=0x752504 is_write=1", start_addr="0x752504", tid=1];
+}
+0->1 ;
+1->2 ;
+2->3 ;
+20->21 ;
+21->22 ;
+22->23 ;
+2->23 ;
+21->1 ;
+}

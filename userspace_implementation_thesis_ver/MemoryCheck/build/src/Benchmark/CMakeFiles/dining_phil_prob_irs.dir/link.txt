@@ -1,0 +1,1 @@
+/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/dining_phil_prob_irs.dir/dining_phil_prob_main.cpp.o  -o ../../bin/dining_phil_prob_irs -rdynamic ../../bin/dining_phil_prob_irs.o ../../lib/libscheduler.a -Wl,-Bstatic -lboost_system -lboost_filesystem -lboost_program_options -lboost_graph -lboost_regex -Wl,-Bdynamic 

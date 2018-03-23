@@ -1,12 +1,14 @@
 #include "Scheduler/Runtime.h"
 #include "Scheduler/Logger.h"
 #include "Scheduler/ModelChecker.h"
-#include "Scheduler/OptimizingScheduler.h"
 #include "Scheduler/PermissionManagerTrace.h"
 #include "Scheduler/PermissionManagerTraceOptimizing.h"
 #include "Scheduler/RecordingScheduler.h"
 #include "Scheduler/Scheduler.h"
 #include "Scheduler/SharedScheduler.h"
+#include "Scheduler/OptimizingScheduler.h"
+#include "Scheduler/SoftYieldScheduler.h"
+#include "Scheduler/HardYieldScheduler.h"
 #include "Scheduler/TraceGenerator.h"
 #include "Scheduler/TraceGraphConverter.h"
 #include "Scheduler/Utility.h"
@@ -43,6 +45,8 @@ std::vector<std::string> inputTraceFiles;
 std::vector<std::string> inputTraceArgs;
 std::string outputTraceFile;
 std::string modelCheckDir;
+std::string schedulerSelect;
+eSelectedScheduler selectionSched = eDefault;
 bool verboseFlag = false;
 bool usageOutput = false;
 
@@ -77,8 +81,8 @@ void _runModelChecker(void (*benchmark)()) {
     if (!createDirectoryIfNotPresent(modelCheckDir))
         traceStackAndAbort();
     for (auto trace = traces.begin(); trace != traces.end(); ++trace) {
-        converter.convert(*trace).dumpDot(QString() << modelCheckDir << "/trace"
-                                                    << trace - traces.begin());
+        converter.convert(*trace).dumpDot(QString()
+                                          << modelCheckDir << "/trace" << trace - traces.begin());
     }
 }
 
@@ -126,17 +130,20 @@ std::vector<std::string> _getFiles(std::vector<std::string> inputPaths) {
 void _parseProgramOptions(int argc, char *argv[]) {
     po::options_description desc("IRS Tool Allowed options");
     desc.add_options()("help,h", "show usages")("verbose,v", "show verbouse output")(
-            "input_trace,i",
+            "input_trace,input_trace ,i,i ",
             po::value<std::vector<std::string>>()
                     ->default_value(std::vector<std::string>(), "")
                     ->implicit_value(std::vector<std::string>({"ip_trace.gv"}), "ip_trace.gv"),
             "input trace file/directory")(
-            "output_trace,o",
+            "output_trace,output_trace ,o,o ",
             po::value<std::string>()->default_value("")->implicit_value("op_trace.gv"),
             "output trace file")(
-            "model_check_dir,m",
+            "model_check_dir,model_check_dir ,m,m ",
             po::value<std::string>()->default_value("")->implicit_value("all_traces"),
-            "explore state space of program and write all traces to directory");
+            "explore state space of program and write all traces to directory")(
+            "sched_sel,s",
+            po::value<std::string>()->default_value("busy_wait")->implicit_value("busy_wait"),
+            "Option to select the scheduler used in IRS. Values include: busy_wait , cond_var, soft_yield, hard_yield");
 
     po::variables_map vm;
 
@@ -179,6 +186,26 @@ void _parseProgramOptions(int argc, char *argv[]) {
     if (vm.count("model_check_dir")) {
         modelCheckDir = vm["model_check_dir"].as<std::string>();
     }
+    if (vm.count("sched_sel")) {
+        schedulerSelect = vm["sched_sel"].as<std::string>();
+        if(schedulerSelect.compare("busy_wait")==0) {
+            selectionSched = eBusyWaitScheduler;
+        }
+        else if(schedulerSelect.compare("cond_var")==0) {
+            selectionSched = eConditionVariableScheduler;
+        }
+        else if(schedulerSelect.compare("soft_yield")==0) {
+            selectionSched = eSoftYieldScheduler;
+        }
+        else if(schedulerSelect.compare("hard_yield")==0) {
+            selectionSched = eHardYieldScheduler;
+        }
+        else {
+            SCH_LOG_ERROR("Invalid Options. Valid values include: busy_wait , cond_var, soft_yield, hard_yield\n");
+            exit(0);
+        }
+        std::cout<<"Selected Scheduler is:"<<selectionSched<<std::endl;
+    }
 
     if (!inputTraceArgs.empty())
         inputTraceFiles = _getFiles(inputTraceArgs);
@@ -202,11 +229,22 @@ void _initSchedulerForRecording(std::vector<Trace> traces) {
 
 void _initSchedulerWithOptimization(std::vector<Trace> traces) {
     SCH_LOG_DEBUG("using optimizing scheduler");
+
     permissionManager.reset(new PermissionManagerTraceOptimizing(traces, threadCount));
-    scheduler.reset(new SharedScheduler(threadCount, traces));
-    //scheduler.reset(new OptimizingScheduler(threadCount, *permissionManager));
+    if(selectionSched == eBusyWaitScheduler) {
+        scheduler.reset(new SharedScheduler(threadCount, traces));
+    }
+    else if(selectionSched == eConditionVariableScheduler) {
+        scheduler.reset(new OptimizingScheduler(threadCount, *permissionManager));
+    }
+    else if(selectionSched == eSoftYieldScheduler) {
+        scheduler.reset(new SoftYieldScheduler(threadCount, traces));
+    }
+    else if(selectionSched == eHardYieldScheduler) {
+        scheduler.reset(new HardYieldScheduler(threadCount, *permissionManager));
+    }
 }
-}
+} // namespace
 
 void registerBenchmark(int argc, char *argv[], int threadCount, void (*benchmark)()) {
     initializeRuntime(argc, argv, threadCount);
@@ -249,4 +287,4 @@ void initializeRuntime(int argc, char *argv[], int threadCount) {
 void cleanUpRuntime() { spdlog::drop_all(); }
 
 void threadFinished(int tid) { scheduler->threadFinished(tid); }
-}
+} // namespace Runtime

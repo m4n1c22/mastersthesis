@@ -31,11 +31,15 @@ void TraceGraph::addNode(int eid, int tid, int count, void *memLoc, bool isWrite
     m_TraceGraph[node].start_addr = startAddrStr.str();
     m_TraceGraph[node].is_write = isWrite;
     std::stringstream label;
-    label << "tid=" << tid;
-    label << " count=" << count;
+    label << "(" << tid;
+    label << "," << count;
     if (memLoc) {
-        label << " start_addr=" << memLoc;
-        label << " is_write=" << isWrite;
+        label << ",";
+        label << (isWrite ? "w" : "r");
+        label << ")\n";
+        label << memLoc;
+    } else {
+        label << ")";
     }
     m_TraceGraph[node].label = label.str();
     m_TraceGraph[node].name = std::to_string(eid);
@@ -76,16 +80,4 @@ std::vector<TraceGraph> TraceGraph::loadDotFiles(std::vector<std::string> dotFil
         traceGraphs.emplace_back(loadDotFile(dotFile));
     }
     return traceGraphs;
-}
-
-AdjacencyMatrix getEmptyAdjacencyMatrix(int n) {
-    AdjacencyMatrix matrix;
-    matrix.resize(n);
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++)
-            matrix[i].push_back(0);
-    }
-
-    return matrix;
 }

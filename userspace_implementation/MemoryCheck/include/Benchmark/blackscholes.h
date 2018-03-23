@@ -38,6 +38,6 @@ extern fptype *volatility;
 extern fptype *otime;
 extern int numError;
 extern int nThreads;
-}
+} // namespace blackscholes
 
 #endif

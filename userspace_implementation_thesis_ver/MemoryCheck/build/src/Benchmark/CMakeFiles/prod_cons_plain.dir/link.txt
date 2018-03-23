@@ -1,0 +1,1 @@
+/usr/bin/clang++    -g -std=c++11 -O3 -pthread   CMakeFiles/prod_cons_plain.dir/prod_cons.cpp.o CMakeFiles/prod_cons_plain.dir/prod_cons_main.cpp.o  -o ../../bin/prod_cons_plain -rdynamic 

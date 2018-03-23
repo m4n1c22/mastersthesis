@@ -53,6 +53,4 @@ class TraceGraph {
     std::map<int, BoostTraceVertexDescriptor> m_eidToNodeLookup;
 };
 
-AdjacencyMatrix getEmptyAdjacencyMatrix(int n);
-
 #endif

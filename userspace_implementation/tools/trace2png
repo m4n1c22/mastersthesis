@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for file in "$@"; do
+  png_file="${file%.gv}.png"
+  beautify_trace.gvpr ${file} | dot -Tpng -o ${png_file}
+done

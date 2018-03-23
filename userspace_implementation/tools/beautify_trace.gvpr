@@ -1,0 +1,19 @@
+#!/bin/bash
+
+gvpr -i '
+BEG_G {
+  $G.rankdir = "LR";
+  int seen[string];
+  graph_t thread_graphs[string];
+}
+N {
+  if (!seen[$.tid]) {
+    thread_graphs[$.tid] = subg($G, $.tid);
+    graph_t sg = thread_graphs[$.tid];
+    sg.rank = "same";
+  }
+  subnode(thread_graphs[$.tid], $);
+}
+END_G {
+  $O = $G;
+}' ${@}
