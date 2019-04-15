@@ -1,4 +1,4 @@
-# Install script for directory: /home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/src/Scheduler
+# Install script for directory: /home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/src/Scheduler
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

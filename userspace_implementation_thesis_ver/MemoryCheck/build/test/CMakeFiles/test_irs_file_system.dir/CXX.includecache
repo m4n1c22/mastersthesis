@@ -12,6 +12,16 @@
 
 ../include/Benchmark/readers_writers.h
 
+../include/Scheduler/Common.h
+boost/graph/graphviz.hpp
+-
+condition_variable
+-
+mutex
+-
+thread
+-
+
 ../include/Scheduler/Event.h
 functional
 -
@@ -42,6 +52,38 @@ Scheduler/Scheduler.h
 Scheduler/Trace.h
 ../include/Scheduler/Scheduler/Trace.h
 
+../include/Scheduler/OptimizingScheduler.h
+condition_variable
+-
+deque
+-
+list
+-
+map
+-
+memory
+-
+mutex
+-
+thread
+-
+tuple
+-
+utility
+-
+vector
+-
+Scheduler/Event.h
+../include/Scheduler/Scheduler/Event.h
+Scheduler/History.h
+../include/Scheduler/Scheduler/History.h
+Scheduler/PermissionManager.h
+../include/Scheduler/Scheduler/PermissionManager.h
+Scheduler/Scheduler.h
+../include/Scheduler/Scheduler/Scheduler.h
+Scheduler/Thread.h
+../include/Scheduler/Scheduler/Thread.h
+
 ../include/Scheduler/PermissionManager.h
 Scheduler/TraceGraph.h
 ../include/Scheduler/Scheduler/TraceGraph.h
@@ -57,6 +99,8 @@ Scheduler/Scheduler.h
 ../include/Scheduler/Scheduler/Scheduler.h
 Scheduler/SharedScheduler.h
 ../include/Scheduler/Scheduler/SharedScheduler.h
+Scheduler/OptimizingScheduler.h
+../include/Scheduler/Scheduler/OptimizingScheduler.h
 Scheduler/Trace.h
 ../include/Scheduler/Scheduler/Trace.h
 
@@ -93,6 +137,18 @@ Scheduler/Scheduler.h
 ../include/Scheduler/Scheduler/Scheduler.h
 Scheduler/Trace.h
 ../include/Scheduler/Scheduler/Trace.h
+
+../include/Scheduler/Thread.h
+Scheduler/Common.h
+../include/Scheduler/Scheduler/Common.h
+Scheduler/ThreadAttribute.h
+../include/Scheduler/Scheduler/ThreadAttribute.h
+
+../include/Scheduler/ThreadAttribute.h
+tuple
+-
+Scheduler/Event.h
+../include/Scheduler/Scheduler/Event.h
 
 ../include/Scheduler/Trace.h
 Scheduler/Event.h
@@ -376,11 +432,11 @@ cfloat
 cstdio
 -
 
-/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/test/Test.h
+/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/test/Test.h
 Scheduler/Logger.h
-/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/test/Scheduler/Logger.h
+/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/test/Scheduler/Logger.h
 Scheduler/Trace.h
-/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/test/Scheduler/Trace.h
+/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/test/Scheduler/Trace.h
 boost/filesystem.hpp
 -
 catch.hpp
@@ -392,9 +448,9 @@ iterator
 string
 -
 
-/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/test/irs/test_irs.h
+/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/test/irs/test_irs.h
 ../Test.h
-/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/test/Test.h
+/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/test/Test.h
 Benchmark/indexer.h
 -
 Benchmark/readers_writers.h
@@ -406,11 +462,11 @@ Scheduler/Runtime.h
 Scheduler/Trace.h
 -
 catch.hpp
-/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/test/irs/catch.hpp
+/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/test/irs/catch.hpp
 
-/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/test/irs/test_irs_file_system.cpp
+/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/test/irs/test_irs_file_system.cpp
 test_irs.h
-/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/test/irs/test_irs.h
+/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/test/irs/test_irs.h
 Benchmark/file_system.h
 -
 Scheduler/ModelChecker.h
@@ -422,5 +478,5 @@ Scheduler/Trace.h
 Scheduler/TraceGraphConverter.h
 -
 catch.hpp
-/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/test/irs/catch.hpp
+/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/test/irs/catch.hpp
 

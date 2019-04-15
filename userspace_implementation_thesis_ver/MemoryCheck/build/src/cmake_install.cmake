@@ -1,4 +1,4 @@
-# Install script for directory: /home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/src
+# Install script for directory: /home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,9 +34,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/build/src/MemoryInstrumentationPass/cmake_install.cmake")
-  include("/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/build/src/Scheduler/cmake_install.cmake")
-  include("/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/build/src/Benchmark/cmake_install.cmake")
+  include("/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/build/src/MemoryInstrumentationPass/cmake_install.cmake")
+  include("/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/build/src/Scheduler/cmake_install.cmake")
+  include("/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/build/src/Benchmark/cmake_install.cmake")
 
 endif()
 

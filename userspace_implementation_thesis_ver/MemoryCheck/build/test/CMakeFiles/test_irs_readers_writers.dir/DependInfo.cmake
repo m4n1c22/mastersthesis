@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/test/irs/test_irs_readers_writers.cpp" "/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/build/test/CMakeFiles/test_irs_readers_writers.dir/irs/test_irs_readers_writers.cpp.o"
+  "/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/test/irs/test_irs_readers_writers.cpp" "/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/build/test/CMakeFiles/test_irs_readers_writers.dir/irs/test_irs_readers_writers.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
 
@@ -15,7 +15,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/build/src/Scheduler/CMakeFiles/scheduler.dir/DependInfo.cmake"
+  "/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/build/src/Scheduler/CMakeFiles/scheduler.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

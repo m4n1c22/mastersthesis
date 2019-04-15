@@ -1,4 +1,4 @@
-# Install script for directory: /home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/src/MemoryInstrumentationPass
+# Install script for directory: /home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/src/MemoryInstrumentationPass
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

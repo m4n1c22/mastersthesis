@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/src/Benchmark/readers_writers.cpp" "/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/build/src/Benchmark/CMakeFiles/readers_writers_plain.dir/readers_writers.cpp.o"
-  "/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/src/Benchmark/readers_writers_main.cpp" "/home/sreeram/Dev/mastersthesis/userspace_implementation/MemoryCheck/build/src/Benchmark/CMakeFiles/readers_writers_plain.dir/readers_writers_main.cpp.o"
+  "/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/src/Benchmark/readers_writers.cpp" "/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/build/src/Benchmark/CMakeFiles/readers_writers_plain.dir/readers_writers.cpp.o"
+  "/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/src/Benchmark/readers_writers_main.cpp" "/home/sreeram/Dev/mastersthesis/userspace_implementation_thesis_ver/MemoryCheck/build/src/Benchmark/CMakeFiles/readers_writers_plain.dir/readers_writers_main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
 
